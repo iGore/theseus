@@ -18,6 +18,27 @@ Current project assets:
 - `.agents/skills/` for reusable Agent Skills directories (`skill-name/SKILL.md`)
 - `docker-compose.yml` and `config.json` for the Sourcebot bootstrap setup
 
+## Sourcebot check
+
+Start the local stack:
+
+```bash
+docker compose up -d
+```
+
+Run the repository health check:
+
+```bash
+./scripts/check-sourcebot.sh
+```
+
+Exit codes:
+
+- `0`: Sourcebot reachable at `http://localhost:3000`
+- `2`: Docker CLI not available
+- `3`: `sourcebot` container not running
+- `4`: endpoint not reachable while running (or missing `curl`)
+
 ## Current subagent flow
 
 `Analyzer -> Spec-Writer -> Verifier -> Architect -> Builder`

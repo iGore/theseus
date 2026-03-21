@@ -1,0 +1,8 @@
+experimental_use_rmcp_client = true
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+
+[mcp_servers.sourcebot]
+url = "http://localhost:3000/api/mcp"

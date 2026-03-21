@@ -40,6 +40,8 @@ The `Orchestrator` coordinates handoffs, artifacts, and retry decisions across t
 
 Do not model these MCPs as skills. They are external context/access layers.
 
+Keep secrets such as Sourcebot API keys out of tracked repo files. Use a local-only file such as `.codex/config.local.toml` or `.codex/secrets.toml`, both of which are gitignored.
+
 ## Skill usage
 
 Skills live under `.agents/skills/<skill-name>/SKILL.md`.

@@ -1,13 +1,10 @@
 {
     "$schema": "https://raw.githubusercontent.com/sourcebot-dev/sourcebot/main/schemas/v3/index.json",
-    // Comments are supported.
-    // This config creates a single connection to GitHub.com that
-    // indexes the Sourcebot repository
     "connections": {
-        "starter-connection": {
+        "pipdeptree": {
             "type": "github",
             "repos": [
-                "sourcebot-dev/sourcebot"
+                "tox-dev/pipdeptree"
             ]
         }
     }
