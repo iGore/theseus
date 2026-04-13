@@ -46,10 +46,16 @@ Exit codes:
 
 ## Current subagent flow
 
-`Analyzer -> Spec-Writer -> Verifier -> Architect -> Builder`
+`Analyzer -> Spec-Writer -> Verifier -> Architect -> Planner -> Task Decomposer -> Builder`
 
-- `Analyzer` reads source code, README guidance, and dependency information.
-- `Architect` plans the target architecture and selects suitable packages for the Builder with Context7-backed documentation.
+- This now mirrors the full conceptual model from the report: a migration pipeline coordinated by one `Orchestrator` across reconstruction, transformation planning, and re-implementation.
+- `Analyzer` reconstructs the bounded source module from code, repository metadata, and supporting docs.
+- `Spec-Writer` produces the central textual specification artifact.
+- `Verifier` gates the pipeline by checking whether the specification is traceable back to source-context evidence.
+- `Architect` plans the target architecture and selects suitable packages with Context7-backed documentation.
+- `Planner` derives an ordered migration plan with work packages from the verified specification and architecture.
+- `Task Decomposer` turns that plan into implementation-ready coding tasks.
+- `Builder` implements from the verified specification, architecture outputs, and decomposed work packages, then records build/test evidence.
 
 ## OpenCode setup
 
@@ -60,7 +66,11 @@ The repo now ships the same migration roles for OpenCode under `.opencode/agents
 - `spec-writer.md` as a subagent
 - `verifier.md` as a subagent
 - `architect.md` as a subagent
+- `planner.md` as a subagent
+- `task-decomposer.md` as a subagent
 - `builder.md` as a subagent
+
+The textual specification is the main handoff artifact between reconstruction and implementation. `AGENTS.md` acts as the shared rule layer across all roles, matching the thesis' emphasis on a persistent instruction artifact for build hints, conventions, and workflow guardrails.
 
 OpenCode MCP configuration is tracked in `opencode.jsonc` and mirrors the Codex setup with both `Context7` and `Sourcebot`:
 
