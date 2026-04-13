@@ -22,7 +22,7 @@ Turn Analyzer artifacts into a clear, testable, source-grounded technical specif
 
 ## Workspace Rule
 
-- Write `SPEC-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
+- Write `SPEC-001` and any related `SPEC-*` stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
 
 ## Skill Use
 

@@ -19,11 +19,12 @@ Turn verified artifacts into a practical migration plan that can guide implement
 
 - `SPEC-001`
 - `VERIFY-001` with PASS
-- `ARCH-001`
+- `ARCHITECTURE`
 
 ## Workspace Rule
 
 - Write `PLAN-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
+- Read `SPEC-*` inputs and `ARCHITECTURE` from `target/specs/` unless the user explicitly requests another location.
 
 ## Skill Use
 
@@ -41,7 +42,7 @@ Produce exactly one artifact: `PLAN-001`
 
 ### 2. Technical Context
 
-- stack assumptions inherited from `ARCH-001`
+- stack assumptions inherited from `ARCHITECTURE`
 
 ### 3. Work Packages
 

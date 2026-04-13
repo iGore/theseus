@@ -33,6 +33,7 @@ Enforce the role order:
 
 - Treat this repository as a spec-first workflow starter.
 - Direct all stages to create and update artifacts inside `target/` unless the user explicitly overrides that location.
+- Direct `SPEC-*` artifacts and `ARCHITECTURE` specifically into `target/specs/` unless the user explicitly overrides that location.
 - Follow a template-driven handoff style inspired by `github/spec-kit`:
   - explicit inputs
   - explicit outputs
@@ -51,7 +52,7 @@ Define and track exactly one target artifact per stage:
 - `ANALYSIS-001` — bounded reconstruction artifact from Analyzer
 - `SPEC-001` — textual specification artifact from Spec-Writer
 - `VERIFY-001` — verification report from Verifier
-- `ARCH-001` — architecture decision artifact from Architect
+- `ARCHITECTURE` — architecture decision artifact from Architect
 - `PLAN-001` — migration plan artifact from Planner
 - `TASKS-001` — implementation task package from Task Decomposer
 - `BUILD-001` — implementation and build evidence artifact from Builder

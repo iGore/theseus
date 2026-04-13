@@ -85,5 +85,5 @@ Produce exactly one artifact: `ANALYSIS-001`
 
 - Stay within the chosen demonstration module.
 - Do not reconstruct the full system architecture.
-- Do not produce architecture output such as `ARCH-001` from the Analyzer stage.
+- Do not produce architecture output such as `ARCHITECTURE` from the Analyzer stage.
 - Do not speculate when evidence is missing; record an open question instead.

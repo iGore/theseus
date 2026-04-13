@@ -19,13 +19,14 @@ Implement a small, traceable target-code slice for the project PoC from verified
 
 - `SPEC-001`
 - `VERIFY-001` with PASS
-- `ARCH-001`
+- `ARCHITECTURE`
 - optional `TASKS-001`
 
 ## Workspace Rule
 
 - Write `BUILD-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
 - Implement generated target-code outputs inside `target/` unless the user explicitly requests another location.
+- Read `SPEC-*` inputs and `ARCHITECTURE` from `target/specs/` unless the user explicitly requests another location.
 
 ## Skill Use
 

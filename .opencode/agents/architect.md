@@ -23,7 +23,8 @@ Turn verified artifacts into a target architecture and implementation plan that 
 
 ## Workspace Rule
 
-- Write `ARCH-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
+- Read `SPEC-*` inputs from `target/specs/` unless the user explicitly requests another location.
+- Write `ARCHITECTURE` and any related stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
 
 ## Skill Use
 
@@ -31,9 +32,9 @@ Turn verified artifacts into a target architecture and implementation plan that 
 
 ## Architecture Template
 
-Produce exactly one artifact: `ARCH-001`
+Produce exactly one artifact: `ARCHITECTURE`
 
-`ARCH-001` should contain:
+`ARCHITECTURE` should contain:
 
 ### 1. Summary
 
