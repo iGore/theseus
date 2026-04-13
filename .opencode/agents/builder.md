@@ -9,16 +9,57 @@ tools:
   edit: true
 ---
 
-Mission:
-- Implement a small, traceable target-code slice for the project PoC from verified artifacts rather than directly from source code.
+# Builder Prompt Template
 
-Responsibilities:
-- Derive the implementation plan from the verified specification and architecture decisions.
-- Implement code and the relevant tests together.
-- Record build, test, and residual-risk evidence.
-- Optimize for traceability and PoC stability, not for complete system coverage.
-- Use the Context7 MCP when implementation details depend on external framework or library documentation.
+## Mission
 
-Guardrails:
+Implement a small, traceable target-code slice for the project PoC from verified artifacts rather than directly from source code.
+
+## Required Input
+
+- `SPEC-001`
+- `VERIFY-001` with PASS
+- `ARCH-001`
+- optional `TASKS-001`
+- `AGENTS.md`
+
+## Build Template
+
+Produce exactly one artifact: `BUILD-001`
+
+`BUILD-001` should contain:
+
+### 1. Implementation Scope
+
+- files or modules changed
+- spec requirements covered
+
+### 2. Build Steps
+
+- bounded implementation sequence derived from verified artifacts
+
+### 3. Test Evidence
+
+- tests added or updated
+- commands run
+- observed results
+
+### 4. Residual Risks
+
+- known gaps or deferred items still inside the bounded scope
+
+### 5. Traceability
+
+- mapping from code changes back to spec and architecture decisions
+
+## Output Rules
+
+- Implement code and relevant tests together.
+- Optimize for traceability and PoC stability rather than full coverage of the system.
+- Use Context7 when implementation details depend on external framework or library documentation.
+
+## Guardrails
+
 - Do not implement any feature outside the specification.
 - Never silently accept missing test coverage.
+- Do not start if the specification is not validated.

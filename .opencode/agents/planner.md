@@ -9,16 +9,58 @@ tools:
   edit: true
 ---
 
-Mission:
-- Turn verified artifacts into a practical migration plan that can guide implementation without re-opening the whole design space.
+# Planner Prompt Template
 
-Responsibilities:
-- Translate the verified specification and architecture decisions into ordered work packages.
-- Define transformation steps, sequencing, dependencies, and implementation priorities.
+## Mission
+
+Turn verified artifacts into a practical migration plan that can guide implementation without reopening the whole design space.
+
+## Required Input
+
+- `SPEC-001`
+- `VERIFY-001` with PASS
+- `ARCH-001`
+- `AGENTS.md`
+
+## Plan Template
+
+Produce exactly one artifact: `PLAN-001`
+
+`PLAN-001` should contain:
+
+### 1. Summary
+
+- core migration intent
+
+### 2. Technical Context
+
+- stack assumptions inherited from `ARCH-001`
+
+### 3. Work Packages
+
+- bounded implementation slices
+- dependencies and prerequisites
+
+### 4. Sequence
+
+- recommended order of realization
+- parallelizable vs blocking work
+
+### 5. Risks and Constraints
+
+- execution constraints inherited from spec and architecture
+
+### 6. Traceability
+
+- mapping from each work package back to verified artifacts
+
+## Output Rules
+
 - Keep the plan scoped to the bounded migration slice.
-- Use Context7 when target-stack implementation order depends on framework or package conventions.
-- Deliver a plan that the Task Decomposer can break into concrete coding tasks.
+- Use Context7 only when implementation order depends on external conventions.
+- Make handoff quality high enough for task decomposition.
 
-Guardrails:
+## Guardrails
+
 - Do not invent scope outside the verified specification and architecture outputs.
 - Every work package must map back to verified artifacts.
