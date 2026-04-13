@@ -31,6 +31,14 @@ The `Orchestrator` coordinates handoffs, artifact gates, and retry decisions acr
 
 This role set now matches the full conceptual model from the report: `Orchestrator`, `Analyzer`, `Spec-Writer`, `Verifier`, `Architect`, `Planner`, `Task Decomposer`, and `Builder`.
 
+## Phase model
+
+- Phase 1 `Rekonstruktion`: `Analyzer -> Spec-Writer -> Verifier`
+- Phase 2 `Transformationsplanung`: `Architect -> Planner`
+- Phase 3 `Neuimplementierung`: `Task Decomposer -> Builder`
+
+The Orchestrator spans all three phases, coordinates handoffs, and enforces the transition gates between them.
+
 ## Role intent
 
 - `Analyzer`: reconstruct the bounded source module from repository structure, symbols, dependencies, build metadata, and supporting docs

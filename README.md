@@ -2,6 +2,8 @@
 
 Starter repository for the Theseus migration setup.
 
+The OpenCode agent definitions are now written in a `spec-kit`-inspired prompt-template style so each role has explicit inputs, outputs, and handoff gates.
+
 ## MCP Setup
 
 The repo uses two MCPs across Codex and OpenCode:
@@ -49,6 +51,9 @@ Exit codes:
 `Analyzer -> Spec-Writer -> Verifier -> Architect -> Planner -> Task Decomposer -> Builder`
 
 - This now mirrors the full conceptual model from the report: a migration pipeline coordinated by one `Orchestrator` across reconstruction, transformation planning, and re-implementation.
+- Phase 1 `Rekonstruktion`: `Analyzer -> Spec-Writer -> Verifier`
+- Phase 2 `Transformationsplanung`: `Architect -> Planner`
+- Phase 3 `Neuimplementierung`: `Task Decomposer -> Builder`
 - `Analyzer` reconstructs the bounded source module from code, repository metadata, and supporting docs.
 - `Spec-Writer` produces the central textual specification artifact.
 - `Verifier` gates the pipeline by checking whether the specification is traceable back to source-context evidence.
@@ -69,6 +74,8 @@ The repo now ships the same migration roles for OpenCode under `.opencode/agents
 - `planner.md` as a subagent
 - `task-decomposer.md` as a subagent
 - `builder.md` as a subagent
+
+These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS-001`, `SPEC-001`, `VERIFY-001`, `ARCH-001`, and `BUILD-001`.
 
 The textual specification is the main handoff artifact between reconstruction and implementation. `AGENTS.md` acts as the shared rule layer across all roles, matching the thesis' emphasis on a persistent instruction artifact for build hints, conventions, and workflow guardrails.
 
