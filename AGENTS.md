@@ -3,11 +3,13 @@
 ## Purpose
 
 This repository is a starter for a subagent-based migration workflow.
-It defines a small, spec-first pipeline and the supporting assets needed to run it in Codex-style environments.
+It defines a small, spec-first pipeline and the supporting assets needed to run it in Codex-style and OpenCode environments.
 
 ## Repository structure
 
 - `.codex/agents/`: TOML agent profiles
+- `.opencode/agents/`: Markdown agent profiles with YAML frontmatter
+- `opencode.jsonc`: OpenCode configuration for MCP servers and default agent selection
 - `.agents/skills/`: Agent Skills directories with `SKILL.md`
 - `docker-compose.yml`: Sourcebot bootstrap
 - `config.json`: Sourcebot example configuration
@@ -40,7 +42,7 @@ The `Orchestrator` coordinates handoffs, artifacts, and retry decisions across t
 
 Do not model these MCPs as skills. They are external context/access layers.
 
-Keep secrets such as Sourcebot API keys out of tracked repo files. Use a local-only file such as `.codex/config.local.toml` or `.codex/secrets.toml`, both of which are gitignored.
+Keep secrets such as Sourcebot API keys out of tracked repo files. Use local-only files such as `.codex/config.local.toml`, `.codex/secrets.toml`, or `opencode.local.jsonc`. A tracked template is available as `opencode.local.jsonc.example`. Use the shared env key `SOURCEBOT_BEARER_TOKEN` when wiring Sourcebot auth across Codex and OpenCode.
 
 ## Skill usage
 
@@ -81,10 +83,18 @@ To fetch the Sourcebot compose file:
 curl -o docker-compose.yml https://raw.githubusercontent.com/sourcebot-dev/sourcebot/main/docker-compose.yml
 ```
 
+`Sourcebot` is configured for both Codex and OpenCode against `http://localhost:3000/api/mcp`.
+
 ## Context7 bootstrap
 
 To register Context7 for Codex:
 
 ```bash
 codex mcp add context7 -- npx -y @upstash/context7-mcp
+```
+
+To register Context7 for OpenCode:
+
+```bash
+opencode mcp add context7 -- npx -y @upstash/context7-mcp
 ```

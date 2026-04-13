@@ -1,3 +1,4 @@
 .DS_Store
 .codex/config.local.toml
 .codex/secrets.toml
+opencode.local.jsonc
