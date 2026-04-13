@@ -2,6 +2,8 @@
 
 Minimal starter for the spec-first migration workflow described in the report, adapted to OpenCode's agent format.
 
+The OpenCode agent prompts are now structured in a `spec-kit`-inspired template style: each role has explicit required inputs, a single named output artifact, and a repeatable output format.
+
 ## Structure
 
 - `.opencode/agents/`: agent profiles as Markdown files with YAML frontmatter
@@ -19,12 +21,29 @@ Minimal starter for the spec-first migration workflow described in the report, a
 - `task-decomposer.md`: subagent for turning the plan into implementation-ready coding tasks
 - `builder.md`: subagent for target-code implementation from verified artifacts
 
+## Prompt Template Style
+
+The agent files intentionally mirror patterns from `github/spec-kit/templates`:
+
+- explicit `Required Input`
+- one named artifact per stage
+- template-shaped output sections
+- explicit gates and retry rules
+
+This keeps the prompts reusable and makes stage handoffs easier to audit.
+
 ## Quick Start
 
 1. Describe the source system and target system in one task.
 2. Choose a bounded demonstration module for the PoC.
 3. Start `orchestrator` as the primary agent and keep the order Analyzer -> Spec-Writer -> Verifier -> Architect -> Planner -> Task Decomposer -> Builder.
 4. Persist each stage result as an artifact (Markdown or JSON), with the textual specification as the main handoff between reconstruction and implementation.
+
+## Three phases from the report
+
+- Phase 1 `Rekonstruktion`: `Analyzer -> Spec-Writer -> Verifier`
+- Phase 2 `Transformationsplanung`: `Architect -> Planner`
+- Phase 3 `Neuimplementierung`: `Task Decomposer -> Builder`
 
 ## Configured MCPs
 
