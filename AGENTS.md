@@ -23,22 +23,28 @@ Use the following flow unless there is a strong reason to deviate:
 2. `Spec-Writer`
 3. `Verifier`
 4. `Architect`
-5. `Builder`
+5. `Planner`
+6. `Task Decomposer`
+7. `Builder`
 
-The `Orchestrator` coordinates handoffs, artifacts, and retry decisions across the full flow.
+The `Orchestrator` coordinates handoffs, artifact gates, and retry decisions across the full flow.
+
+This role set now matches the full conceptual model from the report: `Orchestrator`, `Analyzer`, `Spec-Writer`, `Verifier`, `Architect`, `Planner`, `Task Decomposer`, and `Builder`.
 
 ## Role intent
 
-- `Analyzer`: inspect source code, `README.md`, dependency manifests, and relevant project metadata
-- `Spec-Writer`: turn analyzed findings into a specification-first artifact
-- `Verifier`: check traceability, consistency, and acceptance readiness
-- `Architect`: plan target architecture and package selection for the builder
-- `Builder`: implement from verified specification and architecture outputs
+- `Analyzer`: reconstruct the bounded source module from repository structure, symbols, dependencies, build metadata, and supporting docs
+- `Spec-Writer`: condense Analyzer findings into the central textual specification artifact in Markdown
+- `Verifier`: check whether the specification is traceable back to source-context evidence before later phases are allowed
+- `Architect`: derive target architecture, framework/library choices, and implementation structure from the verified specification
+- `Planner`: translate verified specification and architecture decisions into an ordered migration plan with work packages
+- `Task Decomposer`: break the migration plan into small, implementation-ready coding tasks for the builder
+- `Builder`: implement target code from the verified specification and architecture decisions, then record technical verification evidence
 
 ## MCP usage
 
-- `Sourcebot`: use for repository structure, symbol lookup, references, and code-intelligence tasks
-- `Context7`: use for framework, package, library, and best-practice documentation
+- `Sourcebot`: primary MCP for reconstruction work - repository structure, symbol lookup, references, and code-intelligence tasks
+- `Context7`: primary MCP for target-stack planning and implementation - framework, package, library, and best-practice documentation
 
 Do not model these MCPs as skills. They are external context/access layers.
 
@@ -48,7 +54,7 @@ Keep secrets such as Sourcebot API keys out of tracked repo files. Use local-onl
 
 Skills live under `.agents/skills/<skill-name>/SKILL.md`.
 
-Use only the skills that are actually reflected in the report and starter flow:
+They are optional helpers for execution, not a canonical layer of the report's pipeline model. If you use them, prefer only the skills that are actually reflected in the report and starter flow:
 
 - `reverse-engineering`
 - `code-mapping`
@@ -71,9 +77,14 @@ Use only the skills that are actually reflected in the report and starter flow:
 
 - Keep the workflow spec-first: do not jump from analysis straight to implementation.
 - Keep the migration slice bounded and explicit.
+- Treat the textual specification as the main handoff artifact between reconstruction and implementation.
+- The Verifier is a release gate: unresolved source/spec mismatches block later phases.
 - Record architecture and package decisions before build work starts.
+- Record a migration plan before detailed implementation work starts.
+- Use task decomposition to keep the builder on bounded, implementation-ready work packages.
+- Give each agent only the context and MCP access needed for its current phase.
 - Prefer documented evidence over intuition.
-- Keep agent names aligned with the report: `Analyzer`, `Spec-Writer`, `Verifier`, `Architect`, `Builder`, `Orchestrator`.
+- Keep agent names aligned with the report: `Analyzer`, `Spec-Writer`, `Verifier`, `Architect`, `Planner`, `Task Decomposer`, `Builder`, `Orchestrator`.
 
 ## Sourcebot bootstrap
 
