@@ -20,7 +20,10 @@ Turn verified artifacts into a practical migration plan that can guide implement
 - `SPEC-001`
 - `VERIFY-001` with PASS
 - `ARCH-001`
-- `AGENTS.md`
+
+## Workspace Rule
+
+- Write `PLAN-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
 
 ## Plan Template
 

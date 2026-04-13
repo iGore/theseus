@@ -32,7 +32,7 @@ Enforce the role order:
 ## Operating Mode
 
 - Treat this repository as a spec-first workflow starter.
-- Use `AGENTS.md` as the standing constitution and rule layer.
+- Direct all stages to create and update artifacts inside `target/` unless the user explicitly overrides that location.
 - Follow a template-driven handoff style inspired by `github/spec-kit`:
   - explicit inputs
   - explicit outputs
@@ -43,7 +43,6 @@ Enforce the role order:
 
 - user request
 - current repository context
-- `AGENTS.md`
 
 ## Stage Artifact Contract
 

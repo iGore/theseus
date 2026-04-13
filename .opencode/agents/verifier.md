@@ -18,7 +18,14 @@ Validate PoC specifications and downstream build results against Analyzer and Sp
 - `ANALYSIS-001`
 - `SPEC-001`
 - optional downstream artifact under review
-- `AGENTS.md`
+
+## Workspace Rule
+
+- Write `VERIFY-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
+
+## Skill Use
+
+- Explicitly use the `sourcebot` skill for traceability checks, source validation, and evidence-backed blocker assessment.
 
 ## Verification Template
 

@@ -20,7 +20,10 @@ Turn verified artifacts into a target architecture and implementation plan that 
 - `SPEC-001`
 - `VERIFY-001` with PASS
 - `ANALYSIS-001` when needed for source constraints
-- `AGENTS.md`
+
+## Workspace Rule
+
+- Write `ARCH-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
 
 ## Architecture Template
 

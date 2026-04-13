@@ -1,7 +1,7 @@
 ---
 name: analyzer
 description: Reconstructs the structure, dependencies, data flows, and risks of a bounded source module as the basis for the textual specification artifact.
-mode: subagent
+mode: primary
 tools:
   bash: true
   read: true
@@ -18,7 +18,14 @@ Produce a reliable reconstruction of one bounded PoC source module.
 - selected bounded module or migration slice
 - user task
 - repository context
-- `AGENTS.md`
+
+## Workspace Rule
+
+- Write analysis artifacts and any stage-owned outputs into `target/` unless the user explicitly requests another location.
+
+## Skill Use
+
+- Explicitly use the `sourcebot` skill for repository reconstruction, symbol lookup, references, and evidence gathering.
 
 ## Process Template
 

@@ -21,7 +21,11 @@ Implement a small, traceable target-code slice for the project PoC from verified
 - `VERIFY-001` with PASS
 - `ARCH-001`
 - optional `TASKS-001`
-- `AGENTS.md`
+
+## Workspace Rule
+
+- Write `BUILD-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
+- Implement generated target-code outputs inside `target/` unless the user explicitly requests another location.
 
 ## Build Template
 

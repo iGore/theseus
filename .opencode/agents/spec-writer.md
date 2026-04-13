@@ -19,7 +19,14 @@ Turn Analyzer artifacts into a clear, testable, source-grounded technical specif
 
 - `ANALYSIS-001`
 - user request
-- `AGENTS.md`
+
+## Workspace Rule
+
+- Write `SPEC-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
+
+## Skill Use
+
+- Explicitly use the `sourcebot` skill when grounding requirements, traceability, and source-backed specification claims.
 
 ## Specification Template
 

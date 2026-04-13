@@ -20,7 +20,10 @@ Convert the migration plan into bounded coding tasks that the Builder can execut
 - `PLAN-001`
 - `SPEC-001`
 - `ARCH-001`
-- `AGENTS.md`
+
+## Workspace Rule
+
+- Write `TASKS-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
 
 ## Tasks Template
 
