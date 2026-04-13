@@ -11,7 +11,7 @@ This skill is a usage guide for the Sourcebot MCP. It does not replace Sourcebot
 - reconstruct a bounded source module
 - inspect repository structure
 - locate definitions, references, and ownership
-- gather evidence for `ANALYSIS-001`, `SPEC-001`, or `VERIFY-001`
+- gather traceable repository evidence for `ANALYSIS-001`, `SPEC-001`, or `VERIFY-001`
 - trace requirements back to concrete code locations
 
 ## Required inputs
