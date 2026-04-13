@@ -17,13 +17,13 @@ Turn verified artifacts into a target architecture and implementation plan that 
 
 ## Required Input
 
-- `SPEC-001`
+- `SPEC-*`
 - `VERIFY-001` with PASS
-- `ANALYSIS-001` when needed for source constraints
+- `ANALYSIS.md` when needed for source constraints
 
 ## Workspace Rule
 
-- Read `SPEC-*` inputs from `target/specs/` unless the user explicitly requests another location.
+- Read `SPEC-*` inputs from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 - Write `ARCHITECTURE` and any related stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
 
 ## Skill Use

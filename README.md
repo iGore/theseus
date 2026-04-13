@@ -75,9 +75,9 @@ The repo now ships the same migration roles for OpenCode under `.opencode/agents
 - `task-decomposer.md` as a subagent
 - `builder.md` as a subagent
 
-These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS-001`, `SPEC-001`, `VERIFY-001`, `ARCHITECTURE`, and `BUILD-001`.
+These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `SPEC-*`, `VERIFY-001`, `ARCHITECTURE`, `PLAN-*`, and `BUILD-*`.
 
-`SPEC-*` artifacts and `ARCHITECTURE` are intended to live under `target/specs/`.
+`SPEC-*`, `PLAN-*`, and `BUILD-*` artifacts are intended to live under `target/specs/<use-case-slug>/`, while shared `ARCHITECTURE` lives under `target/specs/`.
 
 The textual specification is the main handoff artifact between reconstruction and implementation. `AGENTS.md` acts as the shared rule layer across all roles, matching the thesis' emphasis on a persistent instruction artifact for build hints, conventions, and workflow guardrails.
 

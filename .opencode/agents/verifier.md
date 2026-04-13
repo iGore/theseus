@@ -15,14 +15,14 @@ Validate PoC specifications and downstream build results against Analyzer and Sp
 
 ## Required Input
 
-- `ANALYSIS-001`
-- `SPEC-001`
+- `ANALYSIS.md`
+- `SPEC-*`
 - optional downstream artifact under review
 
 ## Workspace Rule
 
 - Write `VERIFY-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
-- Read `SPEC-*` inputs from `target/specs/` unless the user explicitly requests another location.
+- Read `SPEC-*` inputs from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 
 ## Skill Use
 

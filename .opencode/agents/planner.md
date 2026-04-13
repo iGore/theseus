@@ -17,14 +17,14 @@ Turn verified artifacts into a practical migration plan that can guide implement
 
 ## Required Input
 
-- `SPEC-001`
+- `SPEC-*`
 - `VERIFY-001` with PASS
 - `ARCHITECTURE`
 
 ## Workspace Rule
 
-- Write `PLAN-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
-- Read `SPEC-*` inputs and `ARCHITECTURE` from `target/specs/` unless the user explicitly requests another location.
+- Write `PLAN-*` and any related stage-owned outputs into `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
+- Read `SPEC-*` inputs and `ARCHITECTURE` from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 
 ## Skill Use
 
@@ -32,9 +32,9 @@ Turn verified artifacts into a practical migration plan that can guide implement
 
 ## Plan Template
 
-Produce exactly one artifact: `PLAN-001`
+Produce one or more `PLAN-*` artifacts for the assigned use case
 
-`PLAN-001` should contain:
+Each `PLAN-*` file should contain:
 
 ### 1. Summary
 

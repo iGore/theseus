@@ -17,14 +17,14 @@ Convert the migration plan into bounded coding tasks that the Builder can execut
 
 ## Required Input
 
-- `PLAN-001`
-- `SPEC-001`
+- `PLAN-*`
+- `SPEC-*`
 - `ARCHITECTURE`
 
 ## Workspace Rule
 
 - Write `TASKS-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
-- Read `SPEC-*` inputs and `ARCHITECTURE` from `target/specs/` unless the user explicitly requests another location.
+- Read `SPEC-*`, `PLAN-*`, and `ARCHITECTURE` from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 
 ## Tasks Template
 

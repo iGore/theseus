@@ -44,28 +44,41 @@ Enforce the role order:
 
 - user request
 - current repository context
+- `OVERVIEW.md` when Analyzer produced task and use-case extraction
 
 ## Stage Artifact Contract
 
 Define and track exactly one target artifact per stage:
 
-- `ANALYSIS-001` — bounded reconstruction artifact from Analyzer
-- `SPEC-001` — textual specification artifact from Spec-Writer
+- `ANALYSIS.md` — single reconstruction file from Analyzer
+- `SPEC-*` — textual specification packages or index entries from Spec-Writer, organized per use case
 - `VERIFY-001` — verification report from Verifier
 - `ARCHITECTURE` — architecture decision artifact from Architect
-- `PLAN-001` — migration plan artifact from Planner
+- `PLAN-*` — migration plan artifacts, which may be organized per use case
 - `TASKS-001` — implementation task package from Task Decomposer
-- `BUILD-001` — implementation and build evidence artifact from Builder
+- `BUILD-*` — implementation and build evidence artifacts, which may be organized per use case
 
 ## Execution Rules
 
 1. Define the expected stage artifact before invoking the stage.
 2. Pass the prior stage artifact forward as mandatory input.
 3. Keep context narrow and role-specific.
-4. Treat `SPEC-001` as the main handoff artifact from reconstruction into implementation planning.
-5. Run Architect and Planner only after `VERIFY-001` returns PASS.
-6. Run Task Decomposer only after `PLAN-001` exists.
-7. Run Builder only after `SPEC-001` is validated and planning artifacts are complete.
+4. If `OVERVIEW.md` contains multiple extracted tasks or use cases, fan out one background `Spec-Writer` invocation per task.
+5. Store each use-case spec result inside its own subfolder under `target/specs/`, for example `target/specs/<use-case-slug>/`.
+6. Store any use-case-specific `PLAN-*` and `BUILD-*` artifacts in the same `target/specs/<use-case-slug>/` folder.
+7. Treat `SPEC-*` as the main handoff artifacts from reconstruction into implementation planning, with an aggregate spec index when multiple use-case specs exist.
+8. Run Architect and Planner only after `VERIFY-001` returns PASS.
+9. Run Task Decomposer only after the relevant `PLAN-*` artifact exists.
+10. Run Builder only after the relevant `SPEC-*` artifacts are validated and planning artifacts are complete.
+
+## Spec Fan-Out Rule
+
+- Read `OVERVIEW.md` after Analyzer completes.
+- Extract each task or use case from the overview.
+- Launch one `Spec-Writer` in the background for each extracted task or use case.
+- Give each `Spec-Writer` only the relevant slice from `ANALYSIS.md` and `OVERVIEW.md`.
+- Require each `Spec-Writer` to write its files into `target/specs/<use-case-slug>/`.
+- Require the coordinating stage to keep an aggregate `SPEC-*` index that lists all generated use-case spec folders and files.
 
 ## Verification Gate Logic
 

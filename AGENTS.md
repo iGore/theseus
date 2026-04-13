@@ -86,7 +86,9 @@ They are optional helpers for execution, not a canonical layer of the report's p
 - Keep the workflow spec-first: do not jump from analysis straight to implementation.
 - Keep the migration slice bounded and explicit.
 - Have all agents work inside `target/` for generated artifacts, plans, and implementation outputs unless the user explicitly requests a different location.
-- Store `SPEC-*` artifacts and `ARCHITECTURE` under `target/specs/` unless the user explicitly requests a different location.
+- Store `SPEC-*`, `PLAN-*`, and `BUILD-*` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE` under `target/specs/` unless the user explicitly requests a different location.
+- When `OVERVIEW.md` defines multiple tasks or use cases, let the Orchestrator fan out one `Spec-Writer` per task in the background and store each task's spec files under its own use-case subfolder in `target/specs/`.
+- When use-case-specific planning or build artifacts are produced, store `PLAN-*` and `BUILD-*` in the same `target/specs/<use-case-slug>/` folder as the related `SPEC-*` files.
 - Treat the textual specification as the main handoff artifact between reconstruction and implementation.
 - The Verifier is a release gate: unresolved source/spec mismatches block later phases.
 - Record architecture and package decisions before build work starts.

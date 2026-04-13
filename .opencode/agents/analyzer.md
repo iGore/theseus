@@ -56,12 +56,12 @@ The result must include a Markdown analysis file and an `OVERVIEW.md` that downs
 
 ## Output Artifact
 
-Produce `ANALYSIS-001` and a companion overview file `OVERVIEW.md`
+Produce `ANALYSIS.md` and a companion overview file `OVERVIEW.md`
 
-- `ANALYSIS-001` must be exactly one Markdown file in `target/`, for example `target/ANALYSIS-001.md`.
+- `ANALYSIS.md` must be exactly one Markdown file in `target/`.
 - `OVERVIEW.md` must be a Markdown file in `target/` that summarizes tasks and all relevant app use cases for the analyzed scope.
 
-`ANALYSIS-001` should contain:
+`ANALYSIS.md` should contain:
 
 - `Scope`
 - `Entry Points`

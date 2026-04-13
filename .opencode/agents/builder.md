@@ -17,16 +17,16 @@ Implement a small, traceable target-code slice for the project PoC from verified
 
 ## Required Input
 
-- `SPEC-001`
+- `SPEC-*`
 - `VERIFY-001` with PASS
 - `ARCHITECTURE`
 - optional `TASKS-001`
 
 ## Workspace Rule
 
-- Write `BUILD-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
+- Write `BUILD-*` and any related stage-owned outputs into `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 - Implement generated target-code outputs inside `target/` unless the user explicitly requests another location.
-- Read `SPEC-*` inputs and `ARCHITECTURE` from `target/specs/` unless the user explicitly requests another location.
+- Read `SPEC-*`, `PLAN-*`, and `ARCHITECTURE` from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 
 ## Skill Use
 
@@ -34,9 +34,9 @@ Implement a small, traceable target-code slice for the project PoC from verified
 
 ## Build Template
 
-Produce exactly one artifact: `BUILD-001`
+Produce one or more `BUILD-*` artifacts for the assigned use case
 
-`BUILD-001` should contain:
+Each `BUILD-*` file should contain:
 
 ### 1. Implementation Scope
 
