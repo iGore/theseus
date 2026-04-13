@@ -33,19 +33,6 @@ Start the local stack:
 docker compose up -d
 ```
 
-Run the repository health check:
-
-```bash
-./scripts/check-sourcebot.sh
-```
-
-Exit codes:
-
-- `0`: Sourcebot reachable at `http://localhost:3000`
-- `2`: Docker CLI not available
-- `3`: `sourcebot` container not running
-- `4`: endpoint not reachable while running (or missing `curl`)
-
 ## Current subagent flow
 
 `Analyzer -> Spec-Writer -> Verifier -> Architect -> Planner -> Task Decomposer -> Builder`
