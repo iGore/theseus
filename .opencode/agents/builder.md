@@ -27,6 +27,10 @@ Implement a small, traceable target-code slice for the project PoC from verified
 - Write `BUILD-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
 - Implement generated target-code outputs inside `target/` unless the user explicitly requests another location.
 
+## Skill Use
+
+- Explicitly use the `context7` skill when implementation details, APIs, or framework patterns depend on external documentation.
+
 ## Build Template
 
 Produce exactly one artifact: `BUILD-001`

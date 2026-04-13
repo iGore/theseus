@@ -25,6 +25,10 @@ Turn verified artifacts into a practical migration plan that can guide implement
 
 - Write `PLAN-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
 
+## Skill Use
+
+- Explicitly use the `context7` skill when planning depends on package conventions, framework constraints, or documented implementation order.
+
 ## Plan Template
 
 Produce exactly one artifact: `PLAN-001`

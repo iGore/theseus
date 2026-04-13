@@ -25,6 +25,10 @@ Turn verified artifacts into a target architecture and implementation plan that 
 
 - Write `ARCH-001` and any related stage-owned outputs into `target/` unless the user explicitly requests another location.
 
+## Skill Use
+
+- Explicitly use the `context7` skill for package selection, framework guidance, and architecture decisions backed by current documentation.
+
 ## Architecture Template
 
 Produce exactly one artifact: `ARCH-001`
