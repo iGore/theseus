@@ -58,29 +58,6 @@ Do not model these MCPs as skills. They are external context/access layers.
 
 Keep secrets such as Sourcebot API keys out of tracked repo files. Use local-only files such as `.codex/config.local.toml`, `.codex/secrets.toml`, or `opencode.local.jsonc`. A tracked template is available as `opencode.local.jsonc.example`. Use the shared env key `SOURCEBOT_BEARER_TOKEN` when wiring Sourcebot auth across Codex and OpenCode.
 
-## Skill usage
-
-Skills live under `.agents/skills/<skill-name>/SKILL.md`.
-
-They are optional helpers for execution, not a canonical layer of the report's pipeline model. If you use them, prefer only the skills that are actually reflected in the report and starter flow:
-
-- `reverse-engineering`
-- `code-mapping`
-- `dependency-inspection`
-- `spec-driven-design`
-- `specification-drafting`
-- `contract-writing`
-- `edge-case-structuring`
-- `traceability-check`
-- `consistency-review`
-- `acceptance-validation`
-- `evaluation-rubric`
-- `ecosystem-mapping`
-- `package-selection`
-- `spec-to-code-translation`
-- `test-scaffolding`
-- `build-verification`
-
 ## Working rules
 
 - Keep the workflow spec-first: do not jump from analysis straight to implementation.
