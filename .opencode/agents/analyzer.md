@@ -12,7 +12,7 @@ tools:
 ## Mission
 
 Produce a reliable reconstruction of one bounded PoC source module.
-The result must be a single Markdown analysis file that downstream Spec-Writers can use in parallel.
+The result must include a Markdown analysis file and an `OVERVIEW.md` that downstream Spec-Writers can use in parallel.
 
 ## Required Input
 
@@ -46,6 +46,7 @@ The result must be a single Markdown analysis file that downstream Spec-Writers 
 
 - Group the reconstructed functionality into coarse feature slices that can be handed to separate Spec-Writers in the background.
 - For each feature slice, identify the main functions, entry points, dependencies, and open questions.
+- Build an overview of tasks and use cases that covers the relevant app behavior from a user-facing perspective.
 
 ### 4. Risk Extraction
 
@@ -55,10 +56,10 @@ The result must be a single Markdown analysis file that downstream Spec-Writers 
 
 ## Output Artifact
 
-Produce exactly one artifact: `ANALYSIS-001`
+Produce `ANALYSIS-001` and a companion overview file `OVERVIEW.md`
 
 - `ANALYSIS-001` must be exactly one Markdown file in `target/`, for example `target/ANALYSIS-001.md`.
-- Do not split the analysis into multiple files.
+- `OVERVIEW.md` must be a Markdown file in `target/` that summarizes tasks and all relevant app use cases for the analyzed scope.
 
 `ANALYSIS-001` should contain:
 
@@ -73,6 +74,13 @@ Produce exactly one artifact: `ANALYSIS-001`
 - `Open Questions`
 - `Evidence Pointers`
 
+`OVERVIEW.md` should contain:
+
+- `App Tasks`
+- `Use Cases`
+- `Feature-to-Task Mapping`
+- `Open Questions`
+
 ## Output Rules
 
 - Make every core claim traceable to source evidence.
@@ -80,6 +88,7 @@ Produce exactly one artifact: `ANALYSIS-001`
 - Deliver enough detail for Spec-Writer to proceed without reopening the whole repository.
 - Keep the function inventory rough but broad enough that parallel Spec-Writers can each pick up one feature slice.
 - For each function entry, include at least name, file, role, and the feature slice it belongs to when known.
+- In `OVERVIEW.md`, cover all relevant app use cases in scope and map them to coarse tasks or feature slices.
 
 ## Guardrails
 
