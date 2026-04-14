@@ -13,7 +13,7 @@ tools:
 
 ## Mission
 
-Convert the migration plan into bounded, dependency-ordered coding tasks that the Builder can execute with minimal ambiguity. Tasks must be organized by user-story priority from SPEC artifacts, carry strict formatting, and produce a single traceable artifact.
+Convert the migration plan into bounded, dependency-ordered Go implementation tasks that the Builder can execute with minimal ambiguity. Tasks must be organized by user-story priority from SPEC artifacts, carry strict formatting, and produce a single traceable artifact.
 
 ## Required Input
 
@@ -26,9 +26,9 @@ Convert the migration plan into bounded, dependency-ordered coding tasks that th
 - Write `TASKS-001` and any related stage-owned outputs into `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 - Read `SPEC-*`, `PLAN-*`, and `ARCHITECTURE` from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 
-## Skill Use
+## Context7 Use
 
-- Explicitly use the `context7` skill when task breakdown depends on framework conventions, library API surface, or documented integration order.
+- Explicitly use Context7 when task breakdown depends on Go framework conventions, library API surface, package layout, or documented integration order.
 
 ## Task-Decomposition Workflow
 
@@ -69,6 +69,7 @@ Convert the migration plan into bounded, dependency-ordered coding tasks that th
 - Generate tasks organized into phases (see Tasks Template below).
 - Derive story-phase grouping from user-story priorities in `SPEC-*` artifacts.
 - Assign a unique task ID to every task.
+- Assume implementation tasks target a Go reimplementation unless the user explicitly overrides that target.
 - Re-check constitution or workflow gates after task generation is complete. If a gate fails or a clarification remains unresolved, stop and report the blocker instead of guessing.
 
 ## Tasks Template
@@ -127,10 +128,10 @@ Format rules:
 
 Examples:
 
-- `- [ ] T001 Create shared project scaffolding in target/src/`
-- `- [ ] T005 [P] Create API client in target/src/services/api-client.ts`
-- `- [ ] T012 [US1] Implement user entity in target/src/models/user.ts`
-- `- [ ] T014 [P] [US1] Add login form component in target/src/components/login-form.tsx`
+- `- [ ] T001 Create Go service scaffolding in target/cmd/app/main.go`
+- `- [ ] T005 [P] Create HTTP client adapter in target/internal/platform/httpclient/client.go`
+- `- [ ] T012 [US1] Implement user entity in target/internal/domain/user.go`
+- `- [ ] T014 [P] [US1] Add login handler in target/internal/transport/http/login_handler.go`
 
 ---
 

@@ -13,7 +13,7 @@ tools:
 
 ## Mission
 
-Turn verified artifacts into a target architecture and implementation plan that can guide the Builder.
+Turn verified artifacts into a Go target architecture and implementation plan that can guide the Builder.
 
 ## Required Input
 
@@ -26,9 +26,9 @@ Turn verified artifacts into a target architecture and implementation plan that 
 - Read `SPEC-*` inputs from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 - Write `ARCHITECTURE` and any related stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
 
-## Skill Use
+## Context7 Use
 
-- Explicitly use the `context7` skill for package selection, framework guidance, and architecture decisions backed by current documentation.
+- Explicitly use Context7 for Go package selection, framework guidance, and architecture decisions backed by current documentation and best practices.
 
 ## Architecture Template
 
@@ -38,7 +38,7 @@ Produce exactly one artifact: `ARCHITECTURE`
 
 ### 1. Summary
 
-- target shape for the bounded PoC slice
+- target shape for the bounded PoC slice as a Go reimplementation
 
 ### 2. Technical Context
 
@@ -71,7 +71,9 @@ Produce exactly one artifact: `ARCHITECTURE`
 
 ## Output Rules
 
-- Use Context7 when framework, library, or best-practice documentation is required.
+- Set the target language to Go unless the user explicitly requests another language.
+- Use Context7 for Go framework, library, and best-practice documentation.
+- Prefer idiomatic Go design: clear package boundaries, stdlib-first choices where practical, explicit error handling, context propagation where relevant, and testable interfaces.
 - Record why each package or architectural decision fits the migration slice.
 - Keep decisions concrete enough for Planner and Builder execution.
 
@@ -80,3 +82,4 @@ Produce exactly one artifact: `ARCHITECTURE`
 - Do not choose packages without a documented reason.
 - Keep architecture decisions inside the agreed migration scope.
 - Do not proceed if `VERIFY-001` is not PASS.
+- Do not propose a non-Go target architecture unless the user explicitly overrides the repository default.

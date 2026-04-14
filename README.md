@@ -44,10 +44,10 @@ docker compose up -d
 - `Analyzer` reconstructs the bounded source module from code, repository metadata, and supporting docs.
 - `Spec-Writer` produces the central textual specification artifact.
 - `Verifier` gates the pipeline by checking whether the specification is traceable back to source-context evidence.
-- `Architect` plans the target architecture and selects suitable packages with Context7-backed documentation.
-- `Planner` derives an ordered migration plan with work packages from the verified specification and architecture.
-- `Task Decomposer` turns that plan into implementation-ready coding tasks.
-- `Builder` implements from the verified specification, architecture outputs, and decomposed work packages, then records build/test evidence.
+- `Architect` plans the Go target architecture and selects suitable packages with Context7-backed documentation and best practices.
+- `Planner` derives an ordered Go reimplementation plan with work packages from the verified specification and architecture.
+- `Task Decomposer` turns that plan into implementation-ready Go coding tasks.
+- `Builder` reimplements in Go from the verified specification, architecture outputs, and decomposed work packages, then records build/test evidence.
 
 ## OpenCode setup
 
@@ -62,9 +62,11 @@ The repo now ships the same migration roles for OpenCode under `.opencode/agents
 - `task-decomposer.md` as a subagent
 - `builder.md` as a subagent
 
-These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `SPEC-*`, `VERIFY-001`, `ARCHITECTURE`, `PLAN-*`, and `BUILD-*`.
+These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `SPEC-*`, `VERIFY-001`, `ARCHITECTURE`, `PLAN-*`, `TASKS-001`, and `BUILD-*`.
 
-`SPEC-*`, `PLAN-*`, and `BUILD-*` artifacts are intended to live under `target/specs/<use-case-slug>/`, while shared `ARCHITECTURE` lives under `target/specs/`.
+`ANALYSIS.md`, `OVERVIEW.md`, and `VERIFY-001` are intended to live under `target/specs/`. `SPEC-*`, `PLAN-*`, `TASKS-001`, and `BUILD-*` artifacts are intended to live under `target/specs/<use-case-slug>/`, while shared `ARCHITECTURE` lives under `target/specs/`.
+
+The Orchestrator fans out background `Spec-Writer` runs per requirement, then background `Planner` runs per requirement-scoped spec package, and then background `Task Decomposer` runs per requirement-scoped plan. Go is the default target reimplementation language across Architect, Planner, Task Decomposer, and Builder, with Context7 used wherever current best-practice guidance is needed.
 
 The textual specification is the main handoff artifact between reconstruction and implementation. `AGENTS.md` acts as the shared rule layer across all roles, matching the thesis' emphasis on a persistent instruction artifact for build hints, conventions, and workflow guardrails.
 

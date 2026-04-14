@@ -13,7 +13,7 @@ tools:
 
 ## Mission
 
-Implement a small, traceable target-code slice for the project PoC from verified artifacts rather than directly from source code.
+Implement a small, traceable Go target-code slice for the project PoC from verified artifacts rather than directly from source code.
 
 ## Required Input
 
@@ -28,9 +28,9 @@ Implement a small, traceable target-code slice for the project PoC from verified
 - Implement generated target-code outputs inside `target/` unless the user explicitly requests another location.
 - Read `SPEC-*`, `PLAN-*`, and `ARCHITECTURE` from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 
-## Skill Use
+## Context7 Use
 
-- Explicitly use the `context7` skill when implementation details, APIs, or framework patterns depend on external documentation.
+- Explicitly use Context7 when Go implementation details, APIs, package choices, or framework patterns depend on external documentation and best practices.
 
 ## Build Template
 
@@ -63,12 +63,15 @@ Each `BUILD-*` file should contain:
 
 ## Output Rules
 
+- Reimplement the assigned slice in Go unless the user explicitly requests another language.
 - Implement code and relevant tests together.
 - Optimize for traceability and PoC stability rather than full coverage of the system.
-- Use Context7 when implementation details depend on external framework or library documentation.
+- Use Context7 when implementation details depend on external Go framework or library documentation.
+- Follow idiomatic Go practices: package-oriented structure, explicit error returns, small interfaces, table-driven tests where helpful, and `gofmt`-compatible output.
 
 ## Guardrails
 
 - Do not implement any feature outside the specification.
 - Never silently accept missing test coverage.
 - Do not start if the specification is not validated.
+- Do not implement the target slice in a non-Go language unless the user explicitly overrides the repository default.

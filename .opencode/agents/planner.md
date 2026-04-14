@@ -13,7 +13,7 @@ tools:
 
 ## Mission
 
-Turn verified artifacts into a practical migration plan that can guide implementation without reopening the whole design space.
+Turn verified artifacts into a practical Go reimplementation plan that can guide implementation without reopening the whole design space.
 
 ## Required Input
 
@@ -26,15 +26,16 @@ Turn verified artifacts into a practical migration plan that can guide implement
 - Write `PLAN-*` and any related stage-owned outputs into `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 - Read `SPEC-*` inputs and `ARCHITECTURE` from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
 
-## Skill Use
+## Context7 Use
 
-- Explicitly use the `context7` skill when planning depends on package conventions, framework constraints, or documented implementation order.
+- Explicitly use Context7 when planning depends on Go package conventions, framework constraints, integration patterns, or documented implementation order.
 
 ## Planning Workflow
 
 - Consider explicit user input before drafting the plan. If the user provides additional constraints, fold them into the plan and mark unknowns as `NEEDS CLARIFICATION`.
 - If `.specify/extensions.yml` exists at the project root, read it and surface executable `hooks.before_plan` and `hooks.after_plan` entries. Skip invalid YAML silently. Treat hooks with `enabled: false` as disabled. Treat hooks without `enabled` as enabled. Do not evaluate non-empty `condition` expressions; leave that to the hook executor. For executable hooks, report whether they are optional or automatic and include the command and prompt text.
 - Use the verified `SPEC-*`, `VERIFY-001`, and `ARCHITECTURE` artifacts as the planning baseline. If `/memory/constitution.md` exists, use it as additional planning context.
+- Assume the bounded slice will be reimplemented in Go unless the user explicitly overrides that target.
 - Resolve unknowns from the Technical Context before finalizing the implementation plan. Record planning research in `research.md` when extra investigation is required.
 - When the plan requires design-side artifacts, generate and store them alongside the plan in the assigned use-case folder: `research.md`, `data-model.md`, `quickstart.md`, and `contracts/` when relevant.
 - Re-check constitution or workflow gates after design-oriented planning artifacts are produced. If a gate fails or a clarification remains unresolved, stop and report the blocker instead of guessing.
@@ -61,12 +62,12 @@ Turn verified artifacts into a practical migration plan that can guide implement
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+**Language/Version**: [e.g., Go 1.24 or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., chi, gin, cobra, sqlc, pgx, testcontainers-go or NEEDS CLARIFICATION]  
 **Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
+**Testing**: [e.g., go test, testify, httptest or NEEDS CLARIFICATION]  
+**Target Platform**: [e.g., Linux server, macOS CLI, containerized Go service or NEEDS CLARIFICATION]
+**Project Type**: [e.g., Go library/cli/web-service/worker or NEEDS CLARIFICATION]  
 **Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
 **Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
 **Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
@@ -100,17 +101,23 @@ target/specs/<use-case-slug>/
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+# [REMOVE IF UNUSED] Option 1: Go service or CLI (DEFAULT)
+cmd/
+├── app/
+└── worker/
 
-tests/
-├── contract/
+internal/
+├── domain/
+├── service/
+├── transport/
+└── platform/
+
+pkg/
+└── [exported libraries only when needed]
+
+test/
 ├── integration/
-└── unit/
+└── fixtures/
 
 # [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
 backend/
@@ -150,10 +157,12 @@ directories captured above]
 ## Output Rules
 
 - Keep the plan scoped to the bounded migration slice.
-- Use Context7 only when implementation order depends on external conventions.
+- Use Context7 for Go implementation order, package conventions, and best-practice validation.
+- Keep the plan concrete enough for one background Planner run per requirement-scoped spec package.
 - Make handoff quality high enough for task decomposition.
 
 ## Guardrails
 
 - Do not invent scope outside the verified specification and architecture outputs.
 - Every work package must map back to verified artifacts.
+- Do not produce a plan for a non-Go reimplementation unless the user explicitly overrides the repository default.

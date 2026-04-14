@@ -44,10 +44,10 @@ The Orchestrator spans all three phases, coordinates handoffs, and enforces the 
 - `Analyzer`: reconstruct the bounded source module from repository structure, symbols, dependencies, build metadata, and supporting docs
 - `Spec-Writer`: condense Analyzer findings into the central textual specification artifact in Markdown
 - `Verifier`: check whether the specification is traceable back to source-context evidence before later phases are allowed
-- `Architect`: derive target architecture, framework/library choices, and implementation structure from the verified specification
-- `Planner`: translate verified specification and architecture decisions into an ordered migration plan with work packages
-- `Task Decomposer`: break the migration plan into small, implementation-ready coding tasks for the builder
-- `Builder`: implement target code from the verified specification and architecture decisions, then record technical verification evidence
+- `Architect`: derive a Go target architecture, framework/library choices, and implementation structure from the verified specification using Context7-backed best practices
+- `Planner`: translate verified specification and architecture decisions into an ordered Go reimplementation plan with work packages
+- `Task Decomposer`: break the migration plan into small, implementation-ready Go coding tasks for the builder
+- `Builder`: reimplement target code in Go from the verified specification and architecture decisions, then record technical verification evidence
 
 ## MCP usage
 
@@ -62,9 +62,13 @@ Keep secrets such as Sourcebot API keys out of tracked repo files. Use local-onl
 
 - Keep the workflow spec-first: do not jump from analysis straight to implementation.
 - Keep the migration slice bounded and explicit.
-- Have all agents work inside `target/` for generated artifacts, plans, and implementation outputs unless the user explicitly requests a different location.
-- Store `SPEC-*`, `PLAN-*`, and `BUILD-*` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE` under `target/specs/` unless the user explicitly requests a different location.
-- When `OVERVIEW.md` defines multiple tasks or use cases, let the Orchestrator fan out one `Spec-Writer` per task in the background and store each task's spec files under its own use-case subfolder in `target/specs/`.
+- Have workflow artifacts live under `target/specs/` unless the user explicitly requests a different location; this includes Analyzer outputs such as `ANALYSIS.md`, `OVERVIEW.md`, and `VERIFY-001`, while generated implementation code can still live under `target/` when needed.
+- Store `SPEC-*`, `PLAN-*`, `TASKS-001`, and `BUILD-*` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE` under `target/specs/` unless the user explicitly requests a different location.
+- Treat Go as the default target reimplementation language unless the user explicitly requests another language.
+- Use Context7 wherever current framework, package, library, or best-practice documentation is needed for planning or implementation.
+- When `OVERVIEW.md` defines multiple requirements, tasks, or use cases, let the Orchestrator fan out one `Spec-Writer` per requirement in the background and store each requirement's spec files under its own use-case subfolder in `target/specs/`.
+- After shared architecture is available, let the Orchestrator fan out one `Planner` per requirement-scoped spec package in the background.
+- After requirement-scoped plans are available, let the Orchestrator fan out one `Task Decomposer` per requirement-scoped plan in the background.
 - When use-case-specific planning or build artifacts are produced, store `PLAN-*` and `BUILD-*` in the same `target/specs/<use-case-slug>/` folder as the related `SPEC-*` files.
 - Treat the textual specification as the main handoff artifact between reconstruction and implementation.
 - The Verifier is a release gate: unresolved source/spec mismatches block later phases.

@@ -32,7 +32,8 @@ Enforce the role order:
 ## Operating Mode
 
 - Treat this repository as a spec-first workflow starter.
-- Direct all stages to create and update artifacts inside `target/` unless the user explicitly overrides that location.
+- Treat the target implementation language as Go unless the user explicitly overrides that constraint.
+- Direct Analyzer, Verifier, and shared workflow artifacts to `target/specs/` unless the user explicitly overrides that location.
 - Direct `SPEC-*` artifacts and `ARCHITECTURE` specifically into `target/specs/` unless the user explicitly overrides that location.
 - Follow a template-driven handoff style inspired by `github/spec-kit`:
   - explicit inputs
@@ -50,7 +51,7 @@ Enforce the role order:
 
 Define and track exactly one target artifact per stage:
 
-- `ANALYSIS.md` — single reconstruction file from Analyzer
+- `ANALYSIS.md` — single reconstruction file from Analyzer in `target/specs/`
 - `SPEC-*` — textual specification packages or index entries from Spec-Writer, organized per use case
 - `VERIFY-001` — verification report from Verifier
 - `ARCHITECTURE` — architecture decision artifact from Architect
@@ -63,13 +64,14 @@ Define and track exactly one target artifact per stage:
 1. Define the expected stage artifact before invoking the stage.
 2. Pass the prior stage artifact forward as mandatory input.
 3. Keep context narrow and role-specific.
-4. If `OVERVIEW.md` contains multiple extracted tasks or use cases, fan out one background `Spec-Writer` invocation per task.
+4. If `OVERVIEW.md` contains multiple extracted requirements, tasks, or use cases, fan out one background `Spec-Writer` invocation per requirement.
 5. Store each use-case spec result inside its own subfolder under `target/specs/`, for example `target/specs/<use-case-slug>/`.
-6. Store any use-case-specific `PLAN-*` and `BUILD-*` artifacts in the same `target/specs/<use-case-slug>/` folder.
+6. Store any use-case-specific `PLAN-*`, `TASKS-001`, and `BUILD-*` artifacts in the same `target/specs/<use-case-slug>/` folder.
 7. Treat `SPEC-*` as the main handoff artifacts from reconstruction into implementation planning, with an aggregate spec index when multiple use-case specs exist.
-8. Run Architect and Planner only after `VERIFY-001` returns PASS.
-9. Run Task Decomposer only after the relevant `PLAN-*` artifact exists.
-10. Run Builder only after the relevant `SPEC-*` artifacts are validated and planning artifacts are complete.
+8. Run Architect only after `VERIFY-001` returns PASS.
+9. When `ARCHITECTURE` is available, fan out one background `Planner` invocation per relevant `SPEC-*` package.
+10. Run `Task Decomposer` only after the matching `PLAN-*` artifact exists, and fan out one background `Task Decomposer` invocation per plan.
+11. Run Builder only after the relevant `SPEC-*` artifacts are validated and planning artifacts are complete.
 
 ## Default Execution Mode
 
@@ -84,12 +86,34 @@ Define and track exactly one target artifact per stage:
 This is an explicit exception to the default sequential background execution mode above.
 
 - Read `OVERVIEW.md` after Analyzer completes.
-- Extract each task or use case from the overview.
-- Launch one `Spec-Writer` in the background for each extracted task or use case.
+- Extract each requirement, task, or use case from the overview.
+- Launch one `Spec-Writer` in the background for each extracted requirement.
 - Give each `Spec-Writer` only the relevant slice from `ANALYSIS.md` and `OVERVIEW.md`.
 - Require each `Spec-Writer` to write its files into `target/specs/<use-case-slug>/`.
 - Require the coordinating stage to keep an aggregate `SPEC-*` index that lists all generated use-case spec folders and files.
 - Wait until all parallel `Spec-Writer` runs finish and their outputs are collected before moving on to Verifier.
+
+## Planner Fan-Out Rule (Parallel Exception)
+
+This is an explicit exception to the default sequential background execution mode above.
+
+- Read the aggregate `SPEC-*` index and `ARCHITECTURE` after Verifier returns PASS and Architect completes.
+- Enumerate each requirement-scoped `SPEC-*` package.
+- Launch one `Planner` in the background for each requirement-scoped `SPEC-*` package.
+- Give each `Planner` only the matching `SPEC-*` package plus the shared `ARCHITECTURE` artifact.
+- Require each `Planner` to write `PLAN-*` into the same `target/specs/<use-case-slug>/` folder as its input spec.
+- Wait until all parallel `Planner` runs finish and their outputs are collected before moving on to task decomposition.
+
+## Task Decomposer Fan-Out Rule (Parallel Exception)
+
+This is an explicit exception to the default sequential background execution mode above.
+
+- Read the produced `PLAN-*` artifacts after all relevant `Planner` runs finish.
+- Enumerate each requirement-scoped `PLAN-*` artifact.
+- Launch one `Task Decomposer` in the background for each requirement-scoped `PLAN-*` artifact.
+- Give each `Task Decomposer` only the matching `PLAN-*`, its corresponding `SPEC-*`, and the shared `ARCHITECTURE` artifact.
+- Require each `Task Decomposer` to write `TASKS-001` into the same `target/specs/<use-case-slug>/` folder as its input plan.
+- Wait until all parallel `Task Decomposer` runs finish and their outputs are collected before moving on to Builder.
 
 ## Verification Gate Logic
 
@@ -101,7 +125,7 @@ This is an explicit exception to the default sequential background execution mod
 
 ## Context7 Rule
 
-Use Context7 only when downstream roles need external library, framework, or package documentation.
+Use Context7 proactively when downstream roles need Go best practices, package guidance, framework documentation, or current implementation patterns.
 
 ## Output Format
 
@@ -120,3 +144,4 @@ When coordinating work, always produce:
 - Do not skip the planning phase between verified specification and implementation.
 - Do not expand scope without an explicit decision log entry.
 - Do not introduce extra roles for evaluation, planning, or review.
+- Do not route implementation planning or build work toward a non-Go target unless the user explicitly overrides the Go constraint.

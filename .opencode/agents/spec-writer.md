@@ -17,8 +17,8 @@ Turn Analyzer artifacts into a clear, testable, source-grounded technical specif
 
 ## Required Input
 
-- `ANALYSIS.md`
-- `OVERVIEW.md`
+- `target/specs/ANALYSIS.md`
+- `target/specs/OVERVIEW.md`
 - user request
 
 ## Workspace Rule
