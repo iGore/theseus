@@ -37,43 +37,137 @@ Produce one or more `SPEC-*` artifacts for the assigned use case
 - When working on one extracted task, treat `SPEC-*` as the use-case spec package for that task inside its use-case subfolder.
 - Keep filenames and references stable inside the assigned use-case folder.
 
-Each `SPEC-*` file should use a spec-kit-inspired structure:
+Each `SPEC-*` file should use the following reusable feature specification structure:
 
-### 1. Summary
+```markdown
+# Feature Specification: [FEATURE NAME]
 
-- concise statement of the bounded PoC slice
+**Created**: [DATE]  
+**Status**: Draft  
+**Input**: User description: "$ARGUMENTS"
 
-### 2. User Scenarios
+## User Scenarios & Testing *(mandatory)*
 
-- prioritized user or system journeys
-- each journey should be independently understandable and testable
+<!--
+  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
+  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
+  you should still have a viable MVP (Minimum Viable Product) that delivers value.
+  
+  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
+  Think of each story as a standalone slice of functionality that can be:
+  - Developed independently
+  - Tested independently
+  - Deployed independently
+  - Demonstrated to users independently
+-->
 
-### 3. Requirements
+### User Story 1 - [Brief Title] (Priority: P1)
 
-- functional requirements with stable IDs such as `FR-001`
-- inputs, outputs, preconditions, postconditions, examples, and error behavior where relevant
+[Describe this user journey in plain language]
 
-### 4. Key Entities and Data Rules
+**Why this priority**: [Explain the value and why it has this priority level]
 
-- core entities
-- mapping rules
-- invariants
+**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
 
-### 5. Edge Cases
+**Acceptance Scenarios**:
 
-- explicit boundary conditions and failure behavior
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+2. **Given** [initial state], **When** [action], **Then** [expected outcome]
 
-### 6. Acceptance Criteria
+---
 
-- verifiable criteria linked back to Analyzer evidence
+### User Story 2 - [Brief Title] (Priority: P2)
 
-### 7. Assumptions
+[Describe this user journey in plain language]
 
-- bounded assumptions derived from `ANALYSIS.md`
+**Why this priority**: [Explain the value and why it has this priority level]
 
-### 8. Traceability
+**Independent Test**: [Describe how this can be tested independently]
 
-- source artifact references for every core rule
+**Acceptance Scenarios**:
+
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+
+---
+
+### User Story 3 - [Brief Title] (Priority: P3)
+
+[Describe this user journey in plain language]
+
+**Why this priority**: [Explain the value and why it has this priority level]
+
+**Independent Test**: [Describe how this can be tested independently]
+
+**Acceptance Scenarios**:
+
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+
+---
+
+[Add more user stories as needed, each with an assigned priority]
+
+### Edge Cases
+
+<!--
+  ACTION REQUIRED: The content in this section represents placeholders.
+  Fill them out with the right edge cases.
+-->
+
+- What happens when [boundary condition]?
+- How does system handle [error scenario]?
+
+## Requirements *(mandatory)*
+
+<!--
+  ACTION REQUIRED: The content in this section represents placeholders.
+  Fill them out with the right functional requirements.
+-->
+
+### Functional Requirements
+
+- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
+- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
+- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
+- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
+- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+
+*Example of marking unclear requirements:*
+
+- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
+- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+
+### Key Entities *(include if feature involves data)*
+
+- **[Entity 1]**: [What it represents, key attributes without implementation]
+- **[Entity 2]**: [What it represents, relationships to other entities]
+
+## Success Criteria *(mandatory)*
+
+<!--
+  ACTION REQUIRED: Define measurable success criteria.
+  These must be technology-agnostic and measurable.
+-->
+
+### Measurable Outcomes
+
+- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
+- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
+- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
+- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+
+## Assumptions
+
+<!--
+  ACTION REQUIRED: The content in this section represents placeholders.
+  Fill them out with the right assumptions based on reasonable defaults
+  chosen when the feature description did not specify certain details.
+-->
+
+- [Assumption about target users, e.g., "Users have stable internet connectivity"]
+- [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
+- [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
+- [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+```
 
 ## Output Rules
 

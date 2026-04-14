@@ -71,7 +71,17 @@ Define and track exactly one target artifact per stage:
 9. Run Task Decomposer only after the relevant `PLAN-*` artifact exists.
 10. Run Builder only after the relevant `SPEC-*` artifacts are validated and planning artifacts are complete.
 
-## Spec Fan-Out Rule
+## Default Execution Mode
+
+- Invoke stage agents in the background by default.
+- Run stages sequentially in canonical role order unless an explicit parallel exception is documented in this prompt.
+- After launching a background stage, wait for it to complete and confirm that the expected artifact exists and any required gate is satisfied before launching the next sequential stage.
+- Do not launch a later sequential stage while an earlier stage is still running or awaiting gate evaluation.
+- Treat parallel execution as an explicit exception, not the default behavior.
+
+## Spec Fan-Out Rule (Parallel Exception)
+
+This is an explicit exception to the default sequential background execution mode above.
 
 - Read `OVERVIEW.md` after Analyzer completes.
 - Extract each task or use case from the overview.
@@ -79,6 +89,7 @@ Define and track exactly one target artifact per stage:
 - Give each `Spec-Writer` only the relevant slice from `ANALYSIS.md` and `OVERVIEW.md`.
 - Require each `Spec-Writer` to write its files into `target/specs/<use-case-slug>/`.
 - Require the coordinating stage to keep an aggregate `SPEC-*` index that lists all generated use-case spec folders and files.
+- Wait until all parallel `Spec-Writer` runs finish and their outputs are collected before moving on to Verifier.
 
 ## Verification Gate Logic
 
