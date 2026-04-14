@@ -62,11 +62,11 @@ The repo now ships the same migration roles for OpenCode under `.opencode/agents
 - `task-decomposer.md` as a subagent
 - `builder.md` as a subagent
 
-These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `SPEC-*`, `VERIFY-001`, `ARCHITECTURE`, `PLAN-*`, `TASKS-001`, and `BUILD-*`.
+These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `SPEC.md`, `VERIFY.md`, `ARCHITECTURE`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 
-`ANALYSIS.md`, `OVERVIEW.md`, and `VERIFY-001` are intended to live under `target/specs/`. `SPEC-*`, `PLAN-*`, `TASKS-001`, and `BUILD-*` artifacts are intended to live under `target/specs/<use-case-slug>/`, while shared `ARCHITECTURE` lives under `target/specs/`.
+`ANALYSIS.md`, `OVERVIEW.md`, `VERIFY.md`, `ARCHITECTURE`, and `SPEC-INDEX.md` are intended to live under `target/specs/`. Each requirement gets its own use-case folder under `target/specs/<use-case-slug>/` containing `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 
-The Orchestrator fans out background `Spec-Writer` runs per requirement, then background `Planner` runs per requirement-scoped spec package, and then background `Task Decomposer` runs per requirement-scoped plan. Go is the default target reimplementation language across Architect, Planner, Task Decomposer, and Builder, with Context7 used wherever current best-practice guidance is needed.
+The Orchestrator fans out background `Spec-Writer` runs per requirement, then background `Planner` runs per use-case folder, and then background `Task Decomposer` runs per use-case plan. Go is the default target reimplementation language across Architect, Planner, Task Decomposer, and Builder, with Context7 used wherever current best-practice guidance is needed.
 
 The textual specification is the main handoff artifact between reconstruction and implementation. `AGENTS.md` acts as the shared rule layer across all roles, matching the thesis' emphasis on a persistent instruction artifact for build hints, conventions, and workflow guardrails.
 

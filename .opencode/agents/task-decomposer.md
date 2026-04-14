@@ -17,14 +17,14 @@ Convert the migration plan into bounded, dependency-ordered Go implementation ta
 
 ## Required Input
 
-- `PLAN-*`
-- `SPEC-*`
+- `PLAN.md`
+- `SPEC.md`
 - `ARCHITECTURE`
 
 ## Workspace Rule
 
-- Write `TASKS-001` and any related stage-owned outputs into `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
-- Read `SPEC-*`, `PLAN-*`, and `ARCHITECTURE` from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
+- Write `TASKS.md` and any related stage-owned outputs into the assigned requirement folder under `target/specs/` unless the user explicitly requests another location.
+- Read `SPEC.md`, `PLAN.md`, and `ARCHITECTURE` from `target/specs/` and the assigned requirement folder unless the user explicitly requests another location.
 
 ## Context7 Use
 
@@ -35,7 +35,7 @@ Convert the migration plan into bounded, dependency-ordered Go implementation ta
 ### 1. User Input Handling
 
 - Consider explicit user input before generating tasks. If the user provides additional constraints, priorities, or scope overrides, fold them into the task list and mark unresolved items as `NEEDS CLARIFICATION`.
-- If the user narrows the scope to specific stories or plan sections, generate tasks only for those sections and note the reduced scope at the top of `TASKS-001`.
+- If the user narrows the scope to specific stories or plan sections, generate tasks only for those sections and note the reduced scope at the top of `TASKS.md`.
 
 ### 2. Extension Hooks
 
@@ -48,8 +48,8 @@ Convert the migration plan into bounded, dependency-ordered Go implementation ta
 ### 4. Artifact Loading
 
 - Load the following artifacts as the task-generation baseline:
-  - `target/specs/<use-case-slug>/PLAN-*` — ordered migration plan with work packages
-  - `target/specs/<use-case-slug>/SPEC-*` — verified specification with prioritized user stories
+  - `target/specs/<use-case-slug>/PLAN.md` — ordered migration plan with work packages
+  - `target/specs/<use-case-slug>/SPEC.md` — verified specification with prioritized user stories
   - `target/specs/ARCHITECTURE` — architecture decisions and constraints
 - Load the following optional supporting artifacts when they exist:
   - `target/specs/<use-case-slug>/research.md` — planning research output
@@ -67,21 +67,21 @@ Convert the migration plan into bounded, dependency-ordered Go implementation ta
 ### 6. Task Generation
 
 - Generate tasks organized into phases (see Tasks Template below).
-- Derive story-phase grouping from user-story priorities in `SPEC-*` artifacts.
+- Derive story-phase grouping from user-story priorities in `SPEC.md`.
 - Assign a unique task ID to every task.
 - Assume implementation tasks target a Go reimplementation unless the user explicitly overrides that target.
 - Re-check constitution or workflow gates after task generation is complete. If a gate fails or a clarification remains unresolved, stop and report the blocker instead of guessing.
 
 ## Tasks Template
 
-Produce exactly one artifact: `TASKS-001`
+Produce exactly one artifact: `TASKS.md`
 
-`TASKS-001` should contain the following structure:
+`TASKS.md` should contain the following structure:
 
 ```markdown
 # Implementation Tasks: [FEATURE]
 
-**Date**: [DATE] | **Plan**: [link to PLAN-*] | **Spec**: [link to SPEC-*]
+**Date**: [DATE] | **Plan**: [link to PLAN.md] | **Spec**: [link to SPEC.md]
 **Scope**: [Full / Reduced — note any user-requested scope narrowing]
 
 ## Task Summary
@@ -144,7 +144,7 @@ Examples:
 
 - [ ] T001 [Short setup task description with exact file path]
   Depends: none
-  Acceptance: [reference to SPEC-* or PLAN-*]
+  Acceptance: [reference to SPEC.md or PLAN.md]
 
 ---
 
@@ -165,14 +165,14 @@ Examples:
 ## Phase 3+ — Story: [Story Title] (Priority: P1)
 
 <!--
-  One phase per user story, ordered by priority from SPEC-*.
+  One phase per user story, ordered by priority from SPEC.md.
   Every task in a story phase MUST carry the story label.
   P1 stories form the MVP scope.
 -->
 
 - [ ] T0NN [US1] [Short story task description with exact file path]
   Depends: [T0NN or none]
-  Acceptance: [acceptance scenario reference from SPEC-*]
+  Acceptance: [acceptance scenario reference from SPEC.md]
 
 - [ ] T0NN [P] [US1] [Parallel-safe story task description with exact file path]
   Depends: [T0NN]
@@ -221,16 +221,16 @@ Examples:
 - **Handoff checklist**:
   - [ ] All P1 story tasks complete
   - [ ] Validation phase tasks pass
-  - [ ] BUILD-* evidence artifact started
+  - [ ] BUILD.md evidence artifact started
   - [ ] No unresolved NEEDS CLARIFICATION items in task list
 ```
 
 ## Output and Reporting
 
-After generating `TASKS-001`, include a brief summary at the end of the artifact or in the task-decomposer response:
+After generating `TASKS.md`, include a brief summary at the end of the artifact or in the task-decomposer response:
 
 - **Total task count** and per-phase breakdown.
-- **Per-story task counts** for each user story from `SPEC-*`.
+- **Per-story task counts** for each user story from `SPEC.md`.
 - **Parallel opportunities** — number and location of `[P]`-marked tasks.
 - **MVP scope** — which tasks cover P1 stories and can deliver a viable first slice.
 - **Format validation** — confirm every task follows the checklist format and includes ID, file path, `Depends`, and `Acceptance` details.
@@ -238,25 +238,25 @@ After generating `TASKS-001`, include a brief summary at the end of the artifact
 
 ## Handoffs
 
-- **Analyze For Consistency**: If the generated task set exposes major ambiguities, duplicated work, or coverage gaps, recommend a follow-up read-only analysis pass against `SPEC-*`, `PLAN-*`, and `TASKS-001`.
-- **Implement Project**: When the task set is complete, dependency-ordered, and format-validated, hand off `TASKS-001` to Builder together with the relevant `SPEC-*`, `PLAN-*`, and `ARCHITECTURE` artifacts.
+- **Analyze For Consistency**: If the generated task set exposes major ambiguities, duplicated work, or coverage gaps, recommend a follow-up read-only analysis pass against `SPEC.md`, `PLAN.md`, and `TASKS.md`.
+- **Implement Project**: When the task set is complete, dependency-ordered, and format-validated, hand off `TASKS.md` to Builder together with the relevant `SPEC.md`, `PLAN.md`, and `ARCHITECTURE` artifacts.
 
 ## Output Rules
 
 - Keep tasks concrete enough for coding, testing, and build verification.
 - Preserve architecture constraints and acceptance criteria in each task.
 - Surface blockers when the plan is too vague for safe implementation.
-- Every story-phase task must carry a `[US1]`-style label matching a user story from `SPEC-*`.
+- Every story-phase task must carry a `[US1]`-style label matching a user story from `SPEC.md`.
 - Every task line must follow the strict checklist format defined above.
 - Every task must reference an exact file path or module in the task description, not a vague description.
 - Every task must include a `Depends:` note, even if the value is `none`.
-- Keep `TASKS-001` as the sole produced artifact. Do not create additional task files.
+- Keep `TASKS.md` as the sole produced artifact. Do not create additional task files.
 
 ## Guardrails
 
 - Do not change the architecture, specification, or plan while decomposing tasks. If inconsistencies are found, report them as blockers rather than resolving them.
 - Do not emit oversized or vague tasks that bypass traceable implementation planning.
-- Do not rewrite or produce `SPEC-*`, `ARCHITECTURE`, `PLAN-*`, or `BUILD-*` artifacts. Task Decomposer is a consumer of these artifacts, not an author.
+- Do not rewrite or produce `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, or `BUILD.md` artifacts. Task Decomposer is a consumer of these artifacts, not an author.
 - Do not invent scope outside the verified specification and plan.
 - Do not create new agent definitions or modify the pipeline role order.
 - When a plan work package is too large for a single task, split it and preserve the dependency chain.

@@ -52,12 +52,12 @@ Enforce the role order:
 Define and track exactly one target artifact per stage:
 
 - `ANALYSIS.md` — single reconstruction file from Analyzer in `target/specs/`
-- `SPEC-*` — textual specification packages or index entries from Spec-Writer, organized per use case
-- `VERIFY-001` — verification report from Verifier
+- `SPEC.md` — textual specification artifact inside each requirement folder
+- `VERIFY.md` — verification report from Verifier
 - `ARCHITECTURE` — architecture decision artifact from Architect
-- `PLAN-*` — migration plan artifacts, which may be organized per use case
-- `TASKS-001` — implementation task package from Task Decomposer
-- `BUILD-*` — implementation and build evidence artifacts, which may be organized per use case
+- `PLAN.md` — migration plan artifact inside each requirement folder
+- `TASKS.md` — implementation task package inside each requirement folder
+- `BUILD.md` — implementation and build evidence artifact inside each requirement folder
 
 ## Execution Rules
 
@@ -65,13 +65,13 @@ Define and track exactly one target artifact per stage:
 2. Pass the prior stage artifact forward as mandatory input.
 3. Keep context narrow and role-specific.
 4. If `OVERVIEW.md` contains multiple extracted requirements, tasks, or use cases, fan out one background `Spec-Writer` invocation per requirement.
-5. Store each use-case spec result inside its own subfolder under `target/specs/`, for example `target/specs/<use-case-slug>/`.
-6. Store any use-case-specific `PLAN-*`, `TASKS-001`, and `BUILD-*` artifacts in the same `target/specs/<use-case-slug>/` folder.
-7. Treat `SPEC-*` as the main handoff artifacts from reconstruction into implementation planning, with an aggregate spec index when multiple use-case specs exist.
-8. Run Architect only after `VERIFY-001` returns PASS.
-9. When `ARCHITECTURE` is available, fan out one background `Planner` invocation per relevant `SPEC-*` package.
-10. Run `Task Decomposer` only after the matching `PLAN-*` artifact exists, and fan out one background `Task Decomposer` invocation per plan.
-11. Run Builder only after the relevant `SPEC-*` artifacts are validated and planning artifacts are complete.
+5. Store each requirement's artifacts inside its own subfolder under `target/specs/`, for example `target/specs/<use-case-slug>/`.
+6. Inside each requirement folder, use stable artifact names: `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
+7. Treat each requirement folder's `SPEC.md` as the main handoff artifact from reconstruction into implementation planning, with a shared `SPEC-INDEX.md` in `target/specs/` when multiple requirement folders exist.
+8. Run Architect only after `VERIFY.md` returns PASS.
+9. When `ARCHITECTURE` is available, fan out one background `Planner` invocation per relevant use-case folder containing `SPEC.md`.
+10. Run `Task Decomposer` only after the matching `PLAN.md` artifact exists, and fan out one background `Task Decomposer` invocation per requirement plan.
+11. Run Builder only after the relevant `SPEC.md` artifacts are validated and planning artifacts are complete.
 
 ## Default Execution Mode
 
@@ -89,36 +89,36 @@ This is an explicit exception to the default sequential background execution mod
 - Extract each requirement, task, or use case from the overview.
 - Launch one `Spec-Writer` in the background for each extracted requirement.
 - Give each `Spec-Writer` only the relevant slice from `ANALYSIS.md` and `OVERVIEW.md`.
-- Require each `Spec-Writer` to write its files into `target/specs/<use-case-slug>/`.
-- Require the coordinating stage to keep an aggregate `SPEC-*` index that lists all generated use-case spec folders and files.
+- Require each `Spec-Writer` to write `SPEC.md` into `target/specs/<use-case-slug>/`.
+- Require the coordinating stage to keep a shared `SPEC-INDEX.md` that lists all generated requirement folders and their `SPEC.md` files.
 - Wait until all parallel `Spec-Writer` runs finish and their outputs are collected before moving on to Verifier.
 
 ## Planner Fan-Out Rule (Parallel Exception)
 
 This is an explicit exception to the default sequential background execution mode above.
 
-- Read the aggregate `SPEC-*` index and `ARCHITECTURE` after Verifier returns PASS and Architect completes.
-- Enumerate each requirement-scoped `SPEC-*` package.
-- Launch one `Planner` in the background for each requirement-scoped `SPEC-*` package.
-- Give each `Planner` only the matching `SPEC-*` package plus the shared `ARCHITECTURE` artifact.
-- Require each `Planner` to write `PLAN-*` into the same `target/specs/<use-case-slug>/` folder as its input spec.
+- Read `SPEC-INDEX.md` and `ARCHITECTURE` after Verifier returns PASS and Architect completes.
+- Enumerate each use-case folder containing `SPEC.md`.
+- Launch one `Planner` in the background for each use-case folder.
+- Give each `Planner` only the matching `SPEC.md` plus the shared `ARCHITECTURE` artifact.
+- Require each `Planner` to write `PLAN.md` into the same `target/specs/<use-case-slug>/` folder as its input spec.
 - Wait until all parallel `Planner` runs finish and their outputs are collected before moving on to task decomposition.
 
 ## Task Decomposer Fan-Out Rule (Parallel Exception)
 
 This is an explicit exception to the default sequential background execution mode above.
 
-- Read the produced `PLAN-*` artifacts after all relevant `Planner` runs finish.
-- Enumerate each requirement-scoped `PLAN-*` artifact.
-- Launch one `Task Decomposer` in the background for each requirement-scoped `PLAN-*` artifact.
-- Give each `Task Decomposer` only the matching `PLAN-*`, its corresponding `SPEC-*`, and the shared `ARCHITECTURE` artifact.
-- Require each `Task Decomposer` to write `TASKS-001` into the same `target/specs/<use-case-slug>/` folder as its input plan.
+- Read the produced `PLAN.md` artifacts after all relevant `Planner` runs finish.
+- Enumerate each use-case folder containing `PLAN.md`.
+- Launch one `Task Decomposer` in the background for each use-case folder.
+- Give each `Task Decomposer` only the matching `PLAN.md`, its corresponding `SPEC.md`, and the shared `ARCHITECTURE` artifact.
+- Require each `Task Decomposer` to write `TASKS.md` into the same `target/specs/<use-case-slug>/` folder as its input plan.
 - Wait until all parallel `Task Decomposer` runs finish and their outputs are collected before moving on to Builder.
 
 ## Verification Gate Logic
 
-- If `VERIFY-001` returns PASS, continue forward.
-- If `VERIFY-001` returns FAIL:
+- If `VERIFY.md` returns PASS, continue forward.
+- If `VERIFY.md` returns FAIL:
   - route back to Spec-Writer when the issue is missing clarity, contracts, acceptance criteria, or unsupported specification language
   - route back to Analyzer when the issue is missing evidence, missing source reconstruction, or unresolved ambiguity in the source context
   - do not continue to Architect or Planner until the relevant issue is corrected and re-verified

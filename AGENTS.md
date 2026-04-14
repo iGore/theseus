@@ -62,14 +62,14 @@ Keep secrets such as Sourcebot API keys out of tracked repo files. Use local-onl
 
 - Keep the workflow spec-first: do not jump from analysis straight to implementation.
 - Keep the migration slice bounded and explicit.
-- Have workflow artifacts live under `target/specs/` unless the user explicitly requests a different location; this includes Analyzer outputs such as `ANALYSIS.md`, `OVERVIEW.md`, and `VERIFY-001`, while generated implementation code can still live under `target/` when needed.
-- Store `SPEC-*`, `PLAN-*`, `TASKS-001`, and `BUILD-*` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE` under `target/specs/` unless the user explicitly requests a different location.
+- Have workflow artifacts live under `target/specs/` unless the user explicitly requests a different location; this includes Analyzer outputs such as `ANALYSIS.md`, `OVERVIEW.md`, and `VERIFY.md`, while generated implementation code can still live under `target/` when needed.
+- Store `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE` under `target/specs/` unless the user explicitly requests a different location.
 - Treat Go as the default target reimplementation language unless the user explicitly requests another language.
 - Use Context7 wherever current framework, package, library, or best-practice documentation is needed for planning or implementation.
-- When `OVERVIEW.md` defines multiple requirements, tasks, or use cases, let the Orchestrator fan out one `Spec-Writer` per requirement in the background and store each requirement's spec files under its own use-case subfolder in `target/specs/`.
-- After shared architecture is available, let the Orchestrator fan out one `Planner` per requirement-scoped spec package in the background.
-- After requirement-scoped plans are available, let the Orchestrator fan out one `Task Decomposer` per requirement-scoped plan in the background.
-- When use-case-specific planning or build artifacts are produced, store `PLAN-*` and `BUILD-*` in the same `target/specs/<use-case-slug>/` folder as the related `SPEC-*` files.
+- When `OVERVIEW.md` defines multiple requirements, tasks, or use cases, let the Orchestrator fan out one `Spec-Writer` per requirement in the background and store each requirement's artifacts under its own use-case subfolder in `target/specs/`.
+- After shared architecture is available, let the Orchestrator fan out one `Planner` per use-case folder containing `SPEC.md` in the background.
+- After use-case-scoped plans are available, let the Orchestrator fan out one `Task Decomposer` per use-case-scoped plan in the background.
+- When use-case-specific planning or build artifacts are produced, store `PLAN.md`, `TASKS.md`, and `BUILD.md` in the same `target/specs/<use-case-slug>/` folder as the related `SPEC.md` file.
 - Treat the textual specification as the main handoff artifact between reconstruction and implementation.
 - The Verifier is a release gate: unresolved source/spec mismatches block later phases.
 - Record architecture and package decisions before build work starts.

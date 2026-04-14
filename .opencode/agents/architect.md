@@ -17,13 +17,13 @@ Turn verified artifacts into a Go target architecture and implementation plan th
 
 ## Required Input
 
-- `SPEC-*`
-- `VERIFY-001` with PASS
+- `SPEC.md` from one or more requirement folders under `target/specs/`
+- `VERIFY.md` with PASS
 - `ANALYSIS.md` when needed for source constraints
 
 ## Workspace Rule
 
-- Read `SPEC-*` inputs from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
+- Read `SPEC.md` inputs from requirement folders under `target/specs/` unless the user explicitly requests another location.
 - Write `ARCHITECTURE` and any related stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
 
 ## Context7 Use
@@ -81,5 +81,5 @@ Produce exactly one artifact: `ARCHITECTURE`
 
 - Do not choose packages without a documented reason.
 - Keep architecture decisions inside the agreed migration scope.
-- Do not proceed if `VERIFY-001` is not PASS.
+- Do not proceed if `VERIFY.md` is not PASS.
 - Do not propose a non-Go target architecture unless the user explicitly overrides the repository default.

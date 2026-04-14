@@ -107,10 +107,10 @@ Use this only when the user asks for a read-only consistency review across downs
 - If `.specify/extensions.yml` exists, inspect `hooks.before_analyze` and `hooks.after_analyze`. Skip invalid YAML silently. Treat hooks with `enabled: false` as disabled, treat hooks without `enabled` as enabled, and do not evaluate non-empty `condition` expressions in this workflow.
 - If present, read `/memory/constitution.md` only as a local policy/context aid when it exists in this repository or workspace.
 - Progressively load only the artifacts that exist and are relevant to the current scope, typically:
-  - `target/specs/<use-case-slug>/SPEC-*`
+  - `target/specs/<use-case-slug>/SPEC.md`
   - `target/specs/ARCHITECTURE`
-  - `target/specs/<use-case-slug>/PLAN-*`
-  - `target/specs/<use-case-slug>/TASKS-001`
+  - `target/specs/<use-case-slug>/PLAN.md`
+  - `target/specs/<use-case-slug>/TASKS.md`
 - Build a lightweight semantic model of each artifact’s intent, constraints, and handoff expectations before comparing them.
 - Run detection passes for:
   - terminology drift

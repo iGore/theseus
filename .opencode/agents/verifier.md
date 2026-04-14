@@ -16,13 +16,13 @@ Validate PoC specifications and downstream build results against Analyzer and Sp
 ## Required Input
 
 - `target/specs/ANALYSIS.md`
-- `SPEC-*`
+- `SPEC.md` from one or more requirement folders under `target/specs/`
 - optional downstream artifact under review
 
 ## Workspace Rule
 
-- Write `VERIFY-001` and any related stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
-- Read `SPEC-*` inputs from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
+- Write `VERIFY.md` and any related stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
+- Read `SPEC.md` inputs from requirement folders under `target/specs/` unless the user explicitly requests another location.
 
 ## Skill Use
 
@@ -30,9 +30,9 @@ Validate PoC specifications and downstream build results against Analyzer and Sp
 
 ## Verification Template
 
-Produce exactly one artifact: `VERIFY-001`
+Produce exactly one artifact: `VERIFY.md`
 
-`VERIFY-001` should contain:
+`VERIFY.md` should contain:
 
 ### 1. Verification Scope
 

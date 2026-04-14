@@ -23,8 +23,8 @@ Turn Analyzer artifacts into a clear, testable, source-grounded technical specif
 
 ## Workspace Rule
 
-- Write `SPEC-*` stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
-- When invoked for one extracted task or use case, write all resulting spec files into `target/specs/<use-case-slug>/`.
+- Write stage-owned spec outputs into a dedicated requirement folder under `target/specs/` unless the user explicitly requests another location.
+- When invoked for one extracted requirement, create `target/specs/<use-case-slug>/` and write exactly one `SPEC.md` there.
 
 ## Skill Use
 
@@ -32,12 +32,12 @@ Turn Analyzer artifacts into a clear, testable, source-grounded technical specif
 
 ## Specification Template
 
-Produce one or more `SPEC-*` artifacts for the assigned use case
+Produce exactly one `SPEC.md` artifact for the assigned requirement
 
-- When working on one extracted task, treat `SPEC-*` as the use-case spec package for that task inside its use-case subfolder.
+- When working on one extracted requirement, treat `SPEC.md` as the canonical spec artifact for that requirement inside its dedicated folder.
 - Keep filenames and references stable inside the assigned use-case folder.
 
-Each `SPEC-*` file should use the following reusable feature specification structure:
+Each `SPEC.md` file should use the following reusable feature specification structure:
 
 ```markdown
 # Feature Specification: [FEATURE NAME]
@@ -175,8 +175,8 @@ Each `SPEC-*` file should use the following reusable feature specification struc
 - Use Sourcebot-backed source evidence for reconstruction claims.
 - Use Context7 only when target-technology documentation is genuinely needed.
 - Mark unclear points explicitly instead of filling gaps with guesswork.
-- Base the spec on the assigned task or use case from `OVERVIEW.md`.
-- Record relevant files for that use case inside its `target/specs/<use-case-slug>/` folder.
+- Base the spec on the assigned requirement, task, or use case from `OVERVIEW.md`.
+- Record relevant files for that requirement inside its `target/specs/<use-case-slug>/` folder.
 
 ## Guardrails
 

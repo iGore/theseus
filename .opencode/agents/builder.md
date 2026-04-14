@@ -17,16 +17,16 @@ Implement a small, traceable Go target-code slice for the project PoC from verif
 
 ## Required Input
 
-- `SPEC-*`
-- `VERIFY-001` with PASS
+- `SPEC.md`
+- `VERIFY.md` with PASS
 - `ARCHITECTURE`
-- optional `TASKS-001`
+- optional `TASKS.md`
 
 ## Workspace Rule
 
-- Write `BUILD-*` and any related stage-owned outputs into `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
+- Write `BUILD.md` and any related stage-owned outputs into the assigned use-case folder under `target/specs/` unless the user explicitly requests another location.
 - Implement generated target-code outputs inside `target/` unless the user explicitly requests another location.
-- Read `SPEC-*`, `PLAN-*`, and `ARCHITECTURE` from `target/specs/` and `target/specs/<use-case-slug>/` unless the user explicitly requests another location.
+- Read `SPEC.md`, `PLAN.md`, and `ARCHITECTURE` from `target/specs/` and the assigned use-case folder unless the user explicitly requests another location.
 
 ## Context7 Use
 
@@ -34,9 +34,9 @@ Implement a small, traceable Go target-code slice for the project PoC from verif
 
 ## Build Template
 
-Produce one or more `BUILD-*` artifacts for the assigned use case
+Produce exactly one `BUILD.md` artifact for the assigned use case
 
-Each `BUILD-*` file should contain:
+Each `BUILD.md` file should contain:
 
 ### 1. Implementation Scope
 
