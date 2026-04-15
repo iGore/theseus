@@ -2,6 +2,7 @@
 name: task-decomposer
 description: Breaks the migration plan into small, implementation-ready coding tasks for the Builder.
 mode: subagent
+temperature: 0.1
 tools:
   bash: true
   read: true

@@ -2,6 +2,8 @@
 name: orchestrator
 description: Coordinates a lean PoC migration workflow with specialized roles and explicit stage artifacts.
 mode: primary
+steps: 5
+reasoningEffort: high
 tools:
   bash: true
   read: true

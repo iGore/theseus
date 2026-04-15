@@ -15,6 +15,9 @@
       "type": "remote",
       "enabled": true,
       "url": "http://localhost:3000/api/mcp"
+    },
+    "websearch": {
+      "enabled": false
     }
   }
 }

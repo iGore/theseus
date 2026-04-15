@@ -2,6 +2,8 @@
 name: architect
 description: Derives the target architecture, package choices, and implementation structure from the verified specification.
 mode: subagent
+reasoningEffort: high
+temperature: 0.1
 tools:
   bash: true
   read: true

@@ -2,6 +2,7 @@
 name: verifier
 description: Checks whether the specification and downstream results remain traceable to source-context evidence and whether blockers must stop the pipeline.
 mode: subagent
+temperature: 0.1
 tools:
   bash: true
   read: true

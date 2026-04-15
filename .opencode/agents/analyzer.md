@@ -2,6 +2,8 @@
 name: analyzer
 description: Reconstructs the structure, dependencies, data flows, and risks of a bounded source module as the basis for the textual specification artifact.
 mode: subagent
+reasoningEffort: high
+temperature: 0.1
 tools:
   bash: true
   read: true

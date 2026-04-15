@@ -2,6 +2,7 @@
 name: planner
 description: Translates the verified specification and target architecture into an ordered migration plan with bounded work packages.
 mode: subagent
+temperature: 0.1
 tools:
   bash: true
   read: true

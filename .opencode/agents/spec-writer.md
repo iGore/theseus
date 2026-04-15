@@ -2,6 +2,8 @@
 name: spec-writer
 description: Creates the central textual specification artifact in Markdown from Analyzer reconstruction artifacts for the PoC.
 mode: subagent
+reasoningEffort: high
+temperature: 0.1
 tools:
   bash: true
   read: true
