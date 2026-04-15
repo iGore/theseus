@@ -38,6 +38,7 @@ docker compose up -d
 `Analyzer -> Spec-Writer -> Verifier -> Architect -> Planner -> Task Decomposer -> Builder`
 
 - This now mirrors the full conceptual model from the report: a migration pipeline coordinated by one `Orchestrator` across reconstruction, transformation planning, and re-implementation.
+- The `Orchestrator` is coordination-only: it delegates to specialist roles, enforces handoff gates, and may maintain coordination artifacts, but it must not take over analysis, specification, verification, planning, decomposition, or build work itself.
 - Phase 1 `Rekonstruktion`: `Analyzer -> Spec-Writer -> Verifier`
 - Phase 2 `Transformationsplanung`: `Architect -> Planner`
 - Phase 3 `Neuimplementierung`: `Task Decomposer -> Builder`

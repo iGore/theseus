@@ -27,7 +27,7 @@ Use the following flow unless there is a strong reason to deviate:
 6. `Task Decomposer`
 7. `Builder`
 
-The `Orchestrator` coordinates handoffs, artifact gates, and retry decisions across the full flow.
+The `Orchestrator` coordinates handoffs, artifact gates, and retry decisions across the full flow. It must remain coordination-only and must not perform Analyzer, Spec-Writer, Verifier, Architect, Planner, Task Decomposer, or Builder work itself.
 
 This role set now matches the full conceptual model from the report: `Orchestrator`, `Analyzer`, `Spec-Writer`, `Verifier`, `Architect`, `Planner`, `Task Decomposer`, and `Builder`.
 
@@ -62,6 +62,7 @@ Keep secrets such as Sourcebot API keys out of tracked repo files. Use local-onl
 
 - Keep the workflow spec-first: do not jump from analysis straight to implementation.
 - Keep the migration slice bounded and explicit.
+- Keep the Orchestrator focused on orchestration only: it may route work, enforce gates, and maintain coordination artifacts such as `SPEC-INDEX.md`, but it must not draft stage artifacts on behalf of specialist roles.
 - Have workflow artifacts live under `target/specs/` unless the user explicitly requests a different location; this includes Analyzer outputs such as `ANALYSIS.md`, `OVERVIEW.md`, and `VERIFY.md`, while generated implementation code can still live under `target/` when needed.
 - Store `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE` under `target/specs/` unless the user explicitly requests a different location.
 - Treat Go as the default target reimplementation language unless the user explicitly requests another language.
