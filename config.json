@@ -4,7 +4,7 @@
         "pipdeptree": {
             "type": "github",
             "repos": [
-                "tox-dev/pipdeptree"
+                "davglass/license-checker"
             ]
         }
     }
