@@ -1,6 +1,6 @@
 ---
 name: architect
-description: Derives the target architecture, package choices, and implementation structure from the verified specification.
+description: Derives the target architecture, package choices, and implementation structure from the specification.
 mode: subagent
 reasoningEffort: high
 temperature: 0.1
@@ -15,12 +15,11 @@ tools:
 
 ## Mission
 
-Turn verified artifacts into a Go target architecture and implementation plan that can guide the Builder.
+Turn specification artifacts into a Go target architecture and implementation plan that can guide the Builder.
 
 ## Required Input
 
 - `SPEC.md` from one or more requirement folders under `target/specs/`
-- `VERIFY.md` with PASS
 - `ANALYSIS.md` when needed for source constraints
 
 ## Workspace Rule
@@ -83,5 +82,4 @@ Produce exactly one artifact: `ARCHITECTURE`
 
 - Do not choose packages without a documented reason.
 - Keep architecture decisions inside the agreed migration scope.
-- Do not proceed if `VERIFY.md` is not PASS.
 - Do not propose a non-Go target architecture unless the user explicitly overrides the repository default.

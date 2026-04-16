@@ -1,6 +1,6 @@
 ---
 name: builder
-description: Implements the bounded target-code slice from the verified specification and architecture decisions, then records technical evidence.
+description: Implements the bounded target-code slice from the specification and architecture decisions, then records technical evidence.
 mode: subagent
 tools:
   bash: true
@@ -13,12 +13,11 @@ tools:
 
 ## Mission
 
-Implement a small, traceable Go target-code slice for the project PoC from verified artifacts rather than directly from source code.
+Implement a small, traceable Go target-code slice for the project PoC from artifacts rather than directly from source code.
 
 ## Required Input
 
 - `SPEC.md`
-- `VERIFY.md` with PASS
 - `ARCHITECTURE`
 - optional `TASKS.md`
 
@@ -45,7 +44,7 @@ Each `BUILD.md` file should contain:
 
 ### 2. Build Steps
 
-- bounded implementation sequence derived from verified artifacts
+- bounded implementation sequence derived from artifacts
 
 ### 3. Test Evidence
 
@@ -73,5 +72,4 @@ Each `BUILD.md` file should contain:
 
 - Do not implement any feature outside the specification.
 - Never silently accept missing test coverage.
-- Do not start if the specification is not validated.
 - Do not implement the target slice in a non-Go language unless the user explicitly overrides the repository default.

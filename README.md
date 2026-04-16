@@ -35,20 +35,19 @@ docker compose up -d
 
 ## Current subagent flow
 
-`Analyzer -> Spec-Writer -> Verifier -> Architect -> Planner -> Task Decomposer -> Builder`
+`Analyzer -> Spec-Writer -> Architect -> Planner -> Task Decomposer -> Builder`
 
 - This now mirrors the full conceptual model from the report: a migration pipeline coordinated by one `Orchestrator` across reconstruction, transformation planning, and re-implementation.
-- The `Orchestrator` is coordination-only: it delegates to specialist roles, enforces handoff gates, and may maintain coordination artifacts, but it must not take over analysis, specification, verification, planning, decomposition, or build work itself.
-- Phase 1 `Rekonstruktion`: `Analyzer -> Spec-Writer -> Verifier`
+- The `Orchestrator` is coordination-only: it delegates to specialist roles, enforces handoff gates, and may maintain coordination artifacts, but it must not take over analysis, specification, planning, decomposition, or build work itself.
+- Phase 1 `Rekonstruktion`: `Analyzer -> Spec-Writer`
 - Phase 2 `Transformationsplanung`: `Architect -> Planner`
 - Phase 3 `Neuimplementierung`: `Task Decomposer -> Builder`
 - `Analyzer` reconstructs the bounded source module from code, repository metadata, and supporting docs.
 - `Spec-Writer` produces the central textual specification artifact.
-- `Verifier` gates the pipeline by checking whether the specification is traceable back to source-context evidence.
 - `Architect` plans the Go target architecture and selects suitable packages with Context7-backed documentation and best practices.
-- `Planner` derives an ordered Go reimplementation plan with work packages from the verified specification and architecture.
+- `Planner` derives an ordered Go reimplementation plan with work packages from the specification and architecture.
 - `Task Decomposer` turns that plan into implementation-ready Go coding tasks.
-- `Builder` reimplements in Go from the verified specification, architecture outputs, and decomposed work packages, then records build/test evidence.
+- `Builder` reimplements in Go from the specification, architecture outputs, and decomposed work packages, then records build/test evidence.
 
 ## OpenCode setup
 
@@ -57,15 +56,14 @@ The repo now ships the same migration roles for OpenCode under `.opencode/agents
 - `orchestrator.md` as the primary agent
 - `analyzer.md` as a subagent
 - `spec-writer.md` as a subagent
-- `verifier.md` as a subagent
 - `architect.md` as a subagent
 - `planner.md` as a subagent
 - `task-decomposer.md` as a subagent
 - `builder.md` as a subagent
 
-These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `SPEC.md`, `VERIFY.md`, `ARCHITECTURE`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
+These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 
-`ANALYSIS.md`, `OVERVIEW.md`, `VERIFY.md`, `ARCHITECTURE`, and `SPEC-INDEX.md` are intended to live under `target/specs/`. Each requirement gets its own use-case folder under `target/specs/<use-case-slug>/` containing `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
+`ANALYSIS.md`, `OVERVIEW.md`, `ARCHITECTURE`, and `SPEC-INDEX.md` are intended to live under `target/specs/`. Each requirement gets its own use-case folder under `target/specs/<use-case-slug>/` containing `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 
 The Orchestrator fans out background `Spec-Writer` runs per requirement, then background `Planner` runs per use-case folder, and then background `Task Decomposer` runs per use-case plan. Go is the default target reimplementation language across Architect, Planner, Task Decomposer, and Builder, with Context7 used wherever current best-practice guidance is needed.
 

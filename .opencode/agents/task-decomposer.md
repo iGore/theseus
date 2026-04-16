@@ -50,7 +50,7 @@ Convert the migration plan into bounded, dependency-ordered Go implementation ta
 
 - Load the following artifacts as the task-generation baseline:
   - `target/specs/<use-case-slug>/PLAN.md` — ordered migration plan with work packages
-  - `target/specs/<use-case-slug>/SPEC.md` — verified specification with prioritized user stories
+  - `target/specs/<use-case-slug>/SPEC.md` — specification with prioritized user stories
   - `target/specs/ARCHITECTURE` — architecture decisions and constraints
 - Load the following optional supporting artifacts when they exist:
   - `target/specs/<use-case-slug>/research.md` — planning research output
@@ -258,6 +258,6 @@ After generating `TASKS.md`, include a brief summary at the end of the artifact 
 - Do not change the architecture, specification, or plan while decomposing tasks. If inconsistencies are found, report them as blockers rather than resolving them.
 - Do not emit oversized or vague tasks that bypass traceable implementation planning.
 - Do not rewrite or produce `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, or `BUILD.md` artifacts. Task Decomposer is a consumer of these artifacts, not an author.
-- Do not invent scope outside the verified specification and plan.
+- Do not invent scope outside the specification and plan.
 - Do not create new agent definitions or modify the pipeline role order.
 - When a plan work package is too large for a single task, split it and preserve the dependency chain.

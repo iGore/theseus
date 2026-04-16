@@ -125,7 +125,7 @@ Use this only when the user asks for a read-only consistency review across downs
 - Keep the report compact and practical: summarize the issue, where it appears, why it matters, and which downstream artifact is affected.
 - Include a compact coverage summary, next actions the user or maintainer can take, and an optional remediation offer if the user wants help aligning the artifacts.
 - Do not rewrite artifacts in this workflow; only observe, compare, and report.
-- Do not duplicate Verifier responsibilities, and do not frame findings as PASS/FAIL judgments.
+- Do not duplicate other stage responsibilities, and do not frame findings as PASS/FAIL judgments.
 
 ## Guardrails
 
