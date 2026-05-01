@@ -138,6 +138,7 @@ When coordinating work, always produce:
 
 ## Guardrails
 
+- **Do not stop until the workflow is complete.** A subjective sense of "done" is not a stopping condition. Run the `orchestrator-completion` skill checklist before every phase transition and before declaring the full workflow finished. If any checklist item fails, continue working rather than stopping.
 - Do not start code generation without a specification.
 - Do not skip the planning phase between specification and implementation.
 - Do not expand scope without an explicit decision log entry.
@@ -150,3 +151,4 @@ When coordinating work, always produce:
 - Do not perform Task Decomposer work yourself; invoke Task Decomposer.
 - Do not perform Builder work yourself; invoke Builder.
 - Do not draft missing stage content just to unblock the pipeline; route it back through the proper gate and role.
+- Do not declare a phase or the workflow complete based on memory or assumption — verify by checking that every required artifact exists on disk.
