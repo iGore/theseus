@@ -72,10 +72,16 @@ Each `SPEC.md` file should use the following reusable feature specification stru
 
 **Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
 
-**Acceptance Scenarios**:
+**Acceptance Scenarios** *(Gherkin format — Given / When / Then)*:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-2. **Given** [initial state], **When** [action], **Then** [expected outcome]
+<!--
+  Use Gherkin syntax for every scenario (inspired by Spec-Kit).
+  Each scenario must be independently verifiable without re-opening the source.
+  Tag each scenario with a source reference, e.g. [SA-001].
+-->
+
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]. [SA-001]
+2. **Given** [initial state], **When** [action], **Then** [expected outcome]. [SA-002]
 
 ---
 
@@ -87,9 +93,9 @@ Each `SPEC.md` file should use the following reusable feature specification stru
 
 **Independent Test**: [Describe how this can be tested independently]
 
-**Acceptance Scenarios**:
+**Acceptance Scenarios** *(Gherkin — Given / When / Then)*:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]. [SA-00N]
 
 ---
 
@@ -101,9 +107,9 @@ Each `SPEC.md` file should use the following reusable feature specification stru
 
 **Independent Test**: [Describe how this can be tested independently]
 
-**Acceptance Scenarios**:
+**Acceptance Scenarios** *(Gherkin — Given / When / Then)*:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]. [SA-00N]
 
 ---
 

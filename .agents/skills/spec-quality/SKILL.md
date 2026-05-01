@@ -32,7 +32,7 @@ supplements it with explicit acceptance criteria.
 - **Bounded scope**: the spec covers exactly one functionality item from `FUNCTIONALITY-INDEX.md`
 - **Traceable source**: every core claim links to evidence from `ANALYSIS.md` or a Sourcebot finding
 - **Explicit I/O**: inputs and outputs are named with types, formats, and constraints — not left implicit
-- **Acceptance scenarios**: at least one Given/When/Then scenario per user story that is independently testable
+- **Acceptance scenarios**: at least one scenario per user story in Gherkin format (`Given / When / Then`), independently testable, tagged with a source reference (e.g. `[SA-001]`). Inspired by Spec-Kit.
 - **Explicit open questions**: any unclear point is listed as an open question — never silently assumed or guessed
 
 ### Quality indicators
