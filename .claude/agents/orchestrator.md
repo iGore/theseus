@@ -48,3 +48,9 @@ For each coordination step produce: Stage | Input Artifact | Expected Output | G
 - Do not skip the planning phase.
 - Do not draft missing stage content to unblock the pipeline.
 - The Orchestrator has no direct MCP access; delegate context needs to the relevant specialist agent.
+
+## Completion Check
+
+Before declaring any phase or the full workflow complete, run through the
+`orchestrator-completion` skill. Do not stop based on a subjective sense
+of "done" — verify every artifact on disk against the checklist.

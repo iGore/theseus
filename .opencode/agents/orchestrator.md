@@ -2,7 +2,7 @@
 name: orchestrator
 description: Strictly coordinates the migration workflow and never performs specialist stage work itself.
 mode: primary
-steps: 5
+steps: 10
 reasoningEffort: high
 tools:
   bash: false
