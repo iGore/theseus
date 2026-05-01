@@ -7,13 +7,16 @@ It defines a small, spec-first pipeline and the supporting assets needed to run 
 
 ## Repository structure
 
-- `.codex/agents/`: TOML agent profiles
-- `.opencode/agents/`: Markdown agent profiles with YAML frontmatter
+- `.opencode/agents/`: Markdown agent profiles with YAML frontmatter (primary — OpenCode)
+- `.claude/agents/`: Markdown agent profiles for Claude-based environments
+- `.codex/agents/`: TOML agent profiles for Codex environments
 - `opencode.jsonc`: OpenCode configuration for MCP servers and default agent selection
 - `.agents/skills/`: Agent Skills directories with `SKILL.md`
 - `docker-compose.yml`: Sourcebot bootstrap
 - `config.json`: Sourcebot example configuration
 - `README.md`: quickstart and MCP setup notes
+
+All three agent profile sets describe the same role set and MCP access patterns. The pipeline logic is environment-agnostic; only the profile format differs per runtime.
 
 ## Canonical role order
 
@@ -40,8 +43,8 @@ The Orchestrator spans all three phases, coordinates handoffs, and enforces the 
 
 ## Role intent
 
-- `Analyzer`: reconstruct the bounded source module from repository structure, symbols, dependencies, build metadata, and supporting docs
-- `Spec-Writer`: condense Analyzer findings into the central textual specification artifact in Markdown
+- `Analyzer`: reconstruct the bounded source module from repository structure, symbols, dependencies, build metadata, and supporting docs, and emit a complete functionality inventory with traceable checklist items
+- `Spec-Writer`: condense one Analyzer functionality slice into one dedicated textual specification artifact in Markdown
 - `Architect`: derive a Go target architecture, framework/library choices, and implementation structure from the specification using Context7-backed best practices
 - `Planner`: translate specification and architecture decisions into an ordered Go reimplementation plan with work packages
 - `Task Decomposer`: break the migration plan into small, implementation-ready Go coding tasks for the builder
@@ -61,14 +64,16 @@ Keep secrets such as Sourcebot API keys out of tracked repo files. Use local-onl
 - Keep the workflow spec-first: do not jump from analysis straight to implementation.
 - Keep the migration slice bounded and explicit.
 - Keep the Orchestrator focused on orchestration only: it may route work, enforce gates, and maintain coordination artifacts such as `SPEC-INDEX.md`, but it must not draft stage artifacts on behalf of specialist roles.
-- Have workflow artifacts live under `target/specs/` unless the user explicitly requests a different location; this includes Analyzer outputs such as `ANALYSIS.md` and `OVERVIEW.md`, while generated implementation code can still live under `target/` when needed.
+- Have workflow artifacts live under `target/specs/` unless the user explicitly requests a different location; this includes Analyzer outputs such as `ANALYSIS.md`, `OVERVIEW.md`, and `FUNCTIONALITY-INDEX.md`, while generated implementation code can still live under `target/` when needed.
 - Store `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE` under `target/specs/` unless the user explicitly requests a different location.
 - Treat Go as the default target reimplementation language unless the user explicitly requests another language.
 - Use Context7 wherever current framework, package, library, or best-practice documentation is needed for planning or implementation.
-- When `OVERVIEW.md` defines multiple requirements, tasks, or use cases, let the Orchestrator fan out one `Spec-Writer` per requirement in the background and store each requirement's artifacts under its own use-case subfolder in `target/specs/`.
+- When `FUNCTIONALITY-INDEX.md` defines multiple functionality items, let the Orchestrator fan out one `Spec-Writer` per functionality item in the background and store each item's artifacts under its own use-case subfolder in `target/specs/`.
 - After shared architecture is available, let the Orchestrator fan out one `Planner` per use-case folder containing `SPEC.md` in the background.
 - After use-case-scoped plans are available, let the Orchestrator fan out one `Task Decomposer` per use-case-scoped plan in the background.
 - When use-case-specific planning or build artifacts are produced, store `PLAN.md`, `TASKS.md`, and `BUILD.md` in the same `target/specs/<use-case-slug>/` folder as the related `SPEC.md` file.
+- Treat `PLAN.md` as a living checklist artifact: downstream roles may append, split, and check off items, but must preserve traceability and not silently delete unfinished work.
+- Treat `TASKS.md` as the execution checklist derived from `PLAN.md`; Builder should update the relevant task checkboxes as implementation work completes.
 - Treat the textual specification as the main handoff artifact between reconstruction and implementation.
 - Record architecture and package decisions before build work starts.
 - Record a migration plan before detailed implementation work starts.

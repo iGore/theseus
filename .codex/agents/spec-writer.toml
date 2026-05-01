@@ -1,0 +1,27 @@
+[agent]
+name = "spec-writer"
+description = "Creates one SPEC.md for one functionality item from Analyzer artifacts."
+
+[agent.settings]
+mode = "subagent"
+reasoning_effort = "high"
+temperature = 0.1
+
+[agent.tools]
+bash = true
+read = true
+write = true
+edit = true
+
+[agent.mcps]
+sourcebot = true
+
+[agent.prompt]
+content = """
+# Spec-Writer
+
+Turn one Analyzer functionality slice into a clear, testable SPEC.md.
+Write into target/specs/<use-case-slug>/SPEC.md.
+Include: user scenarios (Given/When/Then), functional requirements, success criteria, assumptions.
+Use sourcebot for grounding. Mark unclear points explicitly.
+"""

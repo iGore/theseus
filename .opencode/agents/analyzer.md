@@ -14,7 +14,7 @@ tools:
 ## Mission
 
 Produce a reliable reconstruction of one bounded PoC source module.
-The result must include a Markdown analysis file and an `OVERVIEW.md` that downstream Spec-Writers can use in parallel.
+The result must include a Markdown analysis file, an `OVERVIEW.md`, and a `FUNCTIONALITY-INDEX.md` that downstream Spec-Writers can use in parallel.
 
 ## Required Input
 
@@ -48,12 +48,19 @@ The result must include a Markdown analysis file and an `OVERVIEW.md` that downs
 
 ### 3. Feature Grouping
 
-- Group the reconstructed functionality into coarse feature slices that can be handed to separate Spec-Writers in the background.
-- For each feature slice, identify the main functions, entry points, dependencies, and open questions.
+- Break the reconstructed functionality into fine-grained, spec-writer-ready functionality items.
+- For each functionality item, identify the main functions, entry points, dependencies, side effects, acceptance-relevant behavior, and open questions.
 - Build an overview of tasks and use cases that covers the relevant app behavior from a user-facing perspective.
-- Derive a task list that covers all identified requirements in scope and map each task back to the relevant feature slices or use cases.
+- Derive a task list that covers all identified requirements in scope and map each task back to the relevant functionality items or use cases.
+- Assign a stable functionality ID to every item, for example `F-001`, `F-002`, `F-003`.
 
-### 4. Risk Extraction
+### 4. Checklist Packaging
+
+- Produce a complete dispatch checklist so the Orchestrator can trigger one Spec-Writer per functionality item without reopening the repository.
+- Mark every functionality item with a clear status such as `ready`, `needs-clarification`, or `blocked`.
+- Keep unresolved gaps as checklist entries or open questions rather than silently omitting them.
+
+### 5. Risk Extraction
 
 - Document invariants.
 - Document critical failure paths.
@@ -61,10 +68,11 @@ The result must include a Markdown analysis file and an `OVERVIEW.md` that downs
 
 ## Output Artifact
 
-Produce `ANALYSIS.md` and a companion overview file `OVERVIEW.md`
+Produce `ANALYSIS.md`, a companion overview file `OVERVIEW.md`, and a dispatch file `FUNCTIONALITY-INDEX.md`
 
 - `ANALYSIS.md` must be exactly one Markdown file in `target/specs/`.
 - `OVERVIEW.md` must be a Markdown file in `target/specs/` that summarizes tasks, all relevant app use cases, and a task list covering all identified requirements for the analyzed scope.
+- `FUNCTIONALITY-INDEX.md` must be a Markdown file in `target/specs/` that lists every identified functionality item as a checklist entry with its ID, title, status, and intended output folder slug.
 - If a read-only cross-artifact review is explicitly requested and downstream artifacts exist, also produce `CROSS-ANALYSIS.md` in `target/specs/<use-case-slug>/` (or the closest applicable `target/` analysis folder for the current scope).
 
 `ANALYSIS.md` should contain:
@@ -89,17 +97,27 @@ Produce `ANALYSIS.md` and a companion overview file `OVERVIEW.md`
 - `Feature-to-Task Mapping`
 - `Open Questions`
 
+`FUNCTIONALITY-INDEX.md` should contain:
+
+- `Functionality Checklist`
+- `Status`
+- `Slug`
+- `Evidence Summary`
+- `Open Questions`
+
 ## Output Rules
 
 - Make every core claim traceable to source evidence.
 - Separate observed facts from assumptions.
 - Deliver enough detail for Spec-Writer to proceed without reopening the whole repository.
-- Keep the function inventory rough but broad enough that parallel Spec-Writers can each pick up one feature slice.
-- For each function entry, include at least name, file, role, and the feature slice it belongs to when known.
+- Keep the function inventory complete enough that parallel Spec-Writers can each pick up exactly one functionality item.
+- For each function entry, include at least name, file, role, and the functionality item it belongs to when known.
 - Include a dedicated summary of expected inputs and outputs for the analyzed scope when they can be inferred from code, docs, manifests, or runtime configuration.
 - For important dependencies, record both the package/library name and a short explanation of the function or responsibility it has in the project.
 - In `OVERVIEW.md`, cover all relevant app use cases in scope and map them to coarse tasks or feature slices.
 - In `OVERVIEW.md`, include a task list that captures all identified requirements in scope and ties each task to the supporting evidence when practical.
+- In `FUNCTIONALITY-INDEX.md`, use strict checklist syntax (`- [ ]` or `- [x]` only when explicitly revising an existing completed index) so the file can act as an orchestration checklist.
+- For each functionality checklist item, include the stable ID, short title, folder slug, current readiness status, and a compact evidence pointer.
 
 ## Optional Cross-Artifact Analysis Workflow
 

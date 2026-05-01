@@ -43,6 +43,8 @@ Turn artifacts into a practical Go reimplementation plan that can guide implemen
 
 ## Plan Template
 
+Treat `PLAN.md` as a living checklist artifact. The plan must help a future agent or human see what still needs to happen, what is already decided, and which items can be checked off as execution progresses.
+
 # Implementation Plan: [FEATURE]
 
 **Date**: [DATE] | **Spec**: [link]
@@ -53,6 +55,22 @@ Turn artifacts into a practical Go reimplementation plan that can guide implemen
 ## Summary
 
 [Extract from feature spec: primary requirement + technical approach from research]
+
+## Progress Checklist
+
+- [ ] Planning scope confirmed against `SPEC.md`
+- [ ] Technical context filled with concrete decisions or `NEEDS CLARIFICATION`
+- [ ] Work packages derived from the assigned functionality scope
+- [ ] Dependencies and execution order documented
+- [ ] Validation approach captured
+
+## Decision Log
+
+- [ ] Record architecture, package, or sequencing decisions here as concise bullets
+
+## Open Questions
+
+- [ ] Record unresolved planning questions or blockers here
 
 ## Technical Context
 
@@ -160,6 +178,7 @@ directories captured above]
 - Use Context7 for Go implementation order, package conventions, and best-practice validation.
 - Keep the plan concrete enough for one background Planner run per use-case folder.
 - Make handoff quality high enough for task decomposition.
+- Keep `PLAN.md` checklist-oriented enough that downstream roles can check items off instead of rewriting the full plan.
 
 ## Guardrails
 

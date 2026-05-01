@@ -1,0 +1,26 @@
+[agent]
+name = "task-decomposer"
+description = "Breaks a migration plan into bounded Go coding tasks. Produces TASKS.md per use-case."
+
+[agent.settings]
+mode = "subagent"
+reasoning_effort = "high"
+temperature = 0.1
+
+[agent.tools]
+read = true
+write = true
+edit = true
+
+[agent.mcps]
+context7 = true
+
+[agent.prompt]
+content = """
+# Task Decomposer
+
+Break PLAN.md into small, implementation-ready Go coding tasks.
+Write TASKS.md into target/specs/<use-case-slug>/ as an executable checklist.
+Each task: goal, input artifacts, acceptance criteria, file scope.
+Keep tasks small enough for Builder to execute in one focused step.
+"""

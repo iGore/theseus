@@ -13,8 +13,8 @@ The OpenCode agent prompts are now structured in a `spec-kit`-inspired template 
 ## Included Roles
 
 - `orchestrator.md`: primary agent that coordinates stage order, artifact gates, and retry paths without taking over specialist stage work itself
-- `analyzer.md`: subagent for reconstruction of the bounded source module
-- `spec-writer.md`: subagent for the central textual specification artifact
+- `analyzer.md`: subagent for reconstruction of the bounded source module plus a complete functionality inventory
+- `spec-writer.md`: subagent for one textual specification artifact per functionality item
 - `architect.md`: subagent for target architecture and package planning from the spec
 - `planner.md`: subagent for the ordered migration plan and work-package sequence
 - `task-decomposer.md`: subagent for turning the plan into implementation-ready coding tasks
@@ -37,7 +37,7 @@ This keeps the prompts reusable and makes stage handoffs easier to audit.
 2. Choose a bounded demonstration module for the PoC.
 3. Start `orchestrator` as the primary agent and keep the order Analyzer -> Spec-Writer -> Architect -> Planner -> Task Decomposer -> Builder.
 4. Keep `orchestrator` coordination-only: it should route, gate, and hand off work, not author stage artifacts for the specialist roles.
-5. Persist each stage result as an artifact (Markdown or JSON), with the textual specification as the main handoff between reconstruction and implementation.
+5. Persist each stage result as an artifact (Markdown or JSON), with `FUNCTIONALITY-INDEX.md` as the dispatch list for Spec-Writer fan-out and the textual specification as the main handoff between reconstruction and implementation.
 
 ## Three phases from the report
 

@@ -42,8 +42,8 @@ docker compose up -d
 - Phase 1 `Rekonstruktion`: `Analyzer -> Spec-Writer`
 - Phase 2 `Transformationsplanung`: `Architect -> Planner`
 - Phase 3 `Neuimplementierung`: `Task Decomposer -> Builder`
-- `Analyzer` reconstructs the bounded source module from code, repository metadata, and supporting docs.
-- `Spec-Writer` produces the central textual specification artifact.
+- `Analyzer` reconstructs the bounded source module from code, repository metadata, and supporting docs, then writes a complete functionality inventory with traceable checklist items.
+- `Spec-Writer` produces one dedicated textual specification artifact per functionality item selected by the Orchestrator.
 - `Architect` plans the Go target architecture and selects suitable packages with Context7-backed documentation and best practices.
 - `Planner` derives an ordered Go reimplementation plan with work packages from the specification and architecture.
 - `Task Decomposer` turns that plan into implementation-ready Go coding tasks.
@@ -61,11 +61,11 @@ The repo now ships the same migration roles for OpenCode under `.opencode/agents
 - `task-decomposer.md` as a subagent
 - `builder.md` as a subagent
 
-These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
+These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `OVERVIEW.md`, `FUNCTIONALITY-INDEX.md`, `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 
-`ANALYSIS.md`, `OVERVIEW.md`, `ARCHITECTURE`, and `SPEC-INDEX.md` are intended to live under `target/specs/`. Each requirement gets its own use-case folder under `target/specs/<use-case-slug>/` containing `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
+`ANALYSIS.md`, `OVERVIEW.md`, `FUNCTIONALITY-INDEX.md`, `ARCHITECTURE`, and `SPEC-INDEX.md` are intended to live under `target/specs/`. Each functionality item gets its own use-case folder under `target/specs/<use-case-slug>/` containing `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 
-The Orchestrator fans out background `Spec-Writer` runs per requirement, then background `Planner` runs per use-case folder, and then background `Task Decomposer` runs per use-case plan. Go is the default target reimplementation language across Architect, Planner, Task Decomposer, and Builder, with Context7 used wherever current best-practice guidance is needed.
+The Orchestrator fans out background `Spec-Writer` runs per functionality item from `FUNCTIONALITY-INDEX.md`, then background `Planner` runs per use-case folder, and then background `Task Decomposer` runs per use-case plan. `PLAN.md` is the living checklist for planning progress, while `TASKS.md` is the execution checklist for the Builder. Go is the default target reimplementation language across Architect, Planner, Task Decomposer, and Builder, with Context7 used wherever current best-practice guidance is needed.
 
 The textual specification is the main handoff artifact between reconstruction and implementation. `AGENTS.md` acts as the shared rule layer across all roles, matching the thesis' emphasis on a persistent instruction artifact for build hints, conventions, and workflow guardrails.
 

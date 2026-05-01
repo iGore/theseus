@@ -252,6 +252,7 @@ After generating `TASKS.md`, include a brief summary at the end of the artifact 
 - Every task must reference an exact file path or module in the task description, not a vague description.
 - Every task must include a `Depends:` note, even if the value is `none`.
 - Keep `TASKS.md` as the sole produced artifact. Do not create additional task files.
+- Keep task wording aligned with the checklist items in `PLAN.md` so Builder can update both artifacts without ambiguity.
 
 ## Guardrails
 

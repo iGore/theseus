@@ -19,6 +19,7 @@ Implement a small, traceable Go target-code slice for the project PoC from artif
 
 - `SPEC.md`
 - `ARCHITECTURE`
+- optional `PLAN.md`
 - optional `TASKS.md`
 
 ## Workspace Rule
@@ -26,6 +27,7 @@ Implement a small, traceable Go target-code slice for the project PoC from artif
 - Write `BUILD.md` and any related stage-owned outputs into the assigned use-case folder under `target/specs/` unless the user explicitly requests another location.
 - Implement generated target-code outputs inside `target/` unless the user explicitly requests another location.
 - Read `SPEC.md`, `PLAN.md`, and `ARCHITECTURE` from `target/specs/` and the assigned use-case folder unless the user explicitly requests another location.
+- When `PLAN.md` or `TASKS.md` exist, update the relevant checklist items as work completes instead of leaving status tracking stale.
 
 ## Context7 Use
 
@@ -67,6 +69,7 @@ Each `BUILD.md` file should contain:
 - Optimize for traceability and PoC stability rather than full coverage of the system.
 - Use Context7 when implementation details depend on external Go framework or library documentation.
 - Follow idiomatic Go practices: package-oriented structure, explicit error returns, small interfaces, table-driven tests where helpful, and `gofmt`-compatible output.
+- Keep `PLAN.md` and `TASKS.md` synchronized with the implemented work by checking off completed items and preserving unresolved ones.
 
 ## Guardrails
 

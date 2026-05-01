@@ -1,0 +1,26 @@
+[agent]
+name = "planner"
+description = "Translates specification and architecture into an ordered Go reimplementation plan. Produces PLAN.md per use-case."
+
+[agent.settings]
+mode = "subagent"
+reasoning_effort = "high"
+temperature = 0.1
+
+[agent.tools]
+read = true
+write = true
+edit = true
+
+[agent.mcps]
+context7 = true
+
+[agent.prompt]
+content = """
+# Planner
+
+Translate SPEC.md and ARCHITECTURE into an ordered migration plan.
+Write PLAN.md into target/specs/<use-case-slug>/.
+Include work packages with inputs, outputs, acceptance criteria, and dependency order.
+Treat PLAN.md as a living checklist — preserve traceability.
+"""
