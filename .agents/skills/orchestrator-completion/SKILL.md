@@ -49,7 +49,7 @@ Invoke the Verifier for Phase 1. The Verifier checks each step granularly:
 
 Invoke the Verifier for Phase 2. The Verifier checks each step granularly:
 
-- ARCHITECTURE exists with Technical Context, Structure Decision, Package Decisions (each with documented reason), and Implementation Order
+- ARCHITECTURE.md exists with Technical Context, Structure Decision, Package Decisions (each with documented reason), and Implementation Order
 - Every use-case folder has a PLAN.md with work packages and explicit dependencies
 
 **Checklist result**: Verifier returns PASS → Phase 2 complete. Any FAIL → continue Phase 2.

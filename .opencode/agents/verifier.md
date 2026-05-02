@@ -83,9 +83,9 @@ For every item marked `ready` in `FUNCTIONALITY-INDEX.md`:
 
 ## Phase 2 — Transformationsplanung
 
-### 2.1 ARCHITECTURE
+### 2.1 ARCHITECTURE.md
 
-- [ ] `target/specs/ARCHITECTURE` exists
+- [ ] `target/specs/ARCHITECTURE.md` exists
 - [ ] Contains `## Technical Context` (non-empty — language, framework, storage, constraints)
 - [ ] Contains `## Structure Decision` (non-empty — package layout)
 - [ ] Contains `## Package Decisions` with at least one entry including a documented reason

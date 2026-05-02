@@ -25,7 +25,7 @@ Turn specification artifacts into a Go target architecture and implementation pl
 ## Workspace Rule
 
 - Read `SPEC.md` inputs from requirement folders under `target/specs/` unless the user explicitly requests another location.
-- Write `ARCHITECTURE` and any related stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
+- Write `ARCHITECTURE.md` and any related stage-owned outputs into `target/specs/` unless the user explicitly requests another location.
 
 ## Context7 Use
 
@@ -33,9 +33,9 @@ Turn specification artifacts into a Go target architecture and implementation pl
 
 ## Architecture Template
 
-Produce exactly one artifact: `ARCHITECTURE`
+Produce exactly one artifact: `ARCHITECTURE.md`
 
-`ARCHITECTURE` should contain:
+`ARCHITECTURE.md` should contain:
 
 ### 1. Summary
 

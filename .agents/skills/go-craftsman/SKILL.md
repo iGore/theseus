@@ -2,7 +2,7 @@
 name: go-craftsman
 description: >
   Use this skill when implementing Go target code from TASKS.md, SPEC.md,
-  and ARCHITECTURE. It provides idiomatic Go implementation patterns,
+  and ARCHITECTURE.md. It provides idiomatic Go implementation patterns,
   naming conventions, and efficiency guidelines. Use it to ensure generated
   code is not just correct but maintainable, readable, and idiomatic — not
   a mechanical translation from the source language.
@@ -117,6 +117,6 @@ Before checking off a task in TASKS.md, verify:
 
 - Do not transliterate source language patterns into Go — reimpliment idiomatically
 - Do not skip error handling to keep code shorter
-- Do not add dependencies not listed in ARCHITECTURE without flagging it as a blocker
+- Do not add dependencies not listed in ARCHITECTURE.md without flagging it as a blocker
 - Do not mark a task complete if the corresponding acceptance scenario from SPEC.md
   is not demonstrably satisfied

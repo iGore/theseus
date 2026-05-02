@@ -19,12 +19,12 @@ Turn artifacts into a practical Go reimplementation plan that can guide implemen
 ## Required Input
 
 - `SPEC.md`
-- `ARCHITECTURE`
+- `ARCHITECTURE.md`
 
 ## Workspace Rule
 
 - Write `PLAN.md` and any related stage-owned outputs into the assigned requirement folder under `target/specs/` unless the user explicitly requests another location.
-- Read `SPEC.md` inputs and `ARCHITECTURE` from `target/specs/` and the assigned requirement folder unless the user explicitly requests another location.
+- Read `SPEC.md` inputs and `ARCHITECTURE.md` from `target/specs/` and the assigned requirement folder unless the user explicitly requests another location.
 
 ## Context7 Use
 
@@ -34,7 +34,7 @@ Turn artifacts into a practical Go reimplementation plan that can guide implemen
 
 - Consider explicit user input before drafting the plan. If the user provides additional constraints, fold them into the plan and mark unknowns as `NEEDS CLARIFICATION`.
 - If `.specify/extensions.yml` exists at the project root, read it and surface executable `hooks.before_plan` and `hooks.after_plan` entries. Skip invalid YAML silently. Treat hooks with `enabled: false` as disabled. Treat hooks without `enabled` as enabled. Do not evaluate non-empty `condition` expressions; leave that to the hook executor. For executable hooks, report whether they are optional or automatic and include the command and prompt text.
-- Use the `SPEC.md` and `ARCHITECTURE` artifacts as the planning baseline. If `/memory/constitution.md` exists, use it as additional planning context.
+- Use the `SPEC.md` and `ARCHITECTURE.md` artifacts as the planning baseline. If `/memory/constitution.md` exists, use it as additional planning context.
 - Assume the bounded slice will be reimplemented in Go unless the user explicitly overrides that target.
 - Resolve unknowns from the Technical Context before finalizing the implementation plan. Record planning research in `research.md` when extra investigation is required.
 - When the plan requires design-side artifacts, generate and store them alongside the plan in the assigned use-case folder: `research.md`, `data-model.md`, `quickstart.md`, and `contracts/` when relevant.

@@ -59,7 +59,7 @@ Keep secrets such as Sourcebot API keys out of tracked repo files. Use `opencode
 - Keep the migration slice bounded and explicit.
 - Keep the Orchestrator focused on orchestration only: it may route work, enforce gates, and maintain coordination artifacts such as `SPEC-INDEX.md`, but it must not draft stage artifacts on behalf of specialist roles.
 - Have workflow artifacts live under `target/specs/` unless the user explicitly requests a different location.
-- Store `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE` under `target/specs/`.
+- Store `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE.md` under `target/specs/`.
 - Treat Go as the default target reimplementation language unless the user explicitly requests another language.
 - Use Context7 wherever current framework, package, library, or best-practice documentation is needed for planning or implementation.
 - When `FUNCTIONALITY-INDEX.md` defines multiple functionality items, let the Orchestrator fan out one `Spec-Writer` per functionality item in the background.

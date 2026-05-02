@@ -5,7 +5,7 @@ description: >
   artifacts. It captures Go-specific architectural best practices: package
   layout, interface design, error handling strategy, stdlib-first selection,
   and testability. Use it to anchor architecture decisions in documented
-  Go conventions before writing ARCHITECTURE.
+  Go conventions before writing ARCHITECTURE.md.
 ---
 
 # Go Architect
@@ -18,7 +18,7 @@ framework habits from other ecosystems.
 
 ## When to use
 
-- Producing the ARCHITECTURE artifact for a Go target
+- Producing the ARCHITECTURE.md artifact for a Go target
 - Selecting packages and frameworks with Context7 backing
 - Deciding on package layout, interface boundaries, and error strategy
 
@@ -59,7 +59,7 @@ Before reaching for an external library, verify that stdlib covers the need:
 - Testing: `testing` + `testify/assert` for assertions only when stdlib is insufficient
 
 Use Context7 to verify that any chosen external package is actively maintained
-and has stable API surface before committing to it in ARCHITECTURE.
+and has stable API surface before committing to it in ARCHITECTURE.md.
 
 ## Concurrency
 
@@ -77,7 +77,7 @@ and has stable API surface before committing to it in ARCHITECTURE.
 
 ## Guardrails
 
-- Do not import packages without a documented reason in ARCHITECTURE
+- Do not import packages without a documented reason in ARCHITECTURE.md
 - Do not choose a framework because it is familiar from another ecosystem
 - Do not defer error handling decisions to the Builder — decide at architecture time
-- Keep ARCHITECTURE concrete enough for Planner and Builder to act on without reopening the spec
+- Keep ARCHITECTURE.md concrete enough for Planner and Builder to act on without reopening the spec

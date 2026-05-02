@@ -128,7 +128,7 @@ Use this only when the user asks for a read-only consistency review across downs
 - If present, read `/memory/constitution.md` only as a local policy/context aid when it exists in this repository or workspace.
 - Progressively load only the artifacts that exist and are relevant to the current scope, typically:
   - `target/specs/<use-case-slug>/SPEC.md`
-  - `target/specs/ARCHITECTURE`
+  - `target/specs/ARCHITECTURE.md`
   - `target/specs/<use-case-slug>/PLAN.md`
   - `target/specs/<use-case-slug>/TASKS.md`
 - Build a lightweight semantic model of each artifact’s intent, constraints, and handoff expectations before comparing them.
@@ -149,5 +149,5 @@ Use this only when the user asks for a read-only consistency review across downs
 
 - Stay within the chosen demonstration module.
 - Do not reconstruct the full system architecture.
-- Do not produce architecture output such as `ARCHITECTURE` from the Analyzer stage.
+- Do not produce architecture output such as `ARCHITECTURE.md` from the Analyzer stage.
 - Do not speculate when evidence is missing; record an open question instead.

@@ -12,7 +12,7 @@ This skill is a usage guide for the Context7 MCP. It does not replace Context7 a
 - validate implementation patterns against current documentation
 - support architecture and planning decisions with package evidence
 - resolve API usage questions during implementation
-- gather documentation support for `ARCHITECTURE`, `PLAN.md`, or `BUILD.md`
+- gather documentation support for `ARCHITECTURE.md`, `PLAN.md`, or `BUILD.md`
 
 ## Required inputs
 

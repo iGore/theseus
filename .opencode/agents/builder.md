@@ -18,7 +18,7 @@ Implement a small, traceable Go target-code slice for the project PoC from artif
 ## Required Input
 
 - `SPEC.md`
-- `ARCHITECTURE`
+- `ARCHITECTURE.md`
 - optional `PLAN.md`
 - optional `TASKS.md`
 
@@ -26,7 +26,7 @@ Implement a small, traceable Go target-code slice for the project PoC from artif
 
 - Write `BUILD.md` and any related stage-owned outputs into the assigned use-case folder under `target/specs/` unless the user explicitly requests another location.
 - Implement generated target-code outputs inside `target/` unless the user explicitly requests another location.
-- Read `SPEC.md`, `PLAN.md`, and `ARCHITECTURE` from `target/specs/` and the assigned use-case folder unless the user explicitly requests another location.
+- Read `SPEC.md`, `PLAN.md`, and `ARCHITECTURE.md` from `target/specs/` and the assigned use-case folder unless the user explicitly requests another location.
 - When `PLAN.md` or `TASKS.md` exist, update the relevant checklist items as work completes instead of leaving status tracking stale.
 
 ## Context7 Use

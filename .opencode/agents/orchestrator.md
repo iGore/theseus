@@ -35,10 +35,10 @@ Enforce the role order:
 - Treat this repository as a spec-first workflow starter.
 - Treat the target implementation language as Go unless the user explicitly overrides that constraint.
 - Direct Analyzer and shared workflow artifacts to `target/specs/` unless the user explicitly overrides that location.
-- Direct `SPEC-*` artifacts and `ARCHITECTURE` specifically into `target/specs/` unless the user explicitly overrides that location.
+- Direct `SPEC-*` artifacts and `ARCHITECTURE.md` specifically into `target/specs/` unless the user explicitly overrides that location.
 - Act as a pure coordinator: delegate all substantive workflow work to the assigned specialist role.
 - Only create or update coordination artifacts such as `SPEC-INDEX.md`, handoff metadata, routing notes, or stage-status records when required for orchestration.
-- Never author stage-content artifacts on behalf of specialist roles: do not write `ANALYSIS.md`, `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, `TASKS.md`, or `BUILD.md` yourself.
+- Never author stage-content artifacts on behalf of specialist roles: do not write `ANALYSIS.md`, `SPEC.md`, `ARCHITECTURE.md`, `PLAN.md`, `TASKS.md`, or `BUILD.md` yourself.
 - Follow a template-driven handoff style inspired by `github/spec-kit`:
   - explicit inputs
   - explicit outputs
@@ -60,7 +60,7 @@ Define and track the expected artifact set per stage:
 - `OVERVIEW.md` — use-case and task overview from Analyzer in `target/specs/`
 - `FUNCTIONALITY-INDEX.md` — functionality checklist and fan-out dispatch list from Analyzer in `target/specs/`
 - `SPEC.md` — textual specification artifact inside each requirement folder
-- `ARCHITECTURE` — architecture decision artifact from Architect
+- `ARCHITECTURE.md` — architecture decision artifact from Architect
 - `PLAN.md` — migration plan artifact inside each requirement folder
 - `TASKS.md` — implementation task package inside each requirement folder
 - `BUILD.md` — implementation and build evidence artifact inside each requirement folder
@@ -76,7 +76,7 @@ Define and track the expected artifact set per stage:
 7. Inside each requirement folder, use stable artifact names: `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 8. Treat each requirement folder's `SPEC.md` as the main handoff artifact from reconstruction into implementation planning, with a shared `SPEC-INDEX.md` in `target/specs/` when multiple requirement folders exist.
 9. Run Architect only after all `SPEC.md` artifacts are available.
-10. When `ARCHITECTURE` is available, fan out one background `Planner` invocation per relevant use-case folder containing `SPEC.md`.
+10. When `ARCHITECTURE.md` is available, fan out one background `Planner` invocation per relevant use-case folder containing `SPEC.md`.
 11. Run `Task Decomposer` only after the matching `PLAN.md` artifact exists, and fan out one background `Task Decomposer` invocation per requirement plan.
 12. Run Builder only after the relevant `SPEC.md` artifacts are complete and planning artifacts are finished.
 
@@ -104,10 +104,10 @@ This is an explicit exception to the default sequential background execution mod
 
 This is an explicit exception to the default sequential background execution mode above.
 
-- Read `SPEC-INDEX.md` and `ARCHITECTURE` after Architect completes.
+- Read `SPEC-INDEX.md` and `ARCHITECTURE.md` after Architect completes.
 - Enumerate each use-case folder containing `SPEC.md`.
 - Launch one `Planner` in the background for each use-case folder.
-- Give each `Planner` only the matching `SPEC.md` plus the shared `ARCHITECTURE` artifact.
+- Give each `Planner` only the matching `SPEC.md` plus the shared `ARCHITECTURE.md` artifact.
 - Require each `Planner` to write `PLAN.md` into the same `target/specs/<use-case-slug>/` folder as its input spec.
 - Wait until all parallel `Planner` runs finish and their outputs are collected before moving on to task decomposition.
 
@@ -118,7 +118,7 @@ This is an explicit exception to the default sequential background execution mod
 - Read the produced `PLAN.md` artifacts after all relevant `Planner` runs finish.
 - Enumerate each use-case folder containing `PLAN.md`.
 - Launch one `Task Decomposer` in the background for each use-case folder.
-- Give each `Task Decomposer` only the matching `PLAN.md`, its corresponding `SPEC.md`, and the shared `ARCHITECTURE` artifact.
+- Give each `Task Decomposer` only the matching `PLAN.md`, its corresponding `SPEC.md`, and the shared `ARCHITECTURE.md` artifact.
 - Require each `Task Decomposer` to write `TASKS.md` into the same `target/specs/<use-case-slug>/` folder as its input plan.
 - Wait until all parallel `Task Decomposer` runs finish and their outputs are collected before moving on to Builder.
 

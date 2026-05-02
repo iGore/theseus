@@ -20,12 +20,12 @@ Convert the migration plan into bounded, dependency-ordered Go implementation ta
 
 - `PLAN.md`
 - `SPEC.md`
-- `ARCHITECTURE`
+- `ARCHITECTURE.md`
 
 ## Workspace Rule
 
 - Write `TASKS.md` and any related stage-owned outputs into the assigned requirement folder under `target/specs/` unless the user explicitly requests another location.
-- Read `SPEC.md`, `PLAN.md`, and `ARCHITECTURE` from `target/specs/` and the assigned requirement folder unless the user explicitly requests another location.
+- Read `SPEC.md`, `PLAN.md`, and `ARCHITECTURE.md` from `target/specs/` and the assigned requirement folder unless the user explicitly requests another location.
 
 ## Context7 Use
 
@@ -51,7 +51,7 @@ Convert the migration plan into bounded, dependency-ordered Go implementation ta
 - Load the following artifacts as the task-generation baseline:
   - `target/specs/<use-case-slug>/PLAN.md` — ordered migration plan with work packages
   - `target/specs/<use-case-slug>/SPEC.md` — specification with prioritized user stories
-  - `target/specs/ARCHITECTURE` — architecture decisions and constraints
+  - `target/specs/ARCHITECTURE.md` — architecture decisions and constraints
 - Load the following optional supporting artifacts when they exist:
   - `target/specs/<use-case-slug>/research.md` — planning research output
   - `target/specs/<use-case-slug>/data-model.md` — data-model design artifact
@@ -240,7 +240,7 @@ After generating `TASKS.md`, include a brief summary at the end of the artifact 
 ## Handoffs
 
 - **Analyze For Consistency**: If the generated task set exposes major ambiguities, duplicated work, or coverage gaps, recommend a follow-up read-only analysis pass against `SPEC.md`, `PLAN.md`, and `TASKS.md`.
-- **Implement Project**: When the task set is complete, dependency-ordered, and format-validated, hand off `TASKS.md` to Builder together with the relevant `SPEC.md`, `PLAN.md`, and `ARCHITECTURE` artifacts.
+- **Implement Project**: When the task set is complete, dependency-ordered, and format-validated, hand off `TASKS.md` to Builder together with the relevant `SPEC.md`, `PLAN.md`, and `ARCHITECTURE.md` artifacts.
 
 ## Output Rules
 
@@ -258,7 +258,7 @@ After generating `TASKS.md`, include a brief summary at the end of the artifact 
 
 - Do not change the architecture, specification, or plan while decomposing tasks. If inconsistencies are found, report them as blockers rather than resolving them.
 - Do not emit oversized or vague tasks that bypass traceable implementation planning.
-- Do not rewrite or produce `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, or `BUILD.md` artifacts. Task Decomposer is a consumer of these artifacts, not an author.
+- Do not rewrite or produce `SPEC.md`, `ARCHITECTURE.md`, `PLAN.md`, or `BUILD.md` artifacts. Task Decomposer is a consumer of these artifacts, not an author.
 - Do not invent scope outside the specification and plan.
 - Do not create new agent definitions or modify the pipeline role order.
 - When a plan work package is too large for a single task, split it and preserve the dependency chain.
