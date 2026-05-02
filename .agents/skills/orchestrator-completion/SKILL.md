@@ -35,37 +35,34 @@ complete this loop without premature termination.
 
 ## Phase 1 Checklist — Rekonstruktion
 
-Before proceeding to Phase 2, verify all of the following:
+Invoke the Verifier for Phase 1. The Verifier checks each step granularly:
 
-- [ ] `ANALYSIS.md` exists in `target/specs/`
-- [ ] `OVERVIEW.md` exists in `target/specs/`
-- [ ] `FUNCTIONALITY-INDEX.md` exists in `target/specs/` and every item has a status of `ready` or an explicit `blocked` reason — no item is left blank
-- [ ] One `SPEC.md` exists for every item marked `ready` in `FUNCTIONALITY-INDEX.md`, each in its own `target/specs/<use-case-slug>/` folder
-- [ ] `SPEC-INDEX.md` exists in `target/specs/` and lists every generated requirement folder
-- [ ] No Spec-Writer run is still in progress or unconfirmed
+- ANALYSIS.md exists and has all required sections (Scope, Entry Points, Function Inventory, Risk Map)
+- OVERVIEW.md exists with Use Cases and Requirements Task List
+- FUNCTIONALITY-INDEX.md exists, every item has an ID, slug, and explicit status
+- Every `ready` item has a SPEC.md with Gherkin scenarios, FR entries with source references, and Success Criteria
+- SPEC-INDEX.md lists all requirement folders
 
-**Checklist result**: if all pass → Phase 1 complete. If any fail → continue Phase 1.
+**Checklist result**: Verifier returns PASS → Phase 1 complete. Any FAIL → continue Phase 1.
 
 ## Phase 2 Checklist — Transformationsplanung
 
-Before proceeding to Phase 3, verify all of the following:
+Invoke the Verifier for Phase 2. The Verifier checks each step granularly:
 
-- [ ] `ARCHITECTURE` exists in `target/specs/`
-- [ ] One `PLAN.md` exists for every use-case folder listed in `SPEC-INDEX.md`
-- [ ] No Planner run is still in progress or unconfirmed
+- ARCHITECTURE exists with Technical Context, Structure Decision, Package Decisions (each with documented reason), and Implementation Order
+- Every use-case folder has a PLAN.md with work packages and explicit dependencies
 
-**Checklist result**: if all pass → Phase 2 complete. If any fail → continue Phase 2.
+**Checklist result**: Verifier returns PASS → Phase 2 complete. Any FAIL → continue Phase 2.
 
 ## Phase 3 Checklist — Neuimplementierung
 
-Before declaring the workflow complete, verify all of the following:
+Invoke the Verifier for Phase 3. The Verifier checks each step granularly:
 
-- [ ] One `TASKS.md` exists for every use-case folder that has a `PLAN.md`
-- [ ] One `BUILD.md` exists for every use-case folder that has a `TASKS.md`
-- [ ] All checkboxes in every `TASKS.md` are checked — no open items remain
-- [ ] No Task Decomposer or Builder run is still in progress or unconfirmed
+- Every use-case folder has a TASKS.md with correct format, story labels, and no unchecked boxes
+- Every use-case folder has a BUILD.md with verification evidence
+- `go build ./...` and `go vet ./...` pass from `target/`
 
-**Checklist result**: if all pass → workflow complete. If any fail → continue Phase 3.
+**Checklist result**: Verifier returns PASS → workflow complete. Any FAIL → continue Phase 3.
 
 ## Guardrails
 
