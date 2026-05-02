@@ -18,6 +18,9 @@
     },
     "websearch": {
       "enabled": false
+    },
+    "grep_app": {
+      "enabled": false
     }
   }
 }
