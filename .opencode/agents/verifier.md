@@ -15,7 +15,7 @@ tools:
 
 ## Mission
 
-Perform gate verification for a given pipeline phase or the full workflow.
+Perform Oracle verification for a given pipeline phase or the full workflow.
 Return a structured PASS or FAIL report. Do not coordinate, do not implement,
 do not fix — only inspect and report.
 
