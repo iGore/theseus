@@ -45,6 +45,12 @@ Enforce the role order:
   - explicit gates
   - explicit retry paths
 
+## Skill Use
+
+- Use the `orchestrator-completion` skill at every phase gate and before declaring the workflow complete.
+  Run its checklist to confirm all required artifacts exist and are internally complete before proceeding.
+  A subjective sense of "done" is not sufficient — the skill checklist is the only valid exit condition.
+
 ## Required Input
 
 - user request
