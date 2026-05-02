@@ -50,7 +50,7 @@ Each agent owns exactly the artifacts it produces. No agent may write another ag
 
 | Agent | Produces | Location |
 |---|---|---|
-| Analyzer | `ANALYSIS.md`, `OVERVIEW.md`, `FUNCTIONALITY-INDEX.md` | `target/specs/` |
+| Analyzer | `ANALYSIS.md`, `FUNCTIONALITY-INDEX.md` | `target/specs/` |
 | Spec-Writer | `SPEC.md` (one per ready item) | `target/specs/<slug>/` |
 | Architect | `ARCHITECTURE.md` | `target/specs/` |
 | Planner | `PLAN.md` (one per use-case) | `target/specs/<slug>/` |

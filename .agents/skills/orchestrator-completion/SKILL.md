@@ -38,7 +38,7 @@ complete this loop without premature termination.
 Invoke the Verifier for Phase 1. The Verifier checks each step granularly:
 
 - ANALYSIS.md exists and has all required sections (Scope, Entry Points, Function Inventory, Risk Map)
-- OVERVIEW.md exists with Use Cases and Requirements Task List
+- ANALYSIS.md contains `## Use Cases` and `## Requirements Task List` sections (non-empty)
 - FUNCTIONALITY-INDEX.md exists, every item has an ID, slug, and explicit status
 - Every `ready` item has a SPEC.md with Gherkin scenarios, FR entries with source references, and Success Criteria
 - SPEC-INDEX.md lists all requirement folders

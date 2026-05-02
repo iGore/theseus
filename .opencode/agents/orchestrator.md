@@ -49,7 +49,7 @@ Enforce the role order:
 
 - user request
 - current repository context
-- `OVERVIEW.md` when Analyzer produced task and use-case extraction
+
 - `FUNCTIONALITY-INDEX.md` when Analyzer produced functionality-level fan-out data
 
 ## Stage Artifact Contract
@@ -57,7 +57,6 @@ Enforce the role order:
 Define and track the expected artifact set per stage:
 
 - `ANALYSIS.md` — single reconstruction file from Analyzer in `target/specs/`
-- `OVERVIEW.md` — use-case and task overview from Analyzer in `target/specs/`
 - `FUNCTIONALITY-INDEX.md` — functionality checklist and fan-out dispatch list from Analyzer in `target/specs/`
 - `SPEC.md` — textual specification artifact inside each requirement folder
 - `ARCHITECTURE.md` — architecture decision artifact from Architect
@@ -92,10 +91,10 @@ Define and track the expected artifact set per stage:
 
 This is an explicit exception to the default sequential background execution mode above.
 
-- Read `FUNCTIONALITY-INDEX.md` and `OVERVIEW.md` after Analyzer completes.
+- Read `FUNCTIONALITY-INDEX.md` and `ANALYSIS.md` after Analyzer completes.
 - Extract each functionality item marked `ready` from the functionality index.
 - Launch one `Spec-Writer` in the background for each extracted functionality item.
-- Give each `Spec-Writer` only the relevant slice from `ANALYSIS.md`, `OVERVIEW.md`, and `FUNCTIONALITY-INDEX.md`.
+- Give each `Spec-Writer` only the relevant slice from `ANALYSIS.md`, and `FUNCTIONALITY-INDEX.md`.
 - Require each `Spec-Writer` to write `SPEC.md` into `target/specs/<use-case-slug>/`.
 - Require the coordinating stage to keep a shared `SPEC-INDEX.md` that lists all generated requirement folders and their `SPEC.md` files.
 - Wait until all parallel `Spec-Writer` runs finish and their outputs are collected before moving on to Architect.

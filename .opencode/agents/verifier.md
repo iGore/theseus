@@ -43,14 +43,10 @@ For each check:
 - [ ] Contains section `## Function Inventory` (non-empty)
 - [ ] Contains section `## Risk Map` (non-empty)
 - [ ] Contains section `## Open Questions`
-
-### 1.2 OVERVIEW.md
-
-- [ ] `target/specs/OVERVIEW.md` exists
 - [ ] Contains section `## Use Cases` (non-empty)
 - [ ] Contains section `## Requirements Task List` (non-empty)
 
-### 1.3 FUNCTIONALITY-INDEX.md
+### 1.2 FUNCTIONALITY-INDEX.md
 
 - [ ] `target/specs/FUNCTIONALITY-INDEX.md` exists
 - [ ] Every listed item has a stable ID (e.g. `F-001`)
@@ -58,7 +54,7 @@ For each check:
 - [ ] Every listed item has a non-empty slug
 - [ ] At least one item is marked `ready`
 
-### 1.4 SPEC.md — per ready item
+### 1.3 SPEC.md — per ready item
 
 For every item marked `ready` in `FUNCTIONALITY-INDEX.md`:
 
@@ -72,7 +68,7 @@ For every item marked `ready` in `FUNCTIONALITY-INDEX.md`:
 - [ ] Contains `## Assumptions`
 - [ ] Does NOT contain `[NEEDS CLARIFICATION]` without a corresponding open decision entry
 
-### 1.5 SPEC-INDEX.md
+### 1.4 SPEC-INDEX.md
 
 - [ ] `target/specs/SPEC-INDEX.md` exists
 - [ ] Lists every slug folder that corresponds to a `ready` item in `FUNCTIONALITY-INDEX.md`
