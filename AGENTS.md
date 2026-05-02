@@ -44,6 +44,21 @@ The Orchestrator spans all three phases, coordinates handoffs, and enforces the 
 - `Task Decomposer`: break the migration plan into small, implementation-ready Go coding tasks for the builder
 - `Builder`: reimplement target code in Go from the specification and architecture decisions, then record technical verification evidence
 
+## Artifact ownership
+
+Each agent owns exactly the artifacts it produces. No agent may write another agent's artifacts.
+
+| Agent | Produces | Location |
+|---|---|---|
+| Analyzer | `ANALYSIS.md`, `OVERVIEW.md`, `FUNCTIONALITY-INDEX.md` | `target/specs/` |
+| Spec-Writer | `SPEC.md` (one per ready item) | `target/specs/<slug>/` |
+| Architect | `ARCHITECTURE.md` | `target/specs/` |
+| Planner | `PLAN.md` (one per use-case) | `target/specs/<slug>/` |
+| Task Decomposer | `TASKS.md` (one per use-case) | `target/specs/<slug>/` |
+| Builder | Go source files + `BUILD.md` | `target/` + `target/specs/<slug>/` |
+| Orchestrator | `SPEC-INDEX.md` (coordination only) | `target/specs/` |
+| Verifier | `VERIFIER REPORT` (ephemeral, not persisted) | — |
+
 ## MCP usage
 
 - `Sourcebot`: primary MCP for reconstruction work — repository structure, symbol lookup, references, and code-intelligence tasks
