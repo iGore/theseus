@@ -129,6 +129,14 @@ For every folder with a `TASKS.md`:
 - [ ] `go vet ./...` passes from `target/` (run via bash, report exit code)
 - [ ] No `TODO` or `FIXME` comments without an associated open decision
 
+### 3.x Skill-driven additional checks
+
+The detailed phase checklists, including any CLI-specific end-to-end
+checks for runnable binaries and Golden-Output equivalence, are
+maintained in `.agents/skills/orchestrator-completion/SKILL.md`.
+Execute every item listed there for the current phase as part of this
+verification pass and report each as a separate PASS / FAIL entry.
+
 **Phase 3 result**: all checks pass → workflow complete. Any fail → return to Phase 3.
 
 ---

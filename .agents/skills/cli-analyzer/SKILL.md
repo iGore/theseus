@@ -60,6 +60,48 @@ Group flags by scope: global flags vs. subcommand-local flags.
 - Note what goes to stdout vs. stderr (output vs. diagnostic)
 - Record any structured output formats (JSON, CSV, plain text) activated by flags
 
+### 6. Golden Output Snippets from the Source System
+
+For every observable output mode the source tool supports — whether
+selected by a flag, a subcommand, an environment variable, or a config
+toggle — ANALYSIS.md MUST capture a verbatim sample of real
+source-system output. Do not paraphrase or reconstruct these from source
+code; execute the source system on a minimal fixture and record the
+actual result.
+
+For each output mode:
+
+- Construct a minimal fixture that is just large enough to exercise the
+  mode meaningfully (one or two representative inputs is usually enough).
+  Keep the fixture small enough that the captured output stays readable.
+- Run the source system once with exactly the flag / subcommand / env
+  configuration that selects the mode.
+- Capture verbatim stdout (or a short representative excerpt when the
+  full output is large), verbatim stderr, and the observed exit code
+  into a dedicated subsection of ANALYSIS.md, clearly labelled per
+  output mode.
+
+These snippets become the canonical reference for the Architect and the
+Spec-Writer downstream: any output-format requirement in SPEC.md MUST
+reference one of these snippets as its acceptance baseline, not a
+narrative description. This closes the class of defects where the
+target system silently invents its own output schema because the spec
+only described the format in prose.
+
+### 7. End-to-End Behaviour as an Architectural Anchor
+
+The end-to-end behaviour of the tool (invoke → parse → load → process →
+render → exit) is not itself a functionality and MUST NOT be added as a
+synthetic entry in FUNCTIONALITY-INDEX.md. It is an architectural
+concern and is propagated to ARCHITECTURE.md by the Architect.
+
+ANALYSIS.md MUST therefore contain a dedicated `## End-to-End Pipeline`
+subsection that names, for the source system, the ordered sequence of
+internal stages between CLI invocation and output rendering, and links
+each stage to the functionality slice that implements it. This ordered
+sequence is the input the Architect needs to define the Composition
+Root of the target system.
+
 ## Dependency-Ordered Requirements
 
 When producing FUNCTIONALITY-INDEX.md for a CLI tool, order functionality

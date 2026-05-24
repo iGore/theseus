@@ -70,9 +70,11 @@ Each `BUILD.md` file should contain:
 - Use Context7 when implementation details depend on external Go framework or library documentation.
 - Follow idiomatic Go practices: package-oriented structure, explicit error returns, small interfaces, table-driven tests where helpful, and `gofmt`-compatible output.
 - Keep `PLAN.md` and `TASKS.md` synchronized with the implemented work by checking off completed items and preserving unresolved ones.
+- When the assigned use case (or any use case it depends on) defines a CLI entry point, an executable binary, or `--help` / `--version` behaviour, produce a runnable `target/cmd/<tool>/main.go` that wires the relevant stages end-to-end (loader, transformation, output rendering). A successful `go build ./...` on library packages alone is NOT sufficient — the binary must be invocable and reach the acceptance scenarios from `SPEC.md`. Document the wiring in `BUILD.md` under "Implementation Scope".
 
 ## Guardrails
 
 - Do not implement any feature outside the specification.
 - Never silently accept missing test coverage.
 - Do not implement the target slice in a non-Go language unless the user explicitly overrides the repository default.
+- Do not declare a CLI-oriented use case complete without a runnable entry point under `target/cmd/<tool>/main.go`; the Verifier explicitly checks for this in Phase 3.4.

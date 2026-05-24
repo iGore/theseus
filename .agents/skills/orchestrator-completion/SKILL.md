@@ -50,6 +50,7 @@ Invoke the Verifier for Phase 1. The Verifier checks each step granularly:
 Invoke the Verifier for Phase 2. The Verifier checks each step granularly:
 
 - ARCHITECTURE.md exists with Technical Context, Structure Decision, Package Decisions (each with documented reason), and Implementation Order
+- For CLI-oriented target systems, ARCHITECTURE.md additionally contains a `## Composition Root` section with entry-point path, ordered stage sequence, concrete stage constructors, a flag-to-stage propagation table, and an acceptance reference to the Golden Output Snippets in ANALYSIS.md (see `go-architect` skill)
 - Every use-case folder has a PLAN.md with work packages and explicit dependencies
 
 **Checklist result**: Verifier returns PASS → Phase 2 complete. Any FAIL → continue Phase 2.
@@ -61,6 +62,12 @@ Invoke the Verifier for Phase 3. The Verifier checks each step granularly:
 - Every use-case folder has a TASKS.md with correct format, story labels, and no unchecked boxes
 - Every use-case folder has a BUILD.md with verification evidence
 - `go build ./...` and `go vet ./...` pass from `target/`
+- For CLI-oriented target systems, an end-to-end binary exists and is verifiable:
+  - `target/cmd/<tool>/main.go` is present, derived from the Composition Root section of ARCHITECTURE.md
+  - `go build -o /tmp/cli-bin ./cmd/...` from `target/` produces an executable file
+  - The binary responds to the standard discovery flags it declares (typically `--help` and `--version`) with the exit codes and output channels defined in the corresponding SPEC.md
+  - The binary, executed on each of the minimal fixtures referenced in ANALYSIS.md, produces output that semantically matches the corresponding Golden Output Snippet. Format-level divergences such as ordering of structurally unordered collections, insignificant whitespace, or platform-dependent absolute paths are tolerated; missing entities, divergent output schemas, or empty outputs are FAIL conditions
+  - A pure library build without a `cmd/` entry point counts as FAIL — passing `go build ./...` on packages alone is not sufficient when the migration targets a CLI tool
 
 **Checklist result**: Verifier returns PASS → workflow complete. Any FAIL → continue Phase 3.
 

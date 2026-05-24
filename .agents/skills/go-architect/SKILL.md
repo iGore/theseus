@@ -34,6 +34,46 @@ Follow the standard Go project layout:
 
 Do not import across domain boundaries without an explicit interface contract.
 
+## Composition Root (mandatory for CLI tools)
+
+For any target system that is a CLI tool, ARCHITECTURE.md MUST contain a
+section titled `## Composition Root` that specifies the end-to-end wiring
+of the target binary. This section is the bridge between the per-slice
+specifications and the runnable artifact, and is the single source of
+truth the Builder follows when implementing `cmd/<tool>/main.go`.
+
+The Composition Root section MUST include:
+
+- **Entry-point path**: explicit file path, normally `cmd/<tool>/main.go`,
+  declaring `package main` and a `func main()` that delegates to internal
+  packages without containing business logic itself
+- **Stage sequence**: the ordered list of internal stages the binary
+  executes between CLI invocation and output emission. Each stage MUST
+  be referenced back to the functionality slice that owns it. The
+  sequence mirrors the `## End-to-End Pipeline` section produced by the
+  Analyzer in ANALYSIS.md, expressed in the target language's package
+  vocabulary
+- **Construction of each stage**: which concrete type implements each
+  stage interface, where it is constructed, and which option fields
+  configure it. Interfaces remain at the consumer side as required by
+  the Interface Design section above; the Composition Root names the
+  concrete implementations chosen for the binary
+- **Flag-to-stage propagation table**: for every flag, subcommand,
+  environment variable, or config-file option declared in the
+  CLI-options slice, name the stage that consumes it and the option
+  field that carries it from parsed input to that stage. Inputs without
+  an entry here are an architectural defect — they will be silently
+  dropped at runtime
+- **Acceptance reference**: a link to the Golden Output Snippets in
+  ANALYSIS.md that the end-to-end binary must reproduce semantically.
+  These snippets are the architectural contract; the Builder is
+  expected to smoke-test against them before marking BUILD.md complete
+
+A target system whose ARCHITECTURE.md lacks a Composition Root section
+is not architecturally complete, regardless of how well the per-package
+decisions are documented. The Architect MUST produce this section
+explicitly before Phase 3 may begin.
+
 ## Interface Design
 
 - Define interfaces at the consumer, not the producer
