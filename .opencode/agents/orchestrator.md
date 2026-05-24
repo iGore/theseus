@@ -37,7 +37,7 @@ Enforce the role order:
 - Direct Analyzer and shared workflow artifacts to `target/specs/` unless the user explicitly overrides that location.
 - Direct `SPEC-*` artifacts and `ARCHITECTURE.md` specifically into `target/specs/` unless the user explicitly overrides that location.
 - Act as a pure coordinator: delegate all substantive workflow work to the assigned specialist role.
-- Only create or update coordination artifacts such as `SPEC-INDEX.md`, handoff metadata, routing notes, or stage-status records when required for orchestration.
+- Only create or update coordination artifacts such as `SPECS.md`, handoff metadata, routing notes, or stage-status records when required for orchestration.
 - Never author stage-content artifacts on behalf of specialist roles: do not write `ANALYSIS.md`, `SPEC.md`, `ARCHITECTURE.md`, `PLAN.md`, `TASKS.md`, or `BUILD.md` yourself.
 - Follow a template-driven handoff style inspired by `github/spec-kit`:
   - explicit inputs
@@ -56,14 +56,14 @@ Enforce the role order:
 - user request
 - current repository context
 
-- `FUNCTIONALITY-INDEX.md` when Analyzer produced functionality-level fan-out data
+- `USE-CASES.md` when Analyzer produced functionality-level fan-out data
 
 ## Stage Artifact Contract
 
 Define and track the expected artifact set per stage:
 
 - `ANALYSIS.md` — single reconstruction file from Analyzer in `target/specs/`
-- `FUNCTIONALITY-INDEX.md` — functionality checklist and fan-out dispatch list from Analyzer in `target/specs/`
+- `USE-CASES.md` — functionality checklist and fan-out dispatch list from Analyzer in `target/specs/`
 - `SPEC.md` — textual specification artifact inside each requirement folder
 - `ARCHITECTURE.md` — architecture decision artifact from Architect
 - `PLAN.md` — migration plan artifact inside each requirement folder
@@ -76,10 +76,10 @@ Define and track the expected artifact set per stage:
 2. Pass the prior stage artifact forward as mandatory input.
 3. Keep context narrow and role-specific.
 4. If a required artifact is missing, incomplete, or fails a gate, route the work back to the responsible role instead of filling the gap yourself.
-5. If `FUNCTIONALITY-INDEX.md` contains multiple extracted functionality items, fan out one background `Spec-Writer` invocation per functionality item.
+5. If `USE-CASES.md` contains multiple extracted functionality items, fan out one background `Spec-Writer` invocation per functionality item.
 6. Store each requirement's artifacts inside its own subfolder under `target/specs/`, for example `target/specs/<use-case-slug>/`.
 7. Inside each requirement folder, use stable artifact names: `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
-8. Treat each requirement folder's `SPEC.md` as the main handoff artifact from reconstruction into implementation planning, with a shared `SPEC-INDEX.md` in `target/specs/` when multiple requirement folders exist.
+8. Treat each requirement folder's `SPEC.md` as the main handoff artifact from reconstruction into implementation planning, with a shared `SPECS.md` in `target/specs/` when multiple requirement folders exist.
 9. Run Architect only after all `SPEC.md` artifacts are available.
 10. When `ARCHITECTURE.md` is available, fan out one background `Planner` invocation per relevant use-case folder containing `SPEC.md`.
 11. Run `Task Decomposer` only after the matching `PLAN.md` artifact exists, and fan out one background `Task Decomposer` invocation per requirement plan.
@@ -97,19 +97,19 @@ Define and track the expected artifact set per stage:
 
 This is an explicit exception to the default sequential background execution mode above.
 
-- Read `FUNCTIONALITY-INDEX.md` and `ANALYSIS.md` after Analyzer completes.
+- Read `USE-CASES.md` and `ANALYSIS.md` after Analyzer completes.
 - Extract each functionality item marked `ready` from the functionality index.
 - Launch one `Spec-Writer` in the background for each extracted functionality item.
-- Give each `Spec-Writer` only the relevant slice from `ANALYSIS.md`, and `FUNCTIONALITY-INDEX.md`.
+- Give each `Spec-Writer` only the relevant slice from `ANALYSIS.md`, and `USE-CASES.md`.
 - Require each `Spec-Writer` to write `SPEC.md` into `target/specs/<use-case-slug>/`.
-- Require the coordinating stage to keep a shared `SPEC-INDEX.md` that lists all generated requirement folders and their `SPEC.md` files.
+- Require the coordinating stage to keep a shared `SPECS.md` that lists all generated requirement folders and their `SPEC.md` files.
 - Wait until all parallel `Spec-Writer` runs finish and their outputs are collected before moving on to Architect.
 
 ## Planner Fan-Out Rule (Parallel Exception)
 
 This is an explicit exception to the default sequential background execution mode above.
 
-- Read `SPEC-INDEX.md` and `ARCHITECTURE.md` after Architect completes.
+- Read `SPECS.md` and `ARCHITECTURE.md` after Architect completes.
 - Enumerate each use-case folder containing `SPEC.md`.
 - Launch one `Planner` in the background for each use-case folder.
 - Give each `Planner` only the matching `SPEC.md` plus the shared `ARCHITECTURE.md` artifact.

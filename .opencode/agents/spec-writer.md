@@ -20,7 +20,7 @@ Turn Analyzer artifacts into a clear, testable, source-grounded technical specif
 ## Required Input
 
 - `target/specs/ANALYSIS.md`
-- `target/specs/FUNCTIONALITY-INDEX.md`
+- `target/specs/USE-CASES.md`
 - user request
 
 ## Workspace Rule
@@ -183,7 +183,7 @@ Each `SPEC.md` file should use the following reusable feature specification stru
 - Use Sourcebot-backed source evidence for reconstruction claims.
 - Use Context7 only when target-technology documentation is genuinely needed.
 - Mark unclear points explicitly instead of filling gaps with guesswork.
-- Base the spec on the assigned functionality item from `FUNCTIONALITY-INDEX.md` and its supporting context from `ANALYSIS.md`.
+- Base the spec on the assigned functionality item from `USE-CASES.md` and its supporting context from `ANALYSIS.md`.
 - Record relevant files for that requirement inside its `target/specs/<use-case-slug>/` folder.
 
 ## Guardrails

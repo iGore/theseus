@@ -61,11 +61,11 @@ The repo now ships the same migration roles for OpenCode under `.opencode/agents
 - `task-decomposer.md` as a subagent
 - `builder.md` as a subagent
 
-These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `OVERVIEW.md`, `FUNCTIONALITY-INDEX.md`, `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
+These prompts now follow a more template-oriented structure inspired by `github/spec-kit/templates`, with named stage artifacts such as `ANALYSIS.md`, `OVERVIEW.md`, `USE-CASES.md`, `SPEC.md`, `ARCHITECTURE`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 
-`ANALYSIS.md`, `OVERVIEW.md`, `FUNCTIONALITY-INDEX.md`, `ARCHITECTURE`, and `SPEC-INDEX.md` are intended to live under `target/specs/`. Each functionality item gets its own use-case folder under `target/specs/<use-case-slug>/` containing `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
+`ANALYSIS.md`, `OVERVIEW.md`, `USE-CASES.md`, `ARCHITECTURE`, and `SPECS.md` are intended to live under `target/specs/`. Each functionality item gets its own use-case folder under `target/specs/<use-case-slug>/` containing `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md`.
 
-The Orchestrator fans out background `Spec-Writer` runs per functionality item from `FUNCTIONALITY-INDEX.md`, then background `Planner` runs per use-case folder, and then background `Task Decomposer` runs per use-case plan. `PLAN.md` is the living checklist for planning progress, while `TASKS.md` is the execution checklist for the Builder. Go is the default target reimplementation language across Architect, Planner, Task Decomposer, and Builder, with Context7 used wherever current best-practice guidance is needed.
+The Orchestrator fans out background `Spec-Writer` runs per functionality item from `USE-CASES.md`, then background `Planner` runs per use-case folder, and then background `Task Decomposer` runs per use-case plan. `PLAN.md` is the living checklist for planning progress, while `TASKS.md` is the execution checklist for the Builder. Go is the default target reimplementation language across Architect, Planner, Task Decomposer, and Builder, with Context7 used wherever current best-practice guidance is needed.
 
 The textual specification is the main handoff artifact between reconstruction and implementation. `AGENTS.md` acts as the shared rule layer across all roles, matching the thesis' emphasis on a persistent instruction artifact for build hints, conventions, and workflow guardrails.
 

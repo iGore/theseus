@@ -50,13 +50,13 @@ Each agent owns exactly the artifacts it produces. No agent may write another ag
 
 | Agent | Produces | Location |
 |---|---|---|
-| Analyzer | `ANALYSIS.md`, `FUNCTIONALITY-INDEX.md` | `target/specs/` |
+| Analyzer | `ANALYSIS.md`, `USE-CASES.md` | `target/specs/` |
 | Spec-Writer | `SPEC.md` (one per ready item) | `target/specs/<slug>/` |
 | Architect | `ARCHITECTURE.md` | `target/specs/` |
 | Planner | `PLAN.md` (one per use-case) | `target/specs/<slug>/` |
 | Task Decomposer | `TASKS.md` (one per use-case) | `target/specs/<slug>/` |
 | Builder | Go source files + `BUILD.md` | `target/` + `target/specs/<slug>/` |
-| Orchestrator | `SPEC-INDEX.md` (coordination only) | `target/specs/` |
+| Orchestrator | `SPECS.md` (coordination only) | `target/specs/` |
 | Verifier | `VERIFIER REPORT` (ephemeral, not persisted) | — |
 
 ## MCP usage
@@ -72,12 +72,12 @@ Keep secrets such as Sourcebot API keys out of tracked repo files. Use `opencode
 
 - Keep the workflow spec-first: do not jump from analysis straight to implementation.
 - Keep the migration slice bounded and explicit.
-- Keep the Orchestrator focused on orchestration only: it may route work, enforce gates, and maintain coordination artifacts such as `SPEC-INDEX.md`, but it must not draft stage artifacts on behalf of specialist roles.
+- Keep the Orchestrator focused on orchestration only: it may route work, enforce gates, and maintain coordination artifacts such as `SPECS.md`, but it must not draft stage artifacts on behalf of specialist roles.
 - Have workflow artifacts live under `target/specs/` unless the user explicitly requests a different location.
 - Store `SPEC.md`, `PLAN.md`, `TASKS.md`, and `BUILD.md` under `target/specs/<use-case-slug>/` and store shared `ARCHITECTURE.md` under `target/specs/`.
 - Treat Go as the default target reimplementation language unless the user explicitly requests another language.
 - Use Context7 wherever current framework, package, library, or best-practice documentation is needed for planning or implementation.
-- When `FUNCTIONALITY-INDEX.md` defines multiple functionality items, let the Orchestrator fan out one `Spec-Writer` per functionality item in the background.
+- When `USE-CASES.md` defines multiple functionality items, let the Orchestrator fan out one `Spec-Writer` per functionality item in the background.
 - After shared architecture is available, let the Orchestrator fan out one `Planner` per use-case folder containing `SPEC.md` in the background.
 - After use-case-scoped plans are available, let the Orchestrator fan out one `Task Decomposer` per use-case-scoped plan in the background.
 - Treat `PLAN.md` as a living checklist artifact: preserve traceability and do not silently delete unfinished work.

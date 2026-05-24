@@ -39,9 +39,11 @@ Invoke the Verifier for Phase 1. The Verifier checks each step granularly:
 
 - ANALYSIS.md exists and has all required sections (Scope, Entry Points, Function Inventory, Risk Map)
 - ANALYSIS.md contains `## Use Cases` and `## Requirements Task List` sections (non-empty)
-- FUNCTIONALITY-INDEX.md exists, every item has an ID, slug, and explicit status
+- For source tools that consume external data beyond CLI arguments, ANALYSIS.md contains an `## Input-Field Inventory` section (see `cli-analyzer` skill) listing, for every externally-supplied input field, its default path, every conditional override with source-line reference and triggering condition, and an explicit `unconditional` marker for overrides that no CLI flag, env var, or config key controls. Every unconditional override MUST have a corresponding probe fixture and Golden Output Snippet recorded in ANALYSIS.md
+- Every unconditional override identified in the Input-Field Inventory is surfaced as an explicit FR in the SPEC.md of the slice that owns the affected output field, not only in the slice that owns a flag of the same name
+- USE-CASES.md exists, every item has an ID, slug, and explicit status
 - Every `ready` item has a SPEC.md with Gherkin scenarios, FR entries with source references, and Success Criteria
-- SPEC-INDEX.md lists all requirement folders
+- SPECS.md lists all requirement folders
 
 **Checklist result**: Verifier returns PASS → Phase 1 complete. Any FAIL → continue Phase 1.
 

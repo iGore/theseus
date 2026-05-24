@@ -5,7 +5,7 @@ description: >
   It extends the Sourcebot skill with CLI-specific reconstruction focus:
   entry points, flag and argument parsing, subcommand dispatch, environment
   variables, exit codes, and dependency-ordered requirements. Use it to ensure
-  the FUNCTIONALITY-INDEX.md captures the CLI surface in the order downstream
+  the USE-CASES.md captures the CLI surface in the order downstream
   Spec-Writers need.
 ---
 
@@ -88,11 +88,63 @@ narrative description. This closes the class of defects where the
 target system silently invents its own output schema because the spec
 only described the format in prose.
 
-### 7. End-to-End Behaviour as an Architectural Anchor
+### 7. Input-Field Tracing (Data-Flow Reconstruction)
+
+The CLI surface (entry points, flags, exit codes) captures the
+*control-flow contract* of the tool, but it does not capture the
+*data-flow contract*: how each externally-supplied input field is read,
+transformed, and possibly overridden before reaching output. A flag-
+centric reconstruction systematically misses behaviour that lives as a
+flag-less side effect on a single input field — for instance an input
+marker that silently rewrites a sibling field before rendering, an
+auxiliary descriptor that suppresses a diagnostic, or a configuration
+key that overrides a CLI flag under one undocumented condition. These
+defects are invisible to a CLI-first reading and only surface in
+differential testing against the source system.
+
+To close this class, ANALYSIS.md MUST contain a section titled
+`## Input-Field Inventory` that enumerates, for every input field the
+source tool reads from external data sources (configuration files,
+manifest or descriptor files, environment variables, stdin, network
+responses, or any other input outside the CLI argument vector):
+
+- **Field name and source**: the exact key and where it is read from,
+  using the source-system's own naming for both the file or stream and
+  the key path within it
+- **Default path**: how the field flows through the pipeline when no
+  special condition applies — which stage reads it, which fields it
+  populates in the in-memory model, which output property it surfaces
+  through
+- **Conditional overrides**: every code location that assigns this
+  field a value different from the one read, regardless of whether a
+  CLI flag triggers it. For each override, record: source file and line
+  number, the triggering condition expressed in domain terms, the new
+  value, and whether any CLI flag, env var, or configuration key
+  controls it. An override with no controlling input is an
+  *unconditional override* and MUST be called out explicitly as such
+- **Test coverage reference**: the test in the source repository that
+  exercises each override, if one exists. Tests whose grouping label
+  (e.g. `describe` block, test class, or fixture name) suggests a flag
+  while the test body actually exercises a flag-less override MUST be
+  cross-referenced here, not only under the flag they appear to
+  belong to
+
+For every unconditional override identified, the Analyzer MUST also
+construct a probe fixture that triggers the override path, execute the
+source system on it, and capture the resulting output as an additional
+Golden Output Snippet labelled with the override it exercises. The
+Spec-Writer downstream MUST surface each override as an explicit FR
+in the slice that owns the affected output field, not in the slice
+that owns the surface flag whose name the field happens to share.
+
+Skipping this section is permitted only when the source tool consumes
+no external data beyond its CLI arguments — a rare case in practice.
+
+### 8. End-to-End Behaviour as an Architectural Anchor
 
 The end-to-end behaviour of the tool (invoke → parse → load → process →
 render → exit) is not itself a functionality and MUST NOT be added as a
-synthetic entry in FUNCTIONALITY-INDEX.md. It is an architectural
+synthetic entry in USE-CASES.md. It is an architectural
 concern and is propagated to ARCHITECTURE.md by the Architect.
 
 ANALYSIS.md MUST therefore contain a dedicated `## End-to-End Pipeline`
@@ -104,7 +156,7 @@ Root of the target system.
 
 ## Dependency-Ordered Requirements
 
-When producing FUNCTIONALITY-INDEX.md for a CLI tool, order functionality
+When producing USE-CASES.md for a CLI tool, order functionality
 items so that downstream Spec-Writers can work in dependency sequence:
 
 1. **Entry point and invocation model** — must be specified first; all other
@@ -119,7 +171,7 @@ items so that downstream Spec-Writers can work in dependency sequence:
 6. **Configuration loading** — specify after the flag surface is clear,
    since config often mirrors or overrides flags
 
-Mark each item in FUNCTIONALITY-INDEX.md with its upstream dependency IDs
+Mark each item in USE-CASES.md with its upstream dependency IDs
 so the Orchestrator can enforce ordering in Spec-Writer fan-out.
 
 ## Guardrails

@@ -46,9 +46,9 @@ For each check:
 - [ ] Contains section `## Use Cases` (non-empty)
 - [ ] Contains section `## Requirements Task List` (non-empty)
 
-### 1.2 FUNCTIONALITY-INDEX.md
+### 1.2 USE-CASES.md
 
-- [ ] `target/specs/FUNCTIONALITY-INDEX.md` exists
+- [ ] `target/specs/USE-CASES.md` exists
 - [ ] Every listed item has a stable ID (e.g. `F-001`)
 - [ ] Every listed item has an explicit status: `ready` or `blocked` — no blank status
 - [ ] Every listed item has a non-empty slug
@@ -56,7 +56,7 @@ For each check:
 
 ### 1.3 SPEC.md — per ready item
 
-For every item marked `ready` in `FUNCTIONALITY-INDEX.md`:
+For every item marked `ready` in `USE-CASES.md`:
 
 - [ ] `target/specs/<slug>/SPEC.md` exists
 - [ ] Contains `## Scope` (non-empty)
@@ -68,10 +68,10 @@ For every item marked `ready` in `FUNCTIONALITY-INDEX.md`:
 - [ ] Contains `## Assumptions`
 - [ ] Does NOT contain `[NEEDS CLARIFICATION]` without a corresponding open decision entry
 
-### 1.4 SPEC-INDEX.md
+### 1.4 SPECS.md
 
-- [ ] `target/specs/SPEC-INDEX.md` exists
-- [ ] Lists every slug folder that corresponds to a `ready` item in `FUNCTIONALITY-INDEX.md`
+- [ ] `target/specs/SPECS.md` exists
+- [ ] Lists every slug folder that corresponds to a `ready` item in `USE-CASES.md`
 
 **Phase 1 result**: all checks pass → Phase 1 complete. Any fail → return to Phase 1.
 
@@ -91,7 +91,7 @@ For every item marked `ready` in `FUNCTIONALITY-INDEX.md`:
 
 ### 2.2 PLAN.md — per use-case folder
 
-For every folder listed in `SPEC-INDEX.md`:
+For every folder listed in `SPECS.md`:
 
 - [ ] `target/specs/<slug>/PLAN.md` exists
 - [ ] Contains at least one work package

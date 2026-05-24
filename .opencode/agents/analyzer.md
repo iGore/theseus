@@ -14,7 +14,7 @@ tools:
 ## Mission
 
 Produce a reliable reconstruction of one bounded PoC source module.
-The result must include a Markdown analysis file (`ANALYSIS.md`) and a dispatch file (`FUNCTIONALITY-INDEX.md`) that downstream Spec-Writers can use in parallel.
+The result must include a Markdown analysis file (`ANALYSIS.md`) and a dispatch file (`USE-CASES.md`) that downstream Spec-Writers can use in parallel.
 
 ## Required Input
 
@@ -68,10 +68,10 @@ The result must include a Markdown analysis file (`ANALYSIS.md`) and a dispatch 
 
 ## Output Artifact
 
-Produce `ANALYSIS.md` and a dispatch file `FUNCTIONALITY-INDEX.md`
+Produce `ANALYSIS.md` and a dispatch file `USE-CASES.md`
 
 - `ANALYSIS.md` must be exactly one Markdown file in `target/specs/`.
-- `FUNCTIONALITY-INDEX.md` must be a Markdown file in `target/specs/` that lists every identified functionality item as a checklist entry with its ID, title, status, and intended output folder slug.
+- `USE-CASES.md` must be a Markdown file in `target/specs/` that lists every identified functionality item as a checklist entry with its ID, title, status, and intended output folder slug.
 - If a read-only cross-artifact review is explicitly requested and downstream artifacts exist, also produce `CROSS-ANALYSIS.md` in `target/specs/<use-case-slug>/` (or the closest applicable `target/` analysis folder for the current scope).
 
 `ANALYSIS.md` should contain:
@@ -92,7 +92,7 @@ Produce `ANALYSIS.md` and a dispatch file `FUNCTIONALITY-INDEX.md`
 - `Requirements Task List`
 - `Feature-to-Task Mapping`
 
-`FUNCTIONALITY-INDEX.md` should contain:
+`USE-CASES.md` should contain:
 
 - `Functionality Checklist`
 - `Status`
@@ -111,7 +111,7 @@ Produce `ANALYSIS.md` and a dispatch file `FUNCTIONALITY-INDEX.md`
 - For important dependencies, record both the package/library name and a short explanation of the function or responsibility it has in the project.
 - In `ANALYSIS.md`, include a `## Use Cases` section that covers all relevant app use cases and maps them to coarse tasks or feature slices.
 - In `ANALYSIS.md`, include a `## Requirements Task List` section that captures all identified requirements and ties each task to supporting evidence when practical.
-- In `FUNCTIONALITY-INDEX.md`, use strict checklist syntax (`- [ ]` or `- [x]` only when explicitly revising an existing completed index) so the file can act as an orchestration checklist.
+- In `USE-CASES.md`, use strict checklist syntax (`- [ ]` or `- [x]` only when explicitly revising an existing completed index) so the file can act as an orchestration checklist.
 - For each functionality checklist item, include the stable ID, short title, folder slug, current readiness status, and a compact evidence pointer.
 
 ## Optional Cross-Artifact Analysis Workflow
