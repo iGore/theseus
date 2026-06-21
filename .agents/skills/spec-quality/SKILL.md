@@ -49,9 +49,15 @@ supplements it with explicit acceptance criteria.
   trailing-newline / stdout-vs-file behavior — no prose-only format description
 - Any classification/normalization rule is captured as the **full ordered rule
   table** including the **fallback branch**, with verbatim output literals
-- Source dependencies whose behavior must be replicated (SPDX parser,
-  tree/CSV/markdown formatter, dependency-graph resolver) are named, with an FR
-  requiring the reimplementation to match them
+- Source dependencies whose behavior must be replicated (identifier/expression
+  validator, tree/table/markdown formatter, dependency-graph resolver) are named,
+  with an FR requiring the reimplementation to match them
+- Each such dependency references the Analyzer's `## Source-Dependency Contracts`
+  entry (documented input/output) and the Architect's dependency decision
+  (adopt Go lib / faithful reimplementation / approximate)
+- **Concrete example outputs are always present**: every output/transformation
+  requirement carries at least one worked `input → output` example (from a golden
+  snippet or the dependency contract), never a prose-only description
 - At least one success criterion is a **byte-level differential-parity** baseline
   over an edge-inclusive fixture set, not just the happy path
 
@@ -78,6 +84,10 @@ Before submitting the final `SPEC.md`, verify:
       and covered by an FR + acceptance scenario
 - [ ] A byte-level differential-parity success criterion covers the edge set, not
       just the happy path
+- [ ] Every output/transform requirement carries a concrete worked example
+      (`input → output`); none rely on prose alone
+- [ ] Replicated source dependencies link to their `Source-Dependency Contracts`
+      entry and the Architect's dependency decision
 
 ## Guardrails
 
@@ -88,3 +98,7 @@ Before submitting the final `SPEC.md`, verify:
 - Do not pass an output slice whose format is described only in prose, or whose
   parity criterion is "semantic"/happy-path only — require a byte-exact baseline
 - Do not pass a transform slice whose rule table is a "common cases" subset
+- Do not pass any output/transform requirement that lacks a concrete worked
+  example output
+- Do not pass a replicated-dependency requirement that lacks a documented
+  input/output contract reference and an explicit architecture decision

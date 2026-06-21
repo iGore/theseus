@@ -132,6 +132,7 @@ Produce `ANALYSIS.md` and a dispatch file `USE-CASES.md`
 - `Domain Map`
 - `Flow Map`
 - `Dependency Notes`
+- `Source-Dependency Contracts` (documented input/output + worked examples per third-party lib whose behavior shapes output; see the `cli-analyzer` skill)
 - `Risk Map`
 - `Open Questions`
 - `Evidence Pointers`

@@ -182,6 +182,41 @@ each stage to the functionality slice that implements it. This ordered
 sequence is the input the Architect needs to define the Composition
 Root of the target system.
 
+### 9. Source-Dependency Behavior Contracts (documented I/O + examples)
+
+When the source delegates non-trivial behavior to a third-party library, the
+output identity of the whole tool depends on that library's exact semantics.
+Reconstructing the *calling code* is not enough — the Analyzer MUST also
+reconstruct the *library's contract*, because a stdlib-only reimplementation
+that re-derives it by hand is the dominant cause of divergence.
+
+ANALYSIS.md MUST contain a section titled `## Source-Dependency Contracts`
+that lists every dependency whose behavior shapes observable output
+(examples of such categories, abstractly: dependency-graph/resolution
+libraries, standardized-identifier validators or expression parsers,
+output/tree/table formatters, escaping or serialization helpers, path or
+URL normalizers). For each one, record:
+
+- **Name, version, and role**: the package as pinned in the source manifest,
+  and the one behavior the tool relies on.
+- **Documented input contract**: accepted input shapes/types and relevant
+  options, taken from the library's own documentation/README — not guessed
+  from the call site. Cite the doc source.
+- **Documented output contract**: return shape, ordering guarantees, escaping
+  rules, sentinel/error values, and any whitespace/formatting it controls.
+- **Worked example (mandatory)**: at least one concrete `input → output`
+  example for the relied-upon behavior, copied from the library's docs or
+  produced by exercising the library on a minimal input. Edge inputs
+  (empty, malformed, multi-value) should each get an example when they change
+  the result. These examples are the contract the target must reproduce.
+- **Re-derivation risk**: a one-line note on how hard the behavior is to
+  reproduce faithfully (trivial / moderate / standardized-and-deep). This
+  feeds the Architect's replacement decision (see the `go-architect` skill).
+
+This section gives the Architect the evidence to decide whether to adopt an
+equivalent target-language library or reimplement, and gives the Spec-Writer
+concrete example I/O to attach to every transformation requirement.
+
 ## Dependency-Ordered Requirements
 
 When producing USE-CASES.md for a CLI tool, order functionality

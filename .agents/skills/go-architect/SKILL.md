@@ -101,6 +101,50 @@ Before reaching for an external library, verify that stdlib covers the need:
 Use Context7 to verify that any chosen external package is actively maintained
 and has stable API surface before committing to it in ARCHITECTURE.md.
 
+**Stdlib-first is not "reimplement-by-hand-first".** Stdlib-first applies to
+*generic plumbing* (I/O, JSON, flags). It does **not** license re-deriving
+*standardized or non-trivial domain behavior* that the source delegated to a
+library (identifier/expression validation, dependency-graph resolution,
+canonical formatting/escaping). Hand-rolling such behavior under a stdlib-only
+goal is the dominant cause of output divergence in rewrites. For those cases,
+run the Source-Dependency Replacement Evaluation below before defaulting to a
+hand-written approximation.
+
+## Source-Dependency Replacement Evaluation (mandatory for migrations)
+
+For every entry in the Analyzer's `## Source-Dependency Contracts`, ARCHITECTURE.md
+MUST record an explicit decision. Do not silently drop a source dependency into
+a hand-written helper.
+
+For each source dependency:
+
+1. **Search for a target-language equivalent via Context7.** Look up candidate
+   Go libraries that cover the same behavior and read their documented input
+   and output contract.
+2. **Compare contracts side by side.** Put the source library's documented I/O
+   and worked examples (from ANALYSIS.md) next to the candidate Go library's
+   documented I/O and examples. Note where they agree and, critically, where
+   they differ (ordering, escaping, sentinels, validation strictness,
+   whitespace).
+3. **Decide and justify**, choosing exactly one:
+   - **Adopt a Go library** when it reproduces the documented contract (or the
+     gap is small and explicitly specified away). Pin name + version and cite
+     the Context7 evidence.
+   - **Faithful reimplementation** when no library matches and the behavior is
+     standardized/deep: the spec MUST carry the full rule table and example
+     outputs, and the architecture MUST budget for reproducing them exactly —
+     not a "common cases" subset.
+   - **Approximate** only when the behavior is genuinely trivial and the
+     approximation is proven equivalent on the captured examples.
+4. **Carry example outputs into the contract.** Whichever option is chosen, the
+   decision MUST reference the worked `input → output` examples that the chosen
+   implementation has to satisfy, and link them to the acceptance baseline in
+   the Composition Root.
+
+Record this as a `## Dependency Decisions` table in ARCHITECTURE.md with
+columns: source dependency, behavior relied on, decision, Go library (if any),
+contract differences, and the example(s) that pin the expected output.
+
 ## Concurrency
 
 - Prefer sequential code unless parallelism is explicitly required by the spec
@@ -121,3 +165,8 @@ and has stable API surface before committing to it in ARCHITECTURE.md.
 - Do not choose a framework because it is familiar from another ecosystem
 - Do not defer error handling decisions to the Builder — decide at architecture time
 - Keep ARCHITECTURE.md concrete enough for Planner and Builder to act on without reopening the spec
+- Do not invoke "stdlib-first" to justify re-deriving standardized or non-trivial
+  behavior a source library provided, without first running the Source-Dependency
+  Replacement Evaluation and recording the decision
+- Do not finalize a dependency decision without comparing the source and
+  candidate I/O contracts on concrete example outputs
