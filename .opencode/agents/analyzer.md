@@ -60,11 +60,57 @@ The result must include a Markdown analysis file (`ANALYSIS.md`) and a dispatch 
 - Mark every functionality item with a clear status such as `ready`, `needs-clarification`, or `blocked`.
 - Keep unresolved gaps as checklist entries or open questions rather than silently omitting them.
 
-### 5. Risk Extraction
+### 5. Value-Transformation Fidelity (exact algorithms, not summaries)
+
+Output-identity defects almost never come from missing features — they come
+from transformation logic that was reconstructed *approximately*. For every
+function that maps an input value to an output value (classification,
+normalization, formatting, sanitization, sentinel substitution), the Analyzer
+MUST reconstruct the algorithm exactly, not paraphrase it:
+
+- Transcribe the **complete, ordered rule set** (every branch / regex / lookup
+  entry), in the source's evaluation order. Partial or "representative" rule
+  lists are forbidden — the first matching branch determines the result, so a
+  missing earlier branch silently changes output.
+- Record the **verbatim output literal** each branch emits, character-for-character
+  (e.g. `Apache*` is not the same as `Apache-2.0*`; `UNKNOWN` is not `Undefined`).
+  Quote them from source; do not normalize casing or punctuation.
+- Capture the **fallback / no-match branch** explicitly: what does the source
+  emit when nothing matches — a short sentinel, `null`, or the *entire raw input*?
+  This branch is the single most common source of divergence.
+- Note any **dependency-provided transformation** (e.g. an SPDX parser, a tree
+  formatter, a CSV/markdown library). Record the library name and the exact
+  behavior relied upon (validation passthrough, sort order, escaping rules,
+  trailing-newline behavior). A reimplementation that drops the library MUST
+  replicate that behavior; flag it as a high risk.
+
+### 6. Output Field Order, Provenance & Sentinels
+
+Byte-identical structured output (JSON, tree, CSV, markdown) depends on field
+order and sentinel values, which prose specs routinely lose. ANALYSIS.md MUST
+contain an `## Output Field Contract` section that records, per output record:
+
+- The **exact emission order** of every field, and **where that order comes
+  from** (e.g. a field initialized first in the object literal always appears
+  first; remaining fields follow insertion order). Document conditionally-present
+  fields and the condition that includes them.
+- The exact **sentinel/default strings** and which code branch produces each
+  (e.g. private package → `UNLICENSED`; no license found → `UNKNOWN`).
+- **Aggregation/sort semantics** of any collected output (e.g. summary sorted by
+  count descending vs. first-appearance order; key sets sorted lexically).
+- **Whitespace and line-ending contract**: trailing newline presence, indentation
+  width, and any difference between stdout (often a wrapper adds a newline) and
+  file output (often written raw). Capture these as part of the golden baseline.
+
+### 7. Risk Extraction
 
 - Document invariants.
 - Document critical failure paths.
 - Distinguish direct evidence from inferred assumptions.
+- Explicitly flag every place where the source relies on a third-party library
+  for semantics that a stdlib-only target would have to re-derive (dependency
+  graph resolution, SPDX correctness, tree/CSV formatting). These are the
+  highest-risk parity gaps.
 
 ## Output Artifact
 
@@ -80,6 +126,8 @@ Produce `ANALYSIS.md` and a dispatch file `USE-CASES.md`
 - `Entry Points`
 - `Inputs and Outputs`
 - `Function Inventory`
+- `Value-Transformation Tables` (exact ordered rules + verbatim output literals + fallback branch, per Process step 5)
+- `Output Field Contract` (field order + provenance, sentinels, sort/aggregation, whitespace/newline contract, per Process step 6)
 - `Feature Slices`
 - `Domain Map`
 - `Flow Map`
@@ -146,3 +194,13 @@ Use this only when the user asks for a read-only consistency review across downs
 - Do not reconstruct the full system architecture.
 - Do not produce architecture output such as `ARCHITECTURE.md` from the Analyzer stage.
 - Do not speculate when evidence is missing; record an open question instead.
+- Do not paraphrase transformation logic. Rule sets, classification tables, and
+  output literals MUST be transcribed exactly and completely from source — a
+  "representative subset" is a defect, because the first matching rule decides.
+- Do not describe output formats only in prose. Field order, sentinels, sort
+  order, and trailing-newline behavior MUST be backed by a verbatim golden
+  snippet from the executed source system (see the `cli-analyzer` skill).
+- Do not assume a filesystem/directory walk reproduces a tool's logical model
+  (e.g. a real dependency graph with dedupe/`extraneous`/`root` semantics).
+  Reconstruct what the source's resolver actually computes and record the
+  divergence risk for any stdlib-only reimplementation.

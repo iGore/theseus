@@ -88,6 +88,34 @@ narrative description. This closes the class of defects where the
 target system silently invents its own output schema because the spec
 only described the format in prose.
 
+**Byte-exactness and edge coverage (required).** Snippets are a parity
+baseline, so capture them byte-for-byte — preserve field order, exact
+sentinel strings, indentation, and trailing newlines, and note where
+stdout (often newline-terminated by a print wrapper) differs from file
+output (often written raw). "Semantic" or "selected-snippet" comparison
+is insufficient and is the documented cause of past divergence. The
+fixture set MUST exercise, in addition to the happy path, at least:
+
+- a record with **missing optional fields** (no author, no repository)
+- a record using each **sentinel/default** path (e.g. private → `UNLICENSED`,
+  nothing found → `UNKNOWN`)
+- inputs that force **value-derivation from secondary sources** (e.g. a
+  license determinable only from file text, not metadata)
+- input values **outside the common set** that the source still classifies
+  via its full rule table (e.g. GPL/LGPL/ISC-from-text, SPDX expressions),
+  to expose any fallback branch that dumps raw input
+- every **output mode crossed with the flags that alter it** (custom format,
+  component prefix, relative paths, summary), not just the default mode
+
+**Value-transformation tables (required).** When an output field is the
+result of a classification/normalization function, ANALYSIS.md MUST
+include the function's *complete, ordered* rule table with the verbatim
+output literal of every branch and the no-match/fallback branch — copied
+from source, not summarized. The first matching rule wins, so an omitted
+earlier rule changes results. Record any third-party transformation the
+source delegates to (SPDX validator, tree/CSV/markdown formatter) and the
+exact behavior a stdlib-only target must replicate.
+
 ### 7. Input-Field Tracing (Data-Flow Reconstruction)
 
 The CLI surface (entry points, flags, exit codes) captures the
@@ -174,9 +202,29 @@ items so that downstream Spec-Writers can work in dependency sequence:
 Mark each item in USE-CASES.md with its upstream dependency IDs
 so the Orchestrator can enforce ordering in Spec-Writer fan-out.
 
+## Differential Parity Harness (migration/rewrite scope)
+
+When the goal is a behavior-identical rewrite, capturing snippets is not
+enough — define the harness that proves parity so the Builder and Verifier
+can run it:
+
+- Specify a **fixture corpus** (the edge set above) and the **exact source
+  invocation** per mode/flag combination.
+- The parity check is a **byte-level diff** of source output vs. target output
+  on identical fixtures, normalizing only volatile values that legitimately
+  differ (e.g. absolute filesystem paths under a temp root) and documenting
+  each normalization explicitly.
+- Any remaining diff is a defect to be specified away, not waved through as
+  "semantically equivalent".
+
 ## Guardrails
 
 - Do not reconstruct internal logic before the CLI surface is fully mapped
 - Do not invent flag semantics — derive from help text, source, or tests only
 - If a flag's behavior is ambiguous, record it as an open question rather than guessing
 - Keep CLI surface reconstruction separate from internal domain reconstruction
+- Do not summarize classification/transformation logic — transcribe the full
+  ordered rule table including the fallback branch and verbatim output literals
+- Do not accept prose output descriptions or "semantic"/partial snippet
+  comparison as a parity baseline; require byte-exact golden snippets across
+  the full edge set and flag matrix

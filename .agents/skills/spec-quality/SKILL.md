@@ -42,6 +42,19 @@ supplements it with explicit acceptance criteria.
 - Functional requirements use unambiguous obligation language (MUST / MUST NOT)
 - Success criteria are measurable, not subjective
 
+### Output-identity indicators (for output-producing or value-transforming slices)
+
+- The SPEC has an **Output Contract** pinned to a verbatim golden baseline:
+  field order, conditional fields, exact sentinels/literals, sort order, and
+  trailing-newline / stdout-vs-file behavior — no prose-only format description
+- Any classification/normalization rule is captured as the **full ordered rule
+  table** including the **fallback branch**, with verbatim output literals
+- Source dependencies whose behavior must be replicated (SPDX parser,
+  tree/CSV/markdown formatter, dependency-graph resolver) are named, with an FR
+  requiring the reimplementation to match them
+- At least one success criterion is a **byte-level differential-parity** baseline
+  over an edge-inclusive fixture set, not just the happy path
+
 ## Handling missing information
 
 - If source evidence is absent, record an open question — do not fill the gap with a guess
@@ -57,6 +70,14 @@ Before submitting the final `SPEC.md`, verify:
 - [ ] At least one acceptance scenario is independently testable without re-opening the source
 - [ ] All open questions are explicitly listed — none are silently omitted
 - [ ] I/O formats, types, and constraints are explicit
+- [ ] (Output slices) Output Contract cites a byte-exact golden baseline and lists
+      field order, sentinels/literals, sort order, and newline behavior
+- [ ] (Transform slices) The full ordered rule table incl. fallback branch is
+      transcribed verbatim, not summarized
+- [ ] Replicated-dependency behaviors (SPDX, formatters, graph resolver) are named
+      and covered by an FR + acceptance scenario
+- [ ] A byte-level differential-parity success criterion covers the edge set, not
+      just the happy path
 
 ## Guardrails
 
@@ -64,3 +85,6 @@ Before submitting the final `SPEC.md`, verify:
 - Do not expand scope beyond the assigned functionality item
 - Do not use Context7 for spec writing — the spec describes source behavior, not target implementation
 - Do not conflate source reconstruction with target design decisions
+- Do not pass an output slice whose format is described only in prose, or whose
+  parity criterion is "semantic"/happy-path only — require a byte-exact baseline
+- Do not pass a transform slice whose rule table is a "common cases" subset
