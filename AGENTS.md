@@ -85,6 +85,27 @@ Keep secrets such as Sourcebot API keys out of tracked repo files. Use `opencode
 - Give each agent only the context and MCP access needed for its current phase.
 - Prefer documented evidence over intuition.
 
+## Parity verification: in-flow vs. manual
+
+For behavior-replacing rewrites, parity is verified in two distinct places —
+keep them separate:
+
+- **In-flow (automated, test-driven):** the Analyzer captures example/golden
+  outputs once from the pinned source version and commits them as fixture
+  files. The Builder builds test-driven against them and commits byte-level
+  golden tests across the recorded mode × flag matrix and edge set; the
+  Verifier confirms those tests exist, are byte-level, cover the matrix, and
+  pass (`go test ./...`). **No agent installs or runs the live source system.**
+- **Manual (out-of-flow, done by the maintainers at the end):** a live
+  differential run of the actually-installed source system vs. the target
+  binary across the full matrix. This is a deliberate human step performed
+  once before release. It is **not** a phase gate and must never be wired into
+  the agent flow. The committed golden outputs exist precisely to make this
+  final manual run cheap and likely to pass on the first try.
+- Intentional, declared differences live in a `## Conformance Matrix`
+  (`identical` / `compatible` / `out-of-scope`); claiming "same results" while
+  undeclared `compatible`/`out-of-scope` rows exist is a defect.
+
 ## Sourcebot bootstrap
 
 ```bash

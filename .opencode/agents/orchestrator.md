@@ -84,6 +84,9 @@ Define and track the expected artifact set per stage:
 10. When `ARCHITECTURE.md` is available, fan out one background `Planner` invocation per relevant use-case folder containing `SPEC.md`.
 11. Run `Task Decomposer` only after the matching `PLAN.md` artifact exists, and fan out one background `Task Decomposer` invocation per requirement plan.
 12. Run Builder only after the relevant `SPEC.md` artifacts are complete and planning artifacts are finished.
+13. For behavior-replacing rewrites, ensure the **source version/commit is pinned** in `ANALYSIS.md` before reconstruction proceeds, and that the Analyzer captures **example/golden outputs** once from that pinned source — these become the committed test oracle for the flow.
+14. Do not let Phase 3 transition to "complete" without **committed golden-output tests** that assert byte equality between the target and the recorded example outputs across the matrix, and that pass (`go test ./...`). Every mode/flag must be covered or explicitly declared in the `## Conformance Matrix`.
+15. Agents must **not install or run the live source system**. The live differential run (real source vs. target across the matrix) is a **manual verification done by the maintainers at the end**, outside this flow — never a phase gate.
 
 ## Default Execution Mode
 

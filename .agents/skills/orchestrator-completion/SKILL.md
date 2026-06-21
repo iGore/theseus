@@ -68,8 +68,51 @@ Invoke the Verifier for Phase 3. The Verifier checks each step granularly:
   - `target/cmd/<tool>/main.go` is present, derived from the Composition Root section of ARCHITECTURE.md
   - `go build -o /tmp/cli-bin ./cmd/...` from `target/` produces an executable file
   - The binary responds to the standard discovery flags it declares (typically `--help` and `--version`) with the exit codes and output channels defined in the corresponding SPEC.md
-  - The binary, executed on each of the minimal fixtures referenced in ANALYSIS.md, produces output that semantically matches the corresponding Golden Output Snippet. Format-level divergences such as ordering of structurally unordered collections, insignificant whitespace, or platform-dependent absolute paths are tolerated; missing entities, divergent output schemas, or empty outputs are FAIL conditions
   - A pure library build without a `cmd/` entry point counts as FAIL — passing `go build ./...` on packages alone is not sufficient when the migration targets a CLI tool
+
+### Phase 3 — Golden-Output Parity Gate (test-driven, in-flow)
+
+When the migration goal is to reproduce a source system's behavior, semantic
+"close enough" is **not** an acceptable gate — it is the documented root cause
+of silent output drift. The in-flow gate compares the target against the
+**captured example/golden outputs**, byte-for-byte, via committed tests:
+
+- The golden outputs are the example outputs recorded **once** by the Analyzer
+  (Golden Output Snippets, captured from the pinned source version named in
+  ANALYSIS.md) and committed as fixture files. They are the test oracle inside
+  the flow — the flow does **not** install or run the live source system.
+- The Builder writes **golden-file tests** (table-driven, committed under the
+  target test tree) that run the target binary across the recorded mode × flag
+  matrix and edge set and assert **byte equality** against the golden files.
+- Only an explicit, documented **normalization allowlist** may be applied before
+  comparison — limited to genuinely volatile values (e.g. absolute paths under a
+  temp root). Each normalization must be named in BUILD.md. Ordering of
+  collections, whitespace, sentinels, and trailing newlines are **in scope** and
+  may not be hand-waved away.
+- The Verifier confirms these golden tests **exist, are byte-level, cover the
+  recorded matrix, and pass** (`go test ./...`). It checks the recorded golden
+  outputs and the target — it does **not** run the live source system.
+- **Any failing golden test is FAIL**, unless the affected mode/flag is listed as
+  a deliberate exclusion in a `## Conformance Matrix` (see escape hatch below).
+
+### Out-of-flow final parity run (manual, not a gate)
+
+A live differential run against the actually-installed source system
+(a maintainer-run differential script: source oracle vs. target across the full
+matrix) is a **manual verification performed by the maintainers at the end**,
+outside the agent flow. Agents MUST NOT install or execute the live source system as part
+of any phase gate. The committed golden outputs are what makes that final manual
+run cheap and likely to pass on the first try.
+
+### Conformance Matrix (escape hatch when 100% parity is not the goal)
+
+If full byte-parity is explicitly out of scope, the project MUST declare this
+up front rather than discovering it at the gate. ARCHITECTURE.md (or SPECS.md)
+carries a `## Conformance Matrix` listing, per mode/flag: `identical`,
+`compatible` (documented intentional difference), or `out-of-scope`. The golden
+gate then FAILs only on failing rows marked `identical`. Claiming "produces the
+same results" while the matrix contains undeclared `compatible`/`out-of-scope`
+rows is itself a FAIL.
 
 **Checklist result**: Verifier returns PASS → workflow complete. Any FAIL → continue Phase 3.
 

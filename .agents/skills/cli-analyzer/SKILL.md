@@ -237,20 +237,25 @@ items so that downstream Spec-Writers can work in dependency sequence:
 Mark each item in USE-CASES.md with its upstream dependency IDs
 so the Orchestrator can enforce ordering in Spec-Writer fan-out.
 
-## Differential Parity Harness (migration/rewrite scope)
+## Parity strategy: in-flow golden tests vs. out-of-flow live run
 
 When the goal is a behavior-identical rewrite, capturing snippets is not
-enough — define the harness that proves parity so the Builder and Verifier
-can run it:
+enough — but note the split:
 
-- Specify a **fixture corpus** (the edge set above) and the **exact source
-  invocation** per mode/flag combination.
-- The parity check is a **byte-level diff** of source output vs. target output
-  on identical fixtures, normalizing only volatile values that legitimately
-  differ (e.g. absolute filesystem paths under a temp root) and documenting
-  each normalization explicitly.
-- Any remaining diff is a defect to be specified away, not waved through as
-  "semantically equivalent".
+- **In-flow (test-driven):** the Golden Output Snippets captured here (from the
+  pinned source version) are committed as **fixture files**. The Builder writes
+  byte-level golden tests against them; the Verifier confirms those tests cover
+  the matrix and pass. The agent flow does **not** install or run the live
+  source system — the captured examples are the oracle.
+- **Out-of-flow (manual, by maintainers):** a live differential run (real source
+  vs. target across the full matrix, via a maintainer-run differential script) is performed once at
+  the end, by hand, to catch anything the captured examples missed. Keep the
+  example set broad (edge set above) so this final run is cheap and likely green.
+
+For both, comparison is a **byte-level diff**, normalizing only volatile values
+that legitimately differ (e.g. absolute paths under a temp root) and documenting
+each normalization explicitly. Any remaining diff is a defect to be specified
+away, not waved through as "semantically equivalent".
 
 ## Guardrails
 

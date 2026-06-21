@@ -54,6 +54,24 @@ Each `BUILD.md` file should contain:
 - commands run
 - observed results
 
+### 3a. Golden-Output Parity Evidence *(mandatory for behavior-replacing rewrites)*
+
+Build **test-driven against the committed example/golden outputs** — do NOT
+install or run the live source system (the live differential run is a
+separate, manual, out-of-flow step performed by the maintainers).
+
+- The Golden Output Snippets from `ANALYSIS.md` (captured from the pinned source
+  version) committed as **fixture files** in the target test tree
+- Committed **golden-file tests** (table-driven) that run the target binary
+  across the recorded mode × flag matrix and edge set and assert **byte equality**
+  against those fixtures; the `go test ./...` result
+- A **per-mode / per-flag coverage table**: which golden fixture each row asserts,
+  outcome `identical`, or `compatible` / `out-of-scope` only if declared in the
+  `## Conformance Matrix`
+- The explicit **normalization allowlist** applied before comparison (volatile
+  values only, e.g. temp-root absolute paths) — each normalization named
+- A bare "passed" / "semantically equivalent" statement is not acceptable evidence
+
 ### 4. Residual Risks
 
 - known gaps or deferred items still inside the bounded scope
@@ -76,5 +94,15 @@ Each `BUILD.md` file should contain:
 
 - Do not implement any feature outside the specification.
 - Never silently accept missing test coverage.
+- For behavior-replacing rewrites, do not mark the use case complete while any
+  golden-output test fails, unless that row is declared `compatible` /
+  `out-of-scope` in the `## Conformance Matrix`. Write the golden tests first
+  (test-driven) and keep them committed.
+- Do not install or run the live source system as part of building or verifying —
+  build against the committed golden fixtures; the live parity run is manual and
+  out of flow.
+- Do not record parity as "passed" without the committed golden tests and the
+  per-mode coverage mapping in `BUILD.md` — the Verifier checks the tests exist,
+  are byte-level, cover the matrix, and pass.
 - Do not implement the target slice in a non-Go language unless the user explicitly overrides the repository default.
 - Do not declare a CLI-oriented use case complete without a runnable entry point under `target/cmd/<tool>/main.go`; the Verifier explicitly checks for this in Phase 3.4.

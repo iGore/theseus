@@ -129,6 +129,30 @@ For every folder with a `TASKS.md`:
 - [ ] `go vet ./...` passes from `target/` (run via bash, report exit code)
 - [ ] No `TODO` or `FIXME` comments without an associated open decision
 
+### 3.5 Golden-output parity tests (behavior-replacing rewrites)
+
+For migrations whose goal is to reproduce a source system's behavior, verify
+against the **committed golden/example outputs** — do NOT install or run the
+live source system (that is a separate, manual, out-of-flow step):
+
+- [ ] The Golden Output Snippets recorded in `ANALYSIS.md` (from the pinned
+      source version) exist as committed fixture files in the target test tree
+- [ ] Committed golden-file tests assert **byte equality** between the target
+      binary's output and those fixtures across the recorded mode × flag matrix
+      and the edge set (see `cli-analyzer` skill)
+- [ ] `go test ./...` passes from `target/` (run via bash, report exit code)
+- [ ] Comparison is byte-level; only normalizations explicitly listed in
+      `BUILD.md` (volatile values such as temp-root absolute paths) are applied —
+      ordering, whitespace, sentinels, trailing newlines are in scope
+- [ ] Every mode/flag in the recorded matrix is covered by a golden test, OR is
+      explicitly marked `compatible` / `out-of-scope` in a `## Conformance Matrix`.
+      An uncovered or failing `identical` row = FAIL
+- [ ] `BUILD.md` lists which golden fixtures are covered and any normalizations —
+      a bare "passed" without this mapping = FAIL
+
+Report each mode/flag as its own PASS/FAIL line. Do not collapse failures into a
+single "semantically equivalent" verdict. Do not run the live source oracle.
+
 ### 3.x Skill-driven additional checks
 
 The detailed phase checklists, including any CLI-specific end-to-end
@@ -168,6 +192,9 @@ Next action: [Proceed to Phase N+1 | Return to Phase N — <list failed checks>]
 
 - Do not modify, create, or delete any artifact
 - Do not infer completeness — only report what is verifiably present on disk or in file content
+- Do not accept the Builder's parity claims as evidence — confirm committed golden tests exist, are byte-level, cover the recorded matrix, and pass
+- Do not install or run the live source system; the golden fixtures are the in-flow oracle (the live run is a manual out-of-flow step)
+- Do not tolerate ordering, whitespace, sentinel, or trailing-newline diffs as "semantic" — they are in scope unless declared in the Conformance Matrix
 - Do not attempt to fix a FAIL condition — report it and stop
 - Do not run verification for a phase that has not been started
 - Report every individual check — do not summarise away failures
