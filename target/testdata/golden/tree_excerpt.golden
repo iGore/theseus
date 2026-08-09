@@ -1,0 +1,9 @@
+├─ cli@0.4.3
+│  ├─ repository: http://github.com/chriso/cli
+│  └─ licenses: MIT
+├─ glob@3.1.14
+│  ├─ repository: https://github.com/isaacs/node-glob
+│  └─ licenses: UNKNOWN
+└─ yui-lint@0.1.1
+   ├─ licenses: BSD
+   └─ repository: http://github.com/yui/yui-lint

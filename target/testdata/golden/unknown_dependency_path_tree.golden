@@ -1,0 +1,4 @@
+└─ debug@2.0.0
+   ├─ licenses: UNKNOWN
+   ├─ dependencyPath: /workspace/project/node_modules/debug
+   └─ path: /workspace/project/node_modules/debug

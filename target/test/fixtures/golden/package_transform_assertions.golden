@@ -1,0 +1,6 @@
+private@0.0.0 licenses contains UNLICENSED
+custom-license@0.0.0 url license transforms to Custom: http://example.com/dummy-license
+custom-license@0.0.0 file license transforms to Custom: MY-LICENSE.md
+invalid-with-comma@0.0.0 Apache License, Version 2.0 can be excluded when escaped
+bsd-3-module@0.0.0 BSD excludes BSD-3-Clause
+public-domain-module@0.0.0 Public Domain excludes Public Domain

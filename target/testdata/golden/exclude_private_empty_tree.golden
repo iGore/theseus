@@ -1,0 +1,8 @@
+├─ abbrev@1.0.9
+│  └─ licenses: ISC
+├─ debug@2.0.0
+│  └─ licenses: MIT*
+├─ custom@1.0.0
+│  └─ licenses: MIT*
+└─ mystery@1.0.0
+   └─ licenses: UNKNOWN

@@ -1,0 +1,1 @@
+Warning: As of v17 the --failOn argument takes semicolons as delimeters instead of commas (some license names can contain commas)

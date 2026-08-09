@@ -1,0 +1,9 @@
+{
+  "abbrev@1.0.9": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/abbrev-js",
+    "name": "abbrev",
+    "description": "Like ruby's abbrev module, but in js",
+    "pewpew": "<<Should Never be set>>"
+  }
+}

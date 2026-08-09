@@ -1,0 +1,6 @@
+└─ pkg@1.0.0
+   ├─ licenses: MIT*
+   ├─ path: /fixture/root/node_modules/pkg
+   ├─ licenseFile: node_modules/pkg/LICENSE
+   ├─ licenseText: Permission is hereby granted, free of charge, to any
+   └─ noticeFile: node_modules/pkg/NOTICE

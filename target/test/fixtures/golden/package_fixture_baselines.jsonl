@@ -1,0 +1,6 @@
+{"name":"private","version":"0.0.0","private":true}
+{"name":"custom-license","version":"0.0.0","license":"http://example.com/dummy-license"}
+{"name":"custom-license","version":"0.0.0","license":"See License in MY-LICENSE.md"}
+{"name":"invalid-with-comma","version":"0.0.0","licenses":[{"type":"Apache License, Version 2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.html"}]}
+{"name":"bsd-3-module","version":"0.0.0","licenses":[{"type":"BSD-3-Clause","url":"https://spdx.org/licenses/BSD-3-Clause.html"}]}
+{"name":"public-domain-module","version":"0.0.0","licenses":[{"type":"Public Domain","url":"https://spdx.org/licenses/PublicDomain.html"}]}

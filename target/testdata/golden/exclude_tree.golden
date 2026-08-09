@@ -1,0 +1,5 @@
+├─ mystery@1.0.0
+│  └─ licenses: UNKNOWN
+└─ private@1.0.0
+   ├─ licenses: UNLICENSED
+   └─ private: true
